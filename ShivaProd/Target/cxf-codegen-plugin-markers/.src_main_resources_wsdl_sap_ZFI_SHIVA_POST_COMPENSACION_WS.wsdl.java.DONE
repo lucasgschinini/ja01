@@ -1,0 +1,1 @@
+[-b, file:/C:/Desarrollo/Workspace/ShivaProd/src/main/resources/wsdl/binding.xml, -noAddressBinding, -autoNameResolution, -p, ar.com.telecom.shiva.presentacion.wsdl.sap.imputacion, file:/C:/Desarrollo/Workspace/ShivaProd/src/main/resources/wsdl/sap/ZFI_SHIVA_POST_COMPENSACION_WS.wsdl]

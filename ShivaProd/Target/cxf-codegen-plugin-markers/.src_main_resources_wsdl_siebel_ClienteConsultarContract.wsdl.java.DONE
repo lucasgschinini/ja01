@@ -1,0 +1,1 @@
+\[-b, file:/C:/Desarrollo/Workspace/ShivaProd/src/main/resources/wsdl/binding.xml, -noAddressBinding, -p, ar.com.telecom.shiva.presentacion.wsdl.siebel, -b, C:\Desarrollo\Workspace\ShivaProd/src/main/resources/wsdl/siebel/messageHeaderBinding.xml, file:/C:/Desarrollo/Workspace/ShivaProd/src/main/resources/wsdl/siebel/ClienteConsultarContract.wsdl]

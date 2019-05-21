@@ -1,0 +1,1 @@
+[-b, file:/C:/Desarrollo/Workspace/ShivaProd/src/main/resources/wsdl/binding.xml, -noAddressBinding, -p, ar.com.telecom.shiva.presentacion.wsdl.calipso.cargos, file:/C:/Desarrollo/Workspace/ShivaProd/src/main/resources/wsdl/calipso/WebServiceCalipsoCargos.wsdl]

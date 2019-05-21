@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+
+	<bean id="imageEngine" class="com.octo.captcha.engine.GenericCaptchaEngine">
+		<constructor-arg index="0">
+			<list>
+				<ref bean="CaptchaFactory" />
+			</list>
+		</constructor-arg>
+	</bean>
+	<bean id="CaptchaFactory" class="com.octo.captcha.image.gimpy.GimpyFactory">
+		<constructor-arg ref="wordgen" />
+		<constructor-arg ref="wordtoimage" />
+	</bean>
+
+	<bean id="wordgen"
+		class="com.octo.captcha.component.word.wordgenerator.DictionaryWordGenerator">
+		<constructor-arg ref="filedict" />
+	</bean>
+
+	<!-- 6000 palabras -->
+	<bean id="filedict" class="com.octo.captcha.component.word.FileDictionary">
+		<constructor-arg index="0" value="toddlist" />
+	</bean>
+
+	<bean id="wordtoimage"
+		class="com.octo.captcha.component.image.wordtoimage.ComposedWordToImage">
+		<constructor-arg index="0" ref="fontGenRandom" />
+		<constructor-arg index="1" ref="backGenUni" />
+		<constructor-arg index="2" ref="simpleWhitePaster" />
+	</bean>
+
+	<bean id="fontGenRandom"
+		class="com.octo.captcha.component.image.fontgenerator.RandomFontGenerator">
+		<constructor-arg index="0" value="25" />
+		<constructor-arg index="1" value="74" />
+		<constructor-arg index="2">
+			<list>
+				<ref bean="fontArial" />
+				<ref bean="fontVerdana" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<!-- <bean id="backGenUni" class="com.octo.captcha.component.image.backgroundgenerator.UniColorBackgroundGenerator"> -->
+	<!-- <constructor-arg index="0"><value>50</value></constructor-arg> -->
+	<!-- <constructor-arg index="1"><value>55</value></constructor-arg> -->
+	<!-- </bean> -->
+
+	<bean id="backGenUni"
+		class="com.octo.captcha.component.image.backgroundgenerator.FunkyBackgroundGenerator">
+		<constructor-arg index="0" value="300" />
+		<constructor-arg index="1" value="100" />
+		<constructor-arg
+			type="com.octo.captcha.component.image.color.ColorGenerator" index="2">
+			<ref bean="colorGenRandomList" />
+		</constructor-arg>
+		<constructor-arg
+			type="com.octo.captcha.component.image.color.ColorGenerator" index="3">
+			<ref bean="colorGenRandomList" />
+		</constructor-arg>
+		<constructor-arg
+			type="com.octo.captcha.component.image.color.ColorGenerator" index="4">
+			<ref bean="colorGenRandomList" />
+		</constructor-arg>
+		<constructor-arg
+			type="com.octo.captcha.component.image.color.ColorGenerator" index="5">
+			<ref bean="colorGenRandomList" />
+		</constructor-arg>
+		<constructor-arg index="6" value ="0.2f" />
+	</bean>
+
+	<bean id="colorGenRandomList"
+		class="com.octo.captcha.component.image.color.RandomListColorGenerator">
+		<constructor-arg index="0">
+			<list>
+				<ref bean="white" />
+				<ref bean="lightBlue" />
+				<ref bean="red" />
+			</list>
+		</constructor-arg>
+	</bean>
+	<bean id="white" class="java.awt.Color">
+		<constructor-arg type="int" index="0" value="255" />
+		<constructor-arg type="int" index="1" value="255" />
+		<constructor-arg type="int" index="2" value="255" />
+	</bean>
+
+	<bean id="lightBlue" class="java.awt.Color">
+		<constructor-arg type="int" index="0" value="10" />
+		<constructor-arg type="int" index="1" value="137" />
+		<constructor-arg type="int" index="2" value="194" />
+	</bean>
+
+	<bean id="red" class="java.awt.Color">
+		<constructor-arg type="int" index="0" value="195" />
+		<constructor-arg type="int" index="1" value="10" />
+		<constructor-arg type="int" index="2" value="22" />
+	</bean>
+
+	<bean id="simpleWhitePaster"
+		class="com.octo.captcha.component.image.textpaster.SimpleTextPaster">
+		<constructor-arg type="java.lang.Integer" index="0" value="3" />
+		<constructor-arg type="java.lang.Integer" index="1" value="5" />
+		<constructor-arg type="java.awt.Color" index="2" ref="textColor" />
+	</bean>
+
+	<bean id="fontArial" class="java.awt.Font">
+		<constructor-arg index="0" value="Arial" />
+		<constructor-arg index="1" value="0" />
+		<constructor-arg index="2" value="70" />
+	</bean>
+	<bean id="fontVerdana" class="java.awt.Font">
+		<constructor-arg index="0" value="Verdana" />
+		<constructor-arg index="1" value="0" />
+		<constructor-arg index="2" value="70" />
+	</bean>
+
+	<bean id="textColor" class="java.awt.Color">
+		<constructor-arg type="int" index="0" value="0" /> <!-- red -->
+		<constructor-arg type="int" index="1" value="0" /> <!-- green -->
+		<constructor-arg type="int" index="2" value="0" /> <!-- blue -->
+	</bean>
+
+	<bean id="captchaService"
+		class="com.octo.captcha.service.multitype.GenericManageableCaptchaService">
+		<constructor-arg index="0" ref="imageEngine" />
+		<constructor-arg type="int" index="1" value="180" /> <!-- minGuarantedStorageDelayInSeconds -->
+		<constructor-arg type="int" index="2" value="180000" /> <!-- maxCaptchaStoreSize -->
+		<constructor-arg type="int" index="3" value="75000" /> <!-- captchaStoreLoadBeforeGarbageCollection -->
+	</bean>
+
+</beans>

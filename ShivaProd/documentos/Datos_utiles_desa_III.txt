@@ -1,0 +1,315 @@
+Manual de programador
+=================================================================================================
+Indice:
+1) Argumentos VM y Configuracion Ambientes
+2) Bases de Datos
+3) Servidor JBOSS 6.1.0 EAP
+4) Servidor Unix
+5) Configuracion JNDI para acceso a la BD usando JBOSS
+6) Para probar clientes de siebel 
+7) WebServices
+8) LDAP
+9) Comandos para spring batch
+10) MQ Series - Comandos utiles
+
+=================================================================================================
+1) Argumentos VM
+
+local
+-Dentorno=desa
+-Dconfiguracion=C://Desarrollo//shiva_desa.properties
+-Batch --> Variable de entorno: SHIVA_CONFIG=C://Desarrollo//shiva_desa.properties
+
+
+Desarrollo
+-Dentorno=desa
+-Dconfiguracion=/appl_work/shiva_desa.properties
+-Batch --> Variable de entorno: SHIVA_CONFIG=/appl_work/shiva_desa.properties
+
+Integracion
+-Dentorno=inte
+
+PAU
+-Dentorno=pau
+
+Produccion
+-Dentorno=prod
+
+=================================================================================================
+2) Bases de Datos
+-------------------------------------------
+“DESARROLLO”
+Nombre del Servidor     dlnx0162	10.75.255.84
+SID DSHIDE01
+PORT 1961 
+Usuario: A000656
+Pass: HTAW_4621
+
+Owner: A000656 'HTAW_4621'
+
+-------------------------------------------
+“PI2”
+Nombre del Servidor dlnx0164 10.75.255.86
+SID DSHIIN01
+Port 1961
+User: z001941
+Pass: vV_6eGrW
+
+Owner: A002004 'nN2$L2$$'
+-------------------------------------------
+"PAU"
+Nombre del Servidor  
+SID 
+Port 
+User: 
+Pass: 
+
+
+=================================================================================================
+3) Servidor JBOSS 6.1.0 EAP
+
+ ~ Local
+	URL: localhost:9990	
+	Usuario: admin	
+	Pass: Admin01!
+
+ ~ Desarrollo
+	Consola Desa: 
+	http: dlnx0161/29990 
+	user: admin
+	pass: $hiva2014
+	
+	Base de datos: 
+	Servidor: dlnx0162
+	
+	Aplicacion Desa:
+	http://dlnx0161:28080/Shiva es el http de aplicación
+	https://dlnx0161:28443/Shiva es https para la aplicación
+  
+ ~ Integracion
+	Aplicacion Desa:
+	http://dlnx0163:8080/Shiva es el http de aplicación
+	https://dlnx0163:8443/Shiva es https para la aplicación
+
+ ~ PAU
+	Aplicacion Desa:
+	http://dlnx0165:8080/Shiva es el http de aplicación
+	https://dlnx0165:8443/Shiva es https para la aplicación
+=================================================================================================
+4) Servidor UNIX
+
+Desarrollo
+URL: dlnx0161 / 10.75.255.83
+Puerto: 22	
+Usuario: z000646
+Password: Teco2015
+ 
+Integracion
+URL: dlnx0163 
+Puerto: 22
+Usuario:  
+Password: 
+ 
+Integracion 2
+URL: dlnx0163 
+Puerto: 22
+Usuario: z000619
+Password: T3lp3r15
+ 
+PAU 
+URL: dlnx0163 
+Puerto: 22
+Usuario:  
+Password: 
+
+
+DESA BD
+URL: dlnx0162 / 
+Puerto: 22	
+Usuario: 
+Pass: 
+
+PI BD
+
+
+PAU BD
+
+
+Comandos Unix
+=============
+
+Para levantar el server:
+	nohup /jboss/jboss-eap-6.1/bin/standalone.sh -Djboss.server.base.dir=/appl_work/SHIVA3/ -Djboss.server.temp.dir=/appl_work/SHIVA3/tmp &
+	
+	Para PAU
+	nohup /jboss/SHIVA/jboss-eap-6.1/bin/standalone.sh -Djboss.server.base.dir=/appl_work/SHIVA/ -Djboss.server.log.dir=/appl_log/SHIVA/ &	
+
+Para bajar el server:
+     ps -ef | grep jboss
+
+[root@dlnx0161 logs]# ps -ef | grep jboss
+z306015  26570     1  0 13:50 ?        00:00:00 /bin/sh /jboss/jboss-eap-6.1/bin/standalone.sh -Djboss.server.base.dir=/appl_work/SHIVA3/
+z306015  26630 26570  1 13:50 ?        00:01:05 java -D[Standalone] -server -XX:+UseCompressedOops -Xms1303m -Xmx1303m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true -Dorg.jboss.boot.log.file=/appl_work/SHIVA/log/server.log -Dlogging.configuration=file:/appl_work/SHIVA/configuration/logging.properties -jar /jboss/jboss-eap-6.1/jboss-modules.jar -mp /jboss/jboss-eap-6.1/modules -jaxpmodule javax.xml.jaxp-provider org.jboss.as.standalone -Djboss.home.dir=/jboss/jboss-eap-6.1 -Djboss.server.base.dir=/appl_work/SHIVA -Djboss.server.base.dir=/appl_work/SHIVA/
+ 
+Tienen que matar el proceso que tiene el java adelante, en este caso tienen que hacer:
+	kill -9 26630
+
+En /appl_work/SHIVA3/ van a encontrar:
+/appl_work/SHIVA3/configuration/mgmt-users.properties -> Archivo con el user y el pass de administración. 
+/appl_work/SHIVA3/configuration/ standalone.xml -> Toda la configuración (recomiendo que no hagan cambios directamente aca, ya que si hay un error es difícil la vuelta atrás)
+/appl_work/SHIVA3/log/server.log -> Los logs del server.
+
+En /jboss/jboss-eap-6.1 están los binarios y tmb el log que me pidieron shiva.log
+/jboss/jboss-eap-6.1/logs/shiva.log
+
+Para navegar por lo directorios el comando es cd:
+	cd /appl_work/SHIVA3/
+
+Para ver lo que hay dentro del directorio ls –la (el –la es para que te lo muestre en una lista y te muestre los detalles, tamaño, etc)
+[root@dlnx0161 logs]# ls -la
+total 184
+drwxr-x---  2 z306015 z306015   4096 Jan  9 14:50 .
+drwxrwxr-x 11 z306015 z306015   4096 Dec 18 10:58 ..
+-rw-r-----  1 z306015 z306015      0 Dec 18 10:58 debug.log
+-rw-r-----  1 z306015 z306015   2049 Jan  9 11:08 shiva-2014-01-08.0.log.zip
+-rw-r-----  1 z306015 z306015   8059 Jan  9 14:50 shiva-2014-01-09.log.gz
+-rw-r-----  1 z306015 z306015 166087 Jan  9 14:43 shiva.log
+
+Para ver un archivo el comando es less:
+	less server.log
+
+Para moverte dentro del archivo:
+	SHIFT + G -> Te lleva al final del archivo.
+    G –> Te lleva al principio del archivo.
+    Y después con las flechas vas para arriba y para abajo. 
+
+Para buscar archivos, siempre hay que estar parado en los directorios /jboss o /appl_work:
+    find ./ -name <nombre-archivo>
+
+=================================================================================================
+5) Configuracion JNDI para acceso a la BD usando JBOSS
+
+Sitios Recomendados:
+- https://community.jboss.org/wiki/DataSourceConfigurationinAS7#Installing_a_JDBC_driver_as_a_deployment
+- http://www.jbossauthority.com/alfresco-on-jboss-eap-6-1/
+- http://middlewaremagic.com/jboss/?p=350
+- https://access.redhat.com/site/documentation/en-US/JBoss_Enterprise_Application_Platform/6.1/pdf/Administration_and_Configuration_Guide/JBoss_Enterprise_Application_Platform-6.1-Administration_and_Configuration_Guide-en-US.pdf
+- http://planet.jboss.org/post/how_to_create_and_manage_datasources_in_as7
+
+A) Crear un datasource en la consola de administrador
+		JNDI: java:jboss/datasources/SHIVADS
+		Servidor: jdbc:oracle:thin:@dlnx0162:1961:DSHIDE01
+		Usuario: z001940
+		Pass: W4$e2192
+		Driver: Asociar un driver JDBC
+			
+=================================================================================================
+6)
+Ahi van los datos para probar los datos usando el servicio de consulta de siebel
+2601099569
+1401302924
+1401202724
+1401022360
+1401279138
+1401227300
+1401097870
+1401303251
+2601023708
+1401251574
+0000097033 (Este tiene holding)
+
+=================================================================================================
+7) WebServices Proveedores
+
+- WS ClienteConsultar
+URL Desa: http://dlnx0032.telecom.com.ar:7403/ClienteConsultarPS
+URL Inte: 
+URL Pau: 
+URL Prod: 
+
+- WS Calipso - Cobranzas
+URL Desa: https://dwin0369/Web_Ev2_Des/CobranzasWS.php
+URL Inte: 
+URL Pau: 
+URL Prod:
+
+- WS Cajero Pagador
+URL Desa: http://10.11.33.210:8022/wsCajeroPagador.asmx
+URL Inte: 
+URL Pau: 
+URL Prod: 
+
+- WS Movika - Respuesta Imputacion
+URL Desa1: http://10.11.33.210:8061/wsRespuestaImputacion.asmx
+URL Desa2: http://10.11.33.210:8061/wsRespuestaImputacion.asmx
+URL Inte: 
+URL Pau: 
+URL Prod:
+
+- WS Delta - TeamComercialCliente
+URL Desa: http://dlnx0032.telecom.com.ar:7403/CC/Cliente/InterfazTeamComercialCliente
+URL Inte: 
+URL Pau: 
+URL Prod:
+
+=================================================================================================
+8) LDAP 
+
+ICE
+#ldap.usuario.generico.shiva=cn=z000835,ou=UsuariosEspeciales,ou=Usuarios,o=Telecom
+#ldap.password.generico.shiva=V$a_S1w!fU6y
+#ICE561906  --- > Pass: Desa001 --- > Perfil Admin
+#ICE562201  --- > Pass: Desa001 --- > Perfil Analista
+#ICE197886  --- > Pass: Desa001 --- > Perfil Analista
+#ICE533012  --- > Pass: Desa001 --- > Perfil Seguridad Informatica
+
+LDAP - Puerto no seguro
+ldap.url.puerto=ldap://dlnx0067.telecom.arg.telecom.com.ar:389
+
+LDAP - Puerto seguro
+ldap.url.puerto=ldaps://dlnx0067.telecom.arg.telecom.com.ar:636
+
+#LDAP - Configuracion
+ldap.dn.root=o=Telecom
+ldap.usuario.generico.shiva=cn=z000857,ou=UsuariosEspeciales,ou=Usuarios,o=Telecom
+ldap.password.generico.shiva=F$a_5tG2z!t5
+
+=================================================================================================
+9) Comando para Spring Batch
+CommandLineJobRunner example
+Usage :
+CommandLineJobRunner jobPath <options> jobIdentifier (jobParameters)
+
+To run above spring batch job, type following command :
+$ java -cp "target/dependency-jars/*:target/your-project.jar" org.springframework.batch.core.launch.support.CommandLineJobRunner spring/batch/jobs/job-read-files.xml readJob
+
+For jobParameters, append to the end of the command :
+$ java -cp "target/dependency-jars/*:target/your-project.jar" org.springframework.batch.core.launch.support.CommandLineJobRunner spring/batch/jobs/job-read-files.xml readJob file.name=testing.cvs
+
+=================================================================================================
+10) Comandos para MQ Series
+
+Para ver el contenido de las colas
+/opt/mqm/samp/bin/amqsbcg DSHIVA.CSQ1.G001 
+
+Para borrar el contenido de las colas
+/opt/mqm/samp/bin/amqsget DSHIVA.CSQ1.G001
+
+=================================================================================================
+11) Pruebas de performance
+Para analisis del GC con Jboss
+Jboss - standalone.conf    
+	JAVA_OPTS="$JAVA_OPTS -verbose:gc -Xloggc:"C:/Desarrollo/gc.log" -XX:+PrintGCDetails -XX:+PrintGCDateStamps"
+Jboss Local
+	VM -verbose:gc -Xloggc:"c:/gc.log" -XX:+PrintGCDetails -XX:+PrintGCDateStamps    
+ 
+Para analisis con JConsole con Jboss
+ 	standalone.conf
+	 	JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.port=5555"
+		JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.authenticate=false"
+		JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote"
+		JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.ssl=false"
+		JAVA_OPTS="$JAVA_OPTS -Djboss.platform.mbeanserver"
+		JAVA_OPTS="$JAVA_OPTS -Djava.rmi.server.hostname=localhost"
+		JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Xbootclasspath/p:../modules/org/jboss/logmanager/main/jboss-logmanager-1.2.2.GA.jar  -Xbootclasspath/p:../modules/org/jboss/logmanager/log4j/main/jboss-logmanager-log4j-1.0.0.GA.jar -Xbootclasspath/p:../modules/org/apache/log4j/main/log4j-1.2.16.jar"
+		JAVA_OPTS="$JAVA_OPTS -Djboss.modules.system.pkgs=org.jboss.logmanager"

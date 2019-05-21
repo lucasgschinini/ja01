@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<batch:job id="definicionProcesamientoArchivoAvcAcuerdo.104" job-repository="jobRepository">
+		<batch:step id="importFileStep">
+			<batch:tasklet>
+				<batch:chunk reader="itemReader"
+							 processor="compositeProcessor"
+					         writer="itemWriter"
+					         commit-interval="800"
+		  					 skip-limit="999999"
+					         processor-transactional="false">
+					<batch:skippable-exception-classes>
+						<batch:include class="org.springframework.batch.item.file.FlatFileParseException" />
+						<batch:include class="java.lang.NullPointerException" />
+						<batch:include class="java.lang.IllegalArgumentException" />
+						<batch:include class="org.springframework.batch.item.validator.ValidationException"/>
+					</batch:skippable-exception-classes>
+					<batch:listeners>
+						<batch:listener ref="customSkipListener" />
+						<batch:listener ref="myCountListener" />
+						<batch:listener ref="myProcessorListener" />
+						<batch:listener ref="customReaderListener" />
+					</batch:listeners>
+				</batch:chunk>
+			</batch:tasklet>
+		</batch:step>
+		<batch:listeners>
+			<batch:listener ref="initFinishJobListener" />
+		</batch:listeners>
+		
+	</batch:job>
+
+	<!-- 
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~ Elementos comunes de tratamiento de error
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	-->
+
+	<bean id="customSkipListener" 
+		class="ar.com.telecom.shiva.batch.springbatch.listener.CustomSkipListener" />
+	<bean id="myCountListener" class="ar.com.telecom.shiva.batch.springbatch.listener.ChunkCountListener">
+    	<property name="itemName" value="Customers" />
+   		<property name="loggingInterval" value="10000" />
+	</bean>	
+		
+	<bean id="myProcessorListener" 
+		class="ar.com.telecom.shiva.batch.springbatch.listener.CustomItemProcessListener" scope="step">
+			<!-- 
+			Aqui dejamos armada la lista de caracteres que deseo eliminar del archivo de entrada, una vez
+			leído el archivo y antes de su procesamiento.
+			En el caso de caracteres especiales como puede ser una comilla doble, usaremos el valor '&quot;' ya que
+			no es posile escapar dicho caracter con una barra invertida.
+			
+			Si fuera necesario indicar mas de un caracter, se debe armar una lista usando un '|' como separador
+			Esto sin embargo es una funcionalidad limitada, en un futuro se podría ampliar pudiendo indicar sobre
+			que campo particular realizar este tratamiento y que caracteres usar para cada caso.
+			 -->
+			<property name="listaDeCaracteresARemover" value="&quot;"/>
+	</bean>
+	<bean id="initFinishJobListener" 
+		class="ar.com.telecom.shiva.batch.springbatch.listener.InitFinishJobListener" />
+
+	<!-- 
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~ Se define el "Reader" (lectura) del registro
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	-->
+	<bean id="customReaderListener" 
+		class="ar.com.telecom.shiva.batch.springbatch.listener.CustomReaderListener" scope="step"/>
+ 	<!--
+ 	Se define el "Reader"
+	 	 linesToSkip = 1 indica que omite la linea 1, ya que nosotros sabemos que son los títulos de la cabecera
+ 	 -->
+	<bean id="itemReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+		<property name="resource" value="file:${batch.directorio.archivosRegistrosAvcDinamico}#{jobParameters['file.name']}" />
+		<property name="encoding" value="utf8" />
+		<property name="lineMapper" ref="itemMapper" />
+		<property name="linesToSkip" value="1" />
+	</bean>
+ 
+ 	<!-- Mapeo de cada fila del fichero -->
+ 
+	<bean id="itemMapper"
+		class="ar.com.telecom.shiva.batch.springbatch.mapper.MyLineMapper">
+		<property name="fieldSetMapper" ref="registroAvcAutoFieldSetMapper" />
+		<property name="lineTokenizer">
+			<bean
+				class="ar.com.telecom.shiva.batch.springbatch.reader.CustomDelimitedTokenizer">
+				<property name="names" 
+					value="fechaValor, fechaIngreso, concepto, codigoOperacion, comprobante, deposito, sucursal, importe, descripcion, codigoOpBanco, pcc, columnaSiempreVacia"/>
+				<property name="delimiter" 
+					value="," />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Mapeo de campos y objeto a mapear -->
+ 	<bean id="registroAvcAutoFieldSetMapper" class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+		<property name="prototypeBeanName" value="soporteDatosLecturaBean" />
+	</bean>	
+	
+ 	<!--
+ 	Aqui definimos el Bean que va a terminar recibiendo los datos leídos 
+ 	-->
+ 	<bean id="soporteDatosLecturaBean" 
+ 		class="ar.com.telecom.shiva.batch.springbatch.model.GenericDataItem" scope="prototype">
+ 	</bean>	
+ 	
+	<!-- 
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~ Se define el "Processor" (procesamiento) del registro
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	-->
+	<bean id="compositeProcessor" class="org.springframework.batch.item.support.CompositeItemProcessor">
+		<property name="delegates">
+			<list>
+				<ref bean="validatingItemProcessor"/>
+				<ref bean="itemProcessor"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="validatingItemProcessor" class="org.springframework.batch.item.validator.ValidatingItemProcessor">
+		<property name="validator" ref="itemValidator"></property>
+	</bean>
+	
+	<bean id="itemValidator" class="ar.com.telecom.shiva.batch.springbatch.validator.ItemValidator" scope="step">
+		<property name="listaConfiguracionCampos">
+			<list>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+					<property name="posicionDeCorrespondencia" value="1"/>
+					<property name="id" value="fechaValor"/>
+					<property name="nombre" value="Fecha valor"/>
+					<property name="configuracionTipoDato">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+							<property name="tipoDato" value="FECHA"/>
+							<property name="formato" value="dd-MMM-yyyy"/>
+						</bean>
+					</property>
+					<property name="configuracionObligatoriedad">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+							<property name="esObligatorio" value="SI"/>
+						</bean>
+					</property>
+					<!-- Se realiza esta configuración para saber si esta validacion rechaza el archivo o no -->
+					<property name="configuracionRechazarArchivo">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionRechazarArchivo">
+							<property name="seRechazaArchivo" value="SI"/>
+						</bean>
+					</property>
+					<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+					<property name="configuracionMapeoModeloRelacionado">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+							<property name="atributoMapeoModeloRelacionado" value="fechaValor"/>
+						</bean>
+					</property>
+				</bean>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+					<property name="posicionDeCorrespondencia" value="2"/>
+					<property name="id" value="fechaIngreso"/>
+					<property name="nombre" value="Fecha ingreso"/>
+					<property name="configuracionTipoDato">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+							<property name="tipoDato" value="FECHA"/>
+							<property name="formato" value="dd-MMM-yyyy"/>
+						</bean>
+					</property>
+					<property name="configuracionObligatoriedad">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+							<property name="esObligatorio" value="SI"/>
+						</bean>
+					</property>
+					<!-- Se realiza esta configuración para saber si esta validacion rechaza el archivo o no -->
+					<property name="configuracionRechazarArchivo">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionRechazarArchivo">
+							<property name="seRechazaArchivo" value="SI"/>
+						</bean>
+					</property>
+					<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+					<property name="configuracionMapeoModeloRelacionado">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+							<property name="atributoMapeoModeloRelacionado" value="fechaIngreso"/>
+						</bean>
+					</property>
+				</bean>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+					<property name="posicionDeCorrespondencia" value="3"/>
+					<property name="id" value="concepto"/>
+					<property name="nombre" value="Concepto"/>
+					<property name="configuracionTipoDato">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+							<property name="tipoDato" value="TEXTO"/>
+							<property name="longitud" value="100"/>
+						</bean>
+					</property>
+					<property name="configuracionObligatoriedad">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+							<property name="esObligatorio" value="NO"/>
+						</bean>
+					</property>
+					<!-- Se realiza esta configuración para saber si esta validacion rechaza el archivo o no -->
+					<property name="configuracionRechazarArchivo">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionRechazarArchivo">
+							<property name="seRechazaArchivo" value="SI"/>
+						</bean>
+					</property>
+					<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+					<property name="configuracionMapeoModeloRelacionado">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+							<property name="atributoMapeoModeloRelacionado" value="concepto"/>
+						</bean>
+					</property>
+				</bean>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+					<property name="posicionDeCorrespondencia" value="4"/>
+					<property name="id" value="codigoOperacion"/>
+					<property name="nombre" value="Cod. Op."/>
+					<property name="configuracionTipoDato">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+							<property name="tipoDato" value="TEXTO"/>
+							<property name="longitud" value="3"/>
+						</bean>
+					</property>
+					<property name="configuracionObligatoriedad">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+							<property name="esObligatorio" value="NO"/>
+						</bean>
+					</property>
+					<!-- Se realiza esta configuración para saber si esta validacion rechaza el archivo o no -->
+					<property name="configuracionRechazarArchivo">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionRechazarArchivo">
+							<property name="seRechazaArchivo" value="SI"/>
+						</bean>
+					</property>
+					<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+					<property name="configuracionMapeoModeloRelacionado">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+							<property name="atributoMapeoModeloRelacionado" value="codigoOperacion"/>
+						</bean>
+					</property>
+				</bean>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+					<property name="posicionDeCorrespondencia" value="5"/>
+					<property name="id" value="comprobante"/>
+					<property name="nombre" value="Comprobante"/>
+					<property name="configuracionTipoDato">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+							<property name="tipoDato" value="TEXTO"/>
+							<property name="longitud" value="50"/>
+						</bean>
+					</property>
+					<property name="configuracionObligatoriedad">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+							<property name="esObligatorio" value="SI"/>
+						</bean>
+					</property>
+					<!-- Se realiza esta configuración para saber si esta validacion rechaza el archivo o no -->
+					<property name="configuracionRechazarArchivo">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionRechazarArchivo">
+							<property name="seRechazaArchivo" value="SI"/>
+						</bean>
+					</property>
+					<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+					<!-- De todos modos para el acuerdo 82 esto no aplicaría, ya se usa el calculo del secuencia -->
+					<!--  
+					<property name="configuracionMapeoModeloRelacionado">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+							<property name="atributoMapeoModeloRelacionado" value="referencia"/>
+						</bean>
+					</property>
+					-->
+				</bean>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+					<property name="posicionDeCorrespondencia" value="6"/>
+					<property name="id" value="deposito"/>
+					<property name="nombre" value="Deposito"/>
+					<property name="configuracionTipoDato">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+							<property name="tipoDato" value="TEXTO"/>
+							<property name="longitud" value="50"/>
+						</bean>
+					</property>
+					<property name="configuracionObligatoriedad">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+							<property name="esObligatorio" value="NO"/>
+						</bean>
+					</property>
+					<!-- Se realiza esta configuración para saber si esta validacion rechaza el archivo o no -->
+					<property name="configuracionRechazarArchivo">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionRechazarArchivo">
+							<property name="seRechazaArchivo" value="SI"/>
+						</bean>
+					</property>
+					<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+					<property name="configuracionMapeoModeloRelacionado">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+							<property name="atributoMapeoModeloRelacionado" value="deposito"/>
+						</bean>
+					</property>
+				</bean>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+					<property name="posicionDeCorrespondencia" value="7"/>
+					<property name="id" value="sucursal"/>
+					<property name="nombre" value="Sucursal"/>
+					<property name="configuracionTipoDato">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+							<property name="tipoDato" value="TEXTO"/>
+							<property name="longitud" value="5"/>
+						</bean>
+					</property>
+					<property name="configuracionObligatoriedad">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+							<property name="esObligatorio" value="NO"/>
+						</bean>
+					</property>
+					<!-- Se realiza esta configuración para saber si esta validacion rechaza el archivo o no -->
+					<property name="configuracionRechazarArchivo">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionRechazarArchivo">
+							<property name="seRechazaArchivo" value="SI"/>
+						</bean>
+					</property>
+					<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+					<property name="configuracionMapeoModeloRelacionado">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+							<property name="atributoMapeoModeloRelacionado" value="sucursal"/>
+						</bean>
+					</property>
+				</bean>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+					<property name="posicionDeCorrespondencia" value="8"/>
+					<property name="id" value="importe"/>
+					<property name="nombre" value="Importe"/>
+					<property name="configuracionTipoDato">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+							<property name="tipoDato" value="DECIMAL"/>
+							<property name="longitud" value="17"/>
+						</bean>
+					</property>
+					<property name="configuracionObligatoriedad">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+							<property name="esObligatorio" value="SI"/>
+						</bean>
+					</property>
+					<!-- Se realiza esta configuración para saber si esta validacion rechaza el archivo o no -->
+					<property name="configuracionRechazarArchivo">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionRechazarArchivo">
+							<property name="seRechazaArchivo" value="SI"/>
+						</bean>
+					</property>
+					<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+					<property name="configuracionMapeoModeloRelacionado">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+							<property name="atributoMapeoModeloRelacionado" value="importe"/>
+						</bean>
+					</property>
+				</bean>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+					<property name="posicionDeCorrespondencia" value="9"/>
+					<property name="id" value="descripcion"/>
+					<property name="nombre" value="Descripción"/>
+					<property name="configuracionTipoDato">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+							<property name="tipoDato" value="TEXTO"/>
+						</bean>
+					</property>
+					<property name="configuracionObligatoriedad">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+							<property name="esObligatorio" value="NO"/>
+						</bean>
+					</property>
+					<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+					<property name="configuracionMapeoModeloRelacionado">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+							<property name="atributoMapeoModeloRelacionado" value="descripcion"/>
+						</bean>
+					</property>
+				</bean>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+					<property name="posicionDeCorrespondencia" value="10"/>
+					<property name="id" value="codigoOpBanco"/>
+					<property name="nombre" value="Cod. Op. Bco."/>
+					<property name="configuracionTipoDato">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+							<property name="tipoDato" value="NUMERO"/>
+							<property name="longitud" value="15"/>
+						</bean>
+					</property>
+					<property name="configuracionObligatoriedad">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+							<property name="esObligatorio" value="NO"/>
+						</bean>
+					</property>
+					<!-- Se realiza esta configuración para saber si esta validacion rechaza el archivo o no -->
+					<property name="configuracionRechazarArchivo">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionRechazarArchivo">
+							<property name="seRechazaArchivo" value="SI"/>
+						</bean>
+					</property>
+					<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+					<property name="configuracionMapeoModeloRelacionado">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+							<property name="atributoMapeoModeloRelacionado" value="codigoOpBanco"/>
+						</bean>
+					</property>
+				</bean>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+					<property name="posicionDeCorrespondencia" value="11"/>
+					<property name="id" value="pcc"/>
+					<property name="nombre" value="P.C.C"/>
+					<property name="configuracionTipoDato">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+							<property name="tipoDato" value="TEXTO"/>
+							<property name="longitud" value="100"/>
+						</bean>
+					</property>
+					<property name="configuracionObligatoriedad">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+							<property name="esObligatorio" value="NO"/>
+						</bean>
+					</property>
+					<!-- Se realiza esta configuración para saber si esta validacion rechaza el archivo o no -->
+					<property name="configuracionRechazarArchivo">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionRechazarArchivo">
+							<property name="seRechazaArchivo" value="SI"/>
+						</bean>
+					</property>
+					<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+					<property name="configuracionMapeoModeloRelacionado">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+							<property name="atributoMapeoModeloRelacionado" value="pcc"/>
+						</bean>
+					</property>
+				</bean>
+			</list>
+	</property>
+	</bean>
+
+	<bean id="configuracionProcesamientoDataItem" class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionProcesamientoDataItem">
+		<property name="configuracionModeloRelacionado">
+			<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionModeloRelacionado">
+				<property name="modeloRelacionado" value="ar.com.telecom.shiva.batch.springbatch.model.AvcRegistroAvcTransferencia"/>
+			</bean>
+		</property>
+		<property name="configuracionTipoValorAsociado">
+			<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoValorAsociado">
+				<property name="tipoValorAsociado" value="TRANSFERENCIA"/>
+			</bean>
+		</property>
+		<!-- 
+		<property name="listaConfiguracionCampos">
+		</property>
+		<property name="listaConfiguracionCamposCalculados">
+		</property>
+		 -->
+	</bean>
+
+	<!-- Bean SoporteCaculoStepExecutionSupport General -->
+	<!-- 
+	<bean id="configuracionCalculoStepExecutionSupport" class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCalculoStepExecutionSupport" lazy-init="true" scope="step">
+		<property name="stepExecution" value="#{stepExecution}" />
+	</bean>
+	 -->
+
+	<bean id="itemProcessor" class="ar.com.telecom.shiva.batch.springbatch.processor.AVCProcessor" scope="step">
+		<property name="listaConfiguracionCamposCalculados">
+			<list>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCalculoSecuencialReferencia" scope="step">
+					<property name="stepExecution" value="#{stepExecution}" />
+					<property name="ordenProcesamiento" value="1"/>
+					<property name="idCampoDestino" value="referencia"/>
+				</bean>
+				<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCalculoPorBusquedaEnTabla" scope="step">
+					<property name="stepExecution" value="#{stepExecution}" />
+					<property name="ordenProcesamiento" value="2"/>
+					<property name="configuracionConsultaHql">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionConsultaHql">
+							<property name="consultaHql" value="
+							select idClienteLegado from ShvParamBancoCliente where 
+							sucursal = {sucursal} 
+							and descripcion = {descripcion} 
+							and codigoOpBanco = {codigoOpBanco}  
+							and idAcuerdo = 104"/>
+						</bean>
+					</property>
+					<property name="configuracionCampoDestino">
+						<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionCampo">
+							<property name="posicionDeCorrespondencia" value="0"/>
+							<property name="id" value="codigoCliente"/>
+							<property name="nombre" value="Codigo de Cliente"/>
+							<property name="configuracionTipoDato">
+								<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionTipoDato">
+									<property name="tipoDato" value="TEXTO"/>
+									<property name="longitud" value="11"/>
+								</bean>
+							</property>
+							<property name="configuracionObligatoriedad">
+								<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionObligatoriedad">
+									<property name="esObligatorio" value="SI"/>
+								</bean>
+							</property>
+							<!-- Hoy esta parte de modelo relacionado no se estaría usando -->
+							<property name="configuracionMapeoModeloRelacionado">
+								<bean class="ar.com.telecom.shiva.batch.springbatch.processor.ConfiguracionMapeoAtributoModeloRelacionado">
+									<property name="atributoMapeoModeloRelacionado" value="codigoCliente"/>
+								</bean>
+							</property>
+						</bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+
+	<!-- 
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~ Se define el "Writer" (escritura) del registro
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	-->
+	<bean id="itemWriter"
+		class="ar.com.telecom.shiva.batch.springbatch.writer.GenericImporterWriter" scope="step"/>
+ 
+</beans>

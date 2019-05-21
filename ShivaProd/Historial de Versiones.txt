@@ -1,0 +1,79 @@
+	
+	Historial de Versiones
+	
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~ Version 1.03.00 (en curso, para entregar fin de desarrollo 11 de Febrero)
+	~ Fecha: 
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	Funcionalida de Valores
+		Perfil Analista
+		- Alta de Valores
+
+		Perfil Analista/Supervisor
+		- Busqueda de Valores
+		- Modificacion de Valores
+		- Historial de Modificacion
+		
+		Perfil Conciliador
+		- Busqueda de Valores
+
+		Boletas de Deposito
+		- Enviar boletas por Email
+		- Imprimir Boleta
+		
+		Constancias de Recepcion
+		- Imprimir Constancia			
+	
+
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~ Version 1.02.02 (en curso, para entregar fin de desarrollo 7 de Enero)
+	~ Fecha: 
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	Funcionalidad de Talonarios
+		Perfil Supervisor
+		- Busqueda de Talonarios 
+		- Rechazar Talonario
+		- Asignar Gestor
+		- Creacion de Recibos
+		- Modificación de Recibos / Carga de Compensaciones
+		- Rendicion de Talonarios
+	
+		Perfil Administrador de Talonarios 
+		- Busqueda de Talonarios
+		- Modificación de Talonarios
+		- Aprobación de rendicion de Talonarios
+
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~ Version 1.02.01
+	~ Fecha: 
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	Funcionalidad de Talonarios
+		Perfil Administrador de Talonarios 
+		- Alta
+	
+	
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~ Version 1.01.02
+	~ Fecha: 
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~ Version 1.01.01
+	~ Fecha: 
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~ Version 1.01.00
+	~ Fecha: 
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	Version inicial
+	Funcionalidad de Boletas sin Valor (alta, busqueda, modificacion, anulacion)
+	Menu
+	Login
+	Seguridad

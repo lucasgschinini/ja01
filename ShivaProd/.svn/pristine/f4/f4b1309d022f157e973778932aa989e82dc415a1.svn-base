@@ -1,0 +1,43 @@
+Pasos para instalar certificados en nuestro almacen de certificados en entornos locales
+
+S:\Desarrollo\Certif
+
+1-
+Ejecutar como administrador el CMD
+
+2-
+cd %JAVA_HOME%
+
+c:\Desarrollo\Java\jdk1.7.0\
+
+3-
+keytool -import -noprompt -trustcacerts -alias "artifactory.personal.corp" -file "C:\Desarrollo\Java\Certificados\artifactory.cer" -keystore "c:\Desarrollo\Java\jdk1.7.0\jre\lib\security\cacerts" -storepass changeit
+keytool -import -noprompt -trustcacerts -alias "artifactory.personal.corp" -file "C:\Desarrollo\Java\Certificados\artifactory.cer" -keystore "c:\Program Files\Java\jdk1.8.0_131\jre\lib\security\cacerts" -storepass changeit
+
+
+D:\Desarrollo\Java\jdk1.8.0_131
+
+keytool -import -noprompt -trustcacerts -alias "artifactory.personal.corp" -file "D:\Desarrollo\Java\Certificados\artifactory.cer" -keystore "D:\Desarrollo\Java\jdk1.8.0_131\jre\lib\security\cacerts" -storepass changeit
+keytool -import -noprompt -trustcacerts -alias "stash.personal.corp" -file "D:\Desarrollo\Java\Certificados\artifactory.cer" -keystore "D:\Desarrollo\Java\jdk1.8.0_131\jre\lib\security\cacerts" -storepass changeit
+
+keytool -import -noprompt -trustcacerts -alias "vhtcadh1ci.hec" -file "D:\Desarrollo\Java\Certificados\vhtcadh1ci.hec.cer" -keystore "D:\Desarrollo\Java\jdk1.8.0_131\jre\lib\security\cacerts" -storepass changeit
+keytool -import -noprompt -trustcacerts -alias "dhpx0056.telecom.com.ar" -file "D:\Desarrollo\Java\Certificados\dhpx0056.telecom.com.ar.cer" -keystore "D:\Desarrollo\Java\jdk1.8.0_131\jre\lib\security\cacerts" -storepass changeit
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Esto es lo que usa Shiva para compilar y ejecutar
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+D:\Desarrollo\Java\jdk1.7.0\bin\
+
+keytool -import -noprompt -trustcacerts -alias "artifactory.personal.corp" -file "D:\Desarrollo\Java\Certificados\artifactory.cer" -keystore "D:\Desarrollo\Java\jdk1.7.0\jre\lib\security\cacerts" -storepass changeit
+keytool -import -noprompt -trustcacerts -alias "stash.personal.corp" -file "D:\Desarrollo\Java\Certificados\artifactory.cer" -keystore "D:\Desarrollo\Java\jdk1.7.0\jre\lib\security\cacerts" -storepass changeit
+
+keytool -import -noprompt -trustcacerts -alias "vhtcadh1ci.hec" -file "D:\Desarrollo\Java\Certificados\vhtcadh1ci.hec.cer" -keystore "D:\Desarrollo\Java\jdk1.7.0\jre\lib\security\cacerts" -storepass changeit
+keytool -import -noprompt -trustcacerts -alias "dhpx0056.telecom.com.ar" -file "D:\Desarrollo\Java\Certificados\dhpx0056.telecom.com.ar.cer" -keystore "D:\Desarrollo\Java\jdk1.7.0\jre\lib\security\cacerts" -storepass changeit
+
+
+Referencias:
+%JAVA_HOME%   ----> Ruta del JDK al que se quiere agregar el certificado (Variable de entorno).
+-alias                         ----> Cualquiera que no este usada.
+-file                           ----> Directorio y nombre del certificado a agregar.
+-storepass          ----> Contraseña del Keystore (por default viene changeit).

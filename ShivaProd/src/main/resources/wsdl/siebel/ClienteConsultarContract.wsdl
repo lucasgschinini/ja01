@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s0:definitions targetNamespace="http://www.openuri.org/" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://www.openuri.org/" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <s0:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.openuri.org/" xmlns:conv="http://www.openuri.org/2002/04/soap/conversation/" xmlns:cw="http://www.openuri.org/2002/04/wsdl/conversation/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:jms="http://www.openuri.org/2002/04/wsdl/jms/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:req="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage" xmlns:res="http://www.telecom.com.ar/XMLSchema/bios/cliente/responseMessage" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="http://www.openuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <s:import namespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage" schemaLocation="skeletonClienteReq.xsd"/>
+      <s:import namespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/responseMessage" schemaLocation="skeletonClienteResp.xsd"/>
+      <s:element name="clientRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element ref="req:requestMessage"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="clientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element ref="res:responseMessage"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </s0:types>
+  <s0:message name="clientRequestSoapIn">
+    <s0:part element="s1:clientRequest" name="parameters"/>
+  </s0:message>
+  <s0:message name="clientRequestSoapOut">
+    <s0:part element="s1:clientResponse" name="parameters"/>
+  </s0:message>
+  <s0:portType name="ClienteConsultarSoap">
+    <s0:operation name="clientRequest">
+      <s0:input message="s1:clientRequestSoapIn"/>
+      <s0:output message="s1:clientRequestSoapOut"/>
+    </s0:operation>
+  </s0:portType>
+  <s0:binding name="ClienteConsultarSoap" type="s1:ClienteConsultarSoap">
+    <s2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <s0:operation name="clientRequest">
+      <s2:operation soapAction="http://www.openuri.org/clientRequest" style="document"/>
+      <s0:input>
+        <s2:body use="literal"/>
+      </s0:input>
+      <s0:output>
+        <s2:body use="literal"/>
+      </s0:output>
+    </s0:operation>
+  </s0:binding>
+  <s0:service name="ClienteConsultar">
+    <s0:port binding="s1:ClienteConsultarSoap" name="ClienteConsultarSoap">
+      <s2:address location="http://t0002603207.telecom.arg.telecom.com.ar:7001/ClientesConsultarPS"/>
+    </s0:port>
+  </s0:service>
+</s0:definitions>

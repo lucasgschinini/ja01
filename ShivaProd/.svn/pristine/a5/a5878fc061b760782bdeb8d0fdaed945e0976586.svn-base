@@ -1,0 +1,920 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+  	<bean id="COBROS" class="ar.com.telecom.shiva.negocio.workflow.definicion.Workflow">
+  		<property name="tipoWorkflow">
+  			<util:constant 
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.TipoWorkflow.COBRO" />
+ 		</property>
+  		
+  		<property name="transiciones">
+  			<list>
+  				<ref bean="inicioCOB" />
+  				
+  				<!-- Sprint 4: Inicio -->
+  				<ref bean="guardarCobroEnEdicion" />
+  				<ref bean="guardarCobroEnEdicionVerificacionDebitos" />
+  				<ref bean="solicitarVerificacionDebitos" />
+  				<ref bean="solicitarEdicion" />
+  				<!-- Sprint 4: Fin -->
+  				
+  				<!-- Fase I -->
+  				<ref bean="solicitarImputacionCobro" />
+  				<ref bean="registrarErrorCobro" />
+  				<ref bean="registrarErrorApropiacion" />
+  				<ref bean="reintentarConfirmacion" />
+  				<ref bean="iniciarCobro" />
+  				<ref bean="cobrarCobro" />
+  				<ref bean="registrarErrorConfirmacion" />
+  				<!-- Fin - Fase I -->
+  				
+  				<!-- Sprint 5: Inicio -->
+  				<ref bean="solicitarImputacionCobroConPedidoAutorizacion"/>  				
+  				<ref bean="solicitarAutorizacionReferente"/>  				
+  				<ref bean="rechazarAutorizacionSolicitadaAlReferente"/>  				
+  				<ref bean="rechazarAutorizacionSolicitadaAlSupervisor"/>
+  				<ref bean="anularCobroRechazado"/>
+  				<ref bean="aprobarCobroSegunSupervisorSolicitandoImputacion"/>
+  				<ref bean="aprobarCobroSegunReferenteSolicitandoImputacion"/>
+  				<ref bean="anularCobroEnEdicion"/>
+  				<ref bean="registrarErrorDesapropiacion"/>
+  				<ref bean="registrarErrorDesapropiacionAErrorEnDesapropiacion"/>
+  				<ref bean="reeditarCobroErrorEnApropiacion"/>
+  				<ref bean="reeditarCobroErrorEnCobro"/>
+  				<ref bean="reeditarCobroErrorConfirmacionParcial"/>
+  				<ref bean="anularCobroErrorEnApropiacion"/>
+  				<ref bean="anularCobroErrorEnCobro"/>
+  				<ref bean="solicitarImputacionCobroConPedidoAutorizacionReferente"/>  				
+  				<ref bean="solicitarAutorizacionCobroRechazadoAlReferente"/>  				
+  				<!-- Sprint 5: Fin -->
+
+  				<!-- Sprint 6: Inicio -->
+  				<ref bean="solicitarImputacionCobroRechazadoConPedidoAutorizacion"/>
+  				<ref bean="solicitarVerificacionDebitosCobroRechazado"/>
+  				<ref bean="solicitarEdicionCobroRechazado"/>
+  				<ref bean="solicitarImputacionCobroRechazado"/>
+  				<!-- Sprint 6: Fin -->
+
+  				<!-- Sprint 6, 7 u 8: Fin -->
+  				<ref bean="aprobarCobroSegunSupervisorConMedioDePagoEnProceso"/>
+  				<ref bean="aprobarCobroSegunReferenteConMedioDePagoEnProceso"/>
+  				<ref bean="rechazarPorTiempoCobroConMedioDePagoEnProceso"/>
+  				<ref bean="editarCobroConMedioDePagoEnProceso"/>
+  				<ref bean="solicitarImputacionCobroConMedioPagoDefinitivo"/>
+  				<ref bean="anularCobroConMedioDePagoEnProceso"/>
+  				<ref bean="solicitarEnviarDesapropiacion"/>
+  				<!-- Sprint 7 u 8: Fin -->
+
+  				<!-- Sprint 8: Inicio -->
+  				<ref bean="registrarCobroMasivoPendienteCobrado"/>
+  				<ref bean="registrarCobroMasivoInicioCobrado"/>
+  				<!-- Sprint 8: Fin -->
+  				
+  				<!-- Sprint reingenieria: Inicio -->
+<!--   				<ref bean="registrarCobroDePendienteMicAEnProceso"/> -->
+  				<ref bean="registrarCobroDeEnProcesoAPendienteMic"/>
+  				<ref bean="registrarCobroDePendienteMicAPendienteProcesarMic"/>
+  				<ref bean="registrarCobroPendienteProcesarMicAEnProceso"/>
+  				<!-- Sprint reingenieria: Fin -->
+
+				<!-- Compensaciones: Sprint 8: Inicio -->
+				<ref bean="solicitarImputacionCobroConPedidoAutorizacionSupOperacionesEspeciales"/>
+				<ref bean="rechazarAutorizacionSolicitadaAlSupOperacionesEspeciales"/> 
+				<ref bean="aprobarCobroSegunSupervisorOperacionesEspecialesSolicitandoImputacion"/> 
+				<ref bean="solicitarAutorizacionCobroRechazadoAlSupervisor"/>  
+				<!-- Compensaciones: Sprint 8: Fin -->
+				
+				<!-- Fusion: paquete 1: Inicio -->
+				<ref bean="registrarCobroEnProcesoAPendienteDeConfirmacionManual"/>
+				<ref bean="registrarCobroPendienteDeConfirmacionManualAEnProceso"/>
+				<!-- Fusion: paquete 1: Fin -->
+
+				<!--  NeedIT72562 -->
+				<ref bean="registrarCobroEnProcesoDeAplicacionExterna"/>
+				<ref bean="registrarCobroCobradoParcialmente"/>
+				<ref bean="registrarCobroEnErrorConfirmacionParcial"/>
+				
+				<ref bean="registrarCobroConfirmadoParcialmenteConError"/>
+				
+				<ref bean="registrarCobroDeEnProcesoDeAplicacionExternaAErrorEnDesapropiacion"/>
+				<ref bean="registrarCobroDePendienteConfirmacionManualYEnProcesoDeAplicacionExternaAErrorEnDesapropiacion"/>
+				<ref bean="registrarCobroDeErrorEnDesapropiacionAEnProcesoDeAplicacionExterna"/>
+				<ref bean="registrarCobroDeEnErrorEnDesapropiacionAEnProceso"/>
+				<ref bean="registrarCobroDeErrorEnDesapropiacionAPendienteConfirmacionManualYEnProcesoDeAplicacionExterna"/>
+				
+
+
+				<!-- - En Proceso de Aplicación Externa(2) ->  Para confirmar o desapropiar -> En Proceso(1*) -->
+				<ref bean="registrarProcesoDeAplicacionManualAEnProceso"/>
+				<!--  - En Proceso de Aplicación Externa(2) ->-> En Proceso de Aplicacion Externa y con Respuesta Pendiente de MIC (7)-->
+				<ref bean="registrarProcesoDeAplicacionExternaAEnProcesoAplicacionExternaConRtaPendienteMIC"/>
+				<!-- - En Proceso de Aplicación Extena(2) ->  Tarea pendiente de aprobacion y no existen grupos independientes para procesar -> Pendiente de Confirmación Manual -->
+				<ref bean="registrarProcesoDeAplicacionExternaAEnPendienteDeConfirmacionManual"/>
+				<!-- - En Proceso de Aplicación Externa(2) ->Pendiente de Confirmación Manual y en Proceso de Aplicación Externa(9) COB_PEND_CONFIRMACION_MANUAL_PROCESO_APLIC_EXTERNA -->
+				<ref bean="registrarProcesoDeAplicacionExternaAEnPendienteDeConfirmacionManualYEnProcesoAplicacionExterna"/>
+				<!-- - En Proceso de Aplicación Externa(2) -> Para confirmar o desapropiar		-> En proceso(1*) -->
+				<ref bean="registrarProcesoDeAplicacionExternaAEnProceso"/>
+
+				<!-- En Proceso de Aplicacion Externa y con Respuesta Pendiente de MIC -> // -> En Proceso de Aplicacion Externa y Pendiente de Procesar MIC -->
+				<ref bean="registrarProcesoDeAplicacionExternaPendienteMICAEnProcesoDeAplicacionExternaPendienteProcesarMIC"/>
+				<!--  - En Proceso de Aplicacion Externa y Pendiente de Procesar MIC (11) -> // -> En Proceso de Aplicación Externa(2)-->
+				<ref bean="registrarProcesoDeAplicacionExternaPendienteProcesarMICAEnProcesoDeAplicacionExterna"/>
+				
+				
+				<!--  - Pendiente de Confirmación Manual		->  No existen tareas pendientes de aprobacion -> En Proceso de Aplicación Externa(2)-->
+				<ref bean="registrarPendienteConfirmacionManualAEnProcesoDeAplicacionExterna"/>
+				
+				<!--  - Pendiente de Confirmación Manual		->  Existen tareas pendientes de aprobacion -> Pendiente de Confirmación Manual-->
+				<ref bean="registrarPendienteConfirmacionManualAPendienteConfirmacionManual"/>
+				
+				<!-- - Pendiente de Confirmación Manual y en Proceso de Aplicación Externa(9) -> ->  - Pendiente de Confirmación Manual-->
+				<ref bean="registrarPendienteConfirmacionManualEnProcesoApliExternaAEnPendienteConfirmacionManual"/>
+				
+				<!-- - Pendiente de Confirmación Manual -> ->  - Pendiente de Confirmación Manual  y en Proceso de Aplicación Externa(9)-->
+				<ref bean="registrarPendienteConfirmacionManualAEnPendienteConfirmacionManualEnProcesoApliExterna"/>
+				
+				<!--  - Pendiente de Confirmación Manual y en Proceso de Aplicación Externa(9) ->  		// -> Pendiente de Confirmacion Manual, en Proceso de Aplicacion Externa y con Respuesta Pendiente de MIC-->
+				<ref bean="registrarPendienteConfirmacionManualEnProcesoApliExternaAEnPendienteConfirmacionManualEnProcesoApliExternaPendienteMIC"/>
+				<!-- - Pendiente de Confirmación Manual y en Proceso de Aplicación Externa(9) ->En Proceso de Aplicación Externa(2) -->
+				<ref bean="registrarPendienteConfirmacionManualEnProcesoApliExternaAEnProcesoDeAplicacionExterna"/>
+				<!-- - Pendiente de Confirmación Manual y en Proceso de Aplicación Externa(9) -> Pendiente de Confirmación Manual y en Proceso de Aplicación Externa(9)-->
+				<ref bean="registrarPendienteConfirmacionManualEnProcesoApliExternaAPendienteConfirmacionManualEnProcesoDeAplicacionExterna"/>
+				
+				<!-- Pendiente de Confirmacion Manual, en Proceso de Aplicacion Externa y con Respuesta Pendiente de MIC  ->
+						-> En Proceso de Aplicacion Externa y con Respuesta Pendiente de MIC -->
+				<ref bean="registrarPendienteConfirmacionManualEnProcesoApliExternaPendienteMICAEnProcesoDeAplicacionExternaPendienteMIC"/>
+						
+				<!-- Pendiente de Confirmacion Manual, en Proceso de Aplicacion Externa y con Respuesta Pendiente de MIC  ->
+						-> Pendiente de Confirmacion Manual, en Proceso de Aplicacion Externa y con Respuesta Pendiente de MIC -->
+				<ref bean="registrarPendienteConfirmacionManualEnProcesoApliExternaPendienteMICAPendienteConfirmacionManualEnProcesoDeAplicacionExternaPendienteMIC"/>
+				
+				<!-- Pendiente de Confirmacion Manual, en Proceso de Aplicacion Externa y con Respuesta Pendiente de MIC  -> 
+					Pendiente de Confirmacion Manual, en Proceso de Aplicacion Externa y Pendiente de Procesar MIC -->
+				<ref bean="registrarPendienteConfirmacionManualEnProcesoApliExternaPendienteMICAEnPendienteConfirmacionManualEnProcesoApliExternaPendienteProcesarMIC"/>
+				
+				<!--  - Confirmacion Manual, en Proceso de Aplicacion Externa y Pendiente de Procesar MIC -> // ->Pendiente de Confirmación Manual y en Proceso de Aplicación Extern -->
+				<ref bean="registrarConfirmacionManualEnProcesoApliExternaYPendienteProcesarMICAEnPendienteConfirmacionManualYEnProcesoApliExterna"/>
+				<!--  - Confirmacion Manual, en Proceso de Aplicacion Externa y Pendiente  MIC -> // -> En Proceso de Aplicacion Externa y Pendiente de Procesar MIC-->
+				<ref bean="registrarConfirmacionManualEnProcesoApliExternaYPendienteMICAEnProcesoAplicExternaYPendienteProcesarMIC"/>
+				<!--  - Confirmacion Manual, en Proceso de Aplicacion Externa y Pendiente de Procesar MIC -> // -> En Proceso de Aplicacion Externa y Pendiente de Procesar MIC-->
+				<ref bean="registrarConfirmacionManualEnProcesoApliExternaYPendienteProcesarMICAEnProcesoApliExternaYPendienteProcesarMIC"/>
+				<!--  - Confirmacion Manual, en Proceso de Aplicacion Externa y Pendiente de Procesar MIC -> // -> Confirmacion Manual, en Proceso de Aplicacion Externa y Pendiente de Procesar MIC-->
+				<ref bean="registrarConfirmacionManualEnProcesoApliExternaYPendienteProcesarMICAConfirmacionManualEnProcesoApliExternaYPendienteProcesarMIC"/>
+				
+				<!--  En Proceso de Aplicacion Externa y Pendiente de Procesar MIC -> // -> En Proceso de Aplicación Externa-->
+				<ref bean="registrarProcesoAplicacionExternaYPendienteProcesarMICAEnProcesoAplicacionExterna"/>
+				<!--  - Error en Confirmación Parcial ->  Algún grupo del cobro quedó en error de confirmación manual -> Confirmado Parcialmente con error-->
+				<ref bean="registrarErrorConfirmacionParcialAEnConfrimadoParcialmenteConError"/>
+				<!--  - Error en Desapropiacion Parcial -> // -> En Proceso de Aplicacion Externa-->
+<!-- 				<ref bean="registrarErrorDesapropiacionParcialAENProcesoAplicacionExterna"/> -->
+				<!--  Error en Desapropiacion -> Bloque no es TA (MIC/SHIVA) -> En Proceso de Aplicacion Externa-->
+				<ref bean="registrarErrorDesapropiacionAEnProcesoAplicacionExterna"/>
+				<!--  Error en Desapropiacion -> // En proceso-->
+				<ref bean="registrarErrorDesapropiacionAEnCobroProceso"/>	
+				<!--  -->
+				<ref bean="registrarEnProcesoACobroPendienteDesapropiacionManualExterna"/>
+				<ref bean="registrarCobroPendienteDesapropiacionManualExternaEnProceso"/>
+				
+				<ref bean="registrarCobroEnProcesoACobroParcialmenteEnError"/>
+				<ref bean="registrarCobroParcialmenteEnErrorACobroParcialmenteImputado"/>
+				<ref bean="registrarCobroParcialmenteEnErrorACobroParcialmenteReeditado"/>
+				<ref bean="registrarCobroParcialmenteReeditadoACobroReeditado"/>
+				
+				<ref bean="reeditarParcialmenteCobroErrorEnCobro"/>
+				
+				<!--  NeedIT72562 FIN -->
+  			</list>
+  		</property>	
+  	</bean>
+  	
+  	<!-- Estados + inicial -->
+  	<util:constant id="cob_no_disponible"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_NO_DISPONIBLE" />
+	<util:constant id="cob_en_edicion"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_EN_EDICION" />	
+	<util:constant id="cob_en_edicion_verificando_debitos"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_EN_EDICION_VERIFCANDO_DEBITOS" />	
+  	<util:constant id="cob_pendiente"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PENDIENTE" />
+  	<util:constant id="cob_proceso"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PROCESO" />
+  	<util:constant id="cob_error_cobro"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_ERROR_COBRO" />
+  	<util:constant id="cob_error_apropiacion"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_ERROR_APROPIACION" />
+  	<util:constant id="cob_cobrado"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_COBRADO" />
+  	<util:constant id="cob_error_confirmacion"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_ERROR_CONFIRMACION" />
+  	<util:constant id="cob_confirmacion_con_error"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_CONFIRMADO_CON_ERROR" />
+  	
+	<!-- Sprint 5: Inicio -->
+	<util:constant id="cob_pend_referente_cobranza"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PEND_REFERENTE_COBRANZA" />
+	<util:constant id="cob_pend_supervisor_cobranza"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PEND_SUPERVISOR_COBRANZA" />
+	<util:constant id="cob_rechazado"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_RECHAZADO" />
+	<util:constant id="cob_error_desapropiacion"	
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_ERROR_DESAPROPIACION" />
+	<util:constant id="cob_reeditado"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_REEDITADO" />
+	<util:constant id="cob_reeditado_parcial"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_REEDITADO_PARCIAL" />
+	<util:constant id="cob_anulado"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_ANULADO" />
+	<!-- Sprint 5: Fin -->
+
+	<!-- Sprint 7 u 8: Inicio -->
+	<util:constant id="cob_medio_pago_en_proceso"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_MEDIO_PAGO_EN_PROCESO" />
+	<!-- Sprint 7 u 8: Fin -->
+
+	<!-- Sprint reingieneria: Inicio -->
+	<util:constant id="cob_pendiente_mic"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PENDIENTE_MIC" />
+	<util:constant id="cob_pend_procesar_mic"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PEND_PROCESAR_MIC" />
+	<!-- Sprint reingieneria: Fin -->
+	
+	<!-- Compensaciones: Sprint 8: Inicio -->
+	<util:constant id="cob_pend_supervisor_operaciones_especiales"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PEND_SUPERVISOR_OPERACIONES_ESPECIALES" />
+	<!-- Compensaciones: Sprint 8: Fin -->
+	
+	<!-- Fusion: paquete 1: Inicio -->
+	<util:constant id="cob_pendiente_confirmacion_manual"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PENDIENTE_CONFIRMACION_MANUAL" />
+	<!-- Fusion: paquete 1: Fin -->
+
+	<!--  NeedIT72562 -->
+	<util:constant id="cob_proceso_aplicacion_externa"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PROCESO_APLICACION_EXTERNA" />
+	<util:constant id="cob_cobrado_parcialmente"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_COBRADO_PARCIALMENTE" />
+	<util:constant id="cob_error_confirmacion_parcial"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_ERROR_CONFIRMACION_PARCIAL" />
+	<util:constant id="cob_error_desapropiacion_parcial"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_ERROR_DESAPROPIACION_PARCIAL" />
+	<util:constant id="cob_proceso_aplicacion_externa_y_pendiente_mic"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PROCESO_APLICACION_EXTERNA_Y_PENDIENTE_MIC" />
+	<util:constant id="cob_pendiente_confirmacion_manual_y_proceso_aplicacion_externa"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PENDIENTE_CONFIRMACION_MANUAL_Y_PROCESO_APLICACION_EXTERNA" />
+	<util:constant id="cob_proceso_aplicacion_externa_y_pendiente_procesar_mic"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PROCESO_APLICACION_EXTERNA_Y_PENDIENTE_PROCESAR_MIC" />
+	<util:constant id="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pendiente_mic"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PEND_CONF_MANUAL_Y_PROCESO_APLICACION_EXTERNA_Y_PENDIENTE_MIC" />
+	<util:constant id="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pend_proc_mic"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PEND_CONF_MANUAL_Y_PROCESO_APLICACION_EXTERNA_Y_PEND_PROC_MIC" />
+	<util:constant id="cob_confirmado_parcialmente_con_error"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_CONFIRMADO_PARCIALMENTE_CON_ERROR" />
+	<util:constant id="cob_pend_desapropiacion_manual_externa"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PEND_DESAPROPIACION_MANUAL_EXTERNA" />	
+	<util:constant id="cob_parcialmente_en_error"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.COB_PARCIALMENTE_EN_ERROR" />	
+		
+	<!--  NeedIT72562: fin -->
+	
+  	<!-- Transiciones -->
+  	<!-- Sprint 4 - Crea workflow por medio de online -->
+  	<bean id="inicioCOB" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Inicio"/>
+  		<property name="evento" value="crearWorkflow"/>
+  		<property name="origen">
+  			<util:constant 
+  				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.INICIO" />
+  		</property>
+  		<property name="destino" ref="cob_no_disponible"/>	
+  	</bean>
+  	<bean id="guardarCobroEnEdicion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Guardar Cobro en Edicion"/>
+  		<property name="evento" value="guardarCobroEnEdicion"/>
+  		<property name="origen" ref="cob_no_disponible"/>
+  		<property name="destino" ref="cob_en_edicion"/>
+  	</bean>
+  	<bean id="guardarCobroEnEdicionVerificacionDebitos" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Guardar Cobro en Edicion Verificacion de Debitos"/>
+  		<property name="evento" value="guardarCobroEnEdicionVerificacionDebitos"/>
+  		<property name="origen" ref="cob_no_disponible"/>
+  		<property name="destino" ref="cob_en_edicion_verificando_debitos"/>
+  	</bean>
+  	<bean id="solicitarVerificacionDebitos" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Verificacion de Debitos"/>
+  		<property name="evento" value="solicitarVerificacionDebitos"/>
+  		<property name="origen" ref="cob_en_edicion"/>
+  		<property name="destino" ref="cob_en_edicion_verificando_debitos"/>
+  	</bean>
+  	<bean id="solicitarEdicion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Edicion"/>
+  		<property name="evento" value="solicitarEdicion"/>
+  		<property name="origen" ref="cob_en_edicion_verificando_debitos"/>
+  		<property name="destino" ref="cob_en_edicion"/>
+  	</bean>
+  	<!-- Fase I -->
+  	<bean id="solicitarImputacionCobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar imputacion del cobro"/>
+  		<property name="evento" value="solicitarImputacionCobro"/>
+  		<property name="origen" ref="cob_en_edicion" />
+  		<property name="destino" ref="cob_pendiente"/>	
+  	</bean>
+  	<bean id="registrarErrorCobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar error en cobro"/>
+  		<property name="evento" value="registrarErrorCobro"/>
+  		<property name="origen" ref="cob_proceso"/>
+  		<property name="destino" ref="cob_error_cobro"/>
+  	</bean>
+  	<bean id="registrarErrorApropiacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar error en apropiacion"/>
+  		<property name="evento" value="registrarErrorApropiacion"/>
+  		<property name="origen" ref="cob_proceso"/>
+  		<property name="destino" ref="cob_error_apropiacion"/>
+  	</bean>
+  	<bean id="reintentarConfirmacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar reintento de Confirmacion"/>
+  		<property name="evento" value="reintentarConfirmacion"/>
+  		<property name="origen" ref="cob_error_confirmacion"/>
+  		<property name="destino" ref="cob_confirmacion_con_error"/>
+  	</bean>
+  	<bean id="iniciarCobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Iniciar cobro"/>
+  		<property name="evento" value="iniciarCobro"/>
+  		<property name="origen" ref="cob_pendiente"/>
+  		<property name="destino" ref="cob_proceso"/>	
+  	</bean>
+  	<bean id="cobrarCobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Cobrar cobro"/>
+  		<property name="evento" value="cobrarCobro"/>
+  		<property name="origen" ref="cob_proceso"/>
+  		<property name="destino" ref="cob_cobrado"/>	
+  	</bean>
+  	<bean id="registrarErrorConfirmacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar error en confirmacion"/>
+  		<property name="evento" value="registrarErrorConfirmacion"/>
+  		<property name="origen" ref="cob_proceso"/>
+  		<property name="destino" ref="cob_error_confirmacion"/>	
+  	</bean>
+	<!-- Sprint 5: Inicio -->
+  	<bean id="solicitarImputacionCobroConPedidoAutorizacionReferente" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Imputacion del cobro con Pedido de Autorizacion Referente"/>
+  		<property name="evento" value="solicitarImputacionCobroConPedidoAutorizacionReferente"/>
+  		<property name="origen" ref="cob_en_edicion"/>
+  		<property name="destino" ref="cob_pend_referente_cobranza"/>	
+  	</bean>
+  	
+  	<!-- Compensaciones: Sprint 8: Inicio -->
+  	<bean id="solicitarImputacionCobroConPedidoAutorizacionSupOperacionesEspeciales" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Imputacion del cobro con Pedido de Autorizacion Supervisor Operaciones Especiales"/>
+  		<property name="evento" value="solicitarImputacionCobroConPedidoAutorizacionSupOperacionesEspeciales"/>
+  		<property name="origen" ref="cob_en_edicion"/>
+  		<property name="destino" ref="cob_pend_supervisor_operaciones_especiales"/>	
+  	</bean>
+  	
+  	<bean id="rechazarAutorizacionSolicitadaAlSupOperacionesEspeciales" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rechazar Autorizacion Solicitada al Supervisor Operaciones Especiales"/>
+  		<property name="evento" value="rechazarAutorizacionSolicitadaAlSupOperacionesEspeciales"/>
+  		<property name="origen" ref="cob_pend_supervisor_operaciones_especiales"/>
+  		<property name="destino" ref="cob_rechazado"/>	
+  	</bean>
+  	
+  	<bean id="aprobarCobroSegunSupervisorOperacionesEspecialesSolicitandoImputacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Aprobar Cobro Segun Supervisor Solicitando Imputacion"/>
+  		<property name="evento" value="aprobarCobroSegunSupervisorOperacionesEspecialesSolicitandoImputacion"/>
+  		<property name="origen" ref="cob_pend_supervisor_operaciones_especiales"/>
+  		<property name="destino" ref="cob_pendiente"/>	
+  	</bean>
+  	
+  	<bean id="solicitarAutorizacionCobroRechazadoAlSupervisor" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Autorizacion de Cobro Rechazado Al Supervisor"/>
+  		<property name="evento" value="solicitarAutorizacionCobroRechazadoAlSupervisor"/>
+  		<property name="origen" ref="cob_rechazado"/>
+  		<property name="destino" ref="cob_pend_supervisor_operaciones_especiales"/>	
+  	</bean>
+  	<!-- Compensaciones: Sprint 8: Fin -->
+  	
+  	<bean id="solicitarImputacionCobroConPedidoAutorizacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Imputacion del cobro con Pedido de Autorizacion"/>
+  		<property name="evento" value="solicitarImputacionCobroConPedidoAutorizacion"/>
+  		<property name="origen" ref="cob_en_edicion"/>
+  		<property name="destino" ref="cob_pend_supervisor_cobranza"/>	
+  	</bean>
+  	<bean id="solicitarAutorizacionReferente" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Autorizacion al Referente"/>
+  		<property name="evento" value="solicitarAutorizacionReferente"/>
+  		<property name="origen" ref="cob_pend_supervisor_cobranza"/>
+  		<property name="destino" ref="cob_pend_referente_cobranza"/>	
+  	</bean>
+  	<bean id="rechazarAutorizacionSolicitadaAlReferente" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rechazar Autorizacion Solicitada al Referente"/>
+  		<property name="evento" value="rechazarAutorizacionSolicitadaAlReferente"/>
+  		<property name="origen" ref="cob_pend_referente_cobranza"/>
+  		<property name="destino" ref="cob_rechazado"/>	
+  	</bean>
+  	<bean id="solicitarImputacionCobroRechazadoConPedidoAutorizacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Imputacion de un Cobro Rechazado con Peidido de Autorizacion"/>
+  		<property name="evento" value="solicitarImputacionCobroRechazadoConPedidoAutorizacion"/>
+  		<property name="origen" ref="cob_rechazado"/>
+  		<property name="destino" ref="cob_pend_supervisor_cobranza"/>	
+  	</bean>
+  	<bean id="rechazarAutorizacionSolicitadaAlSupervisor" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rechazar Autorizacion Solicitada al Supervisor"/>
+  		<property name="evento" value="rechazarAutorizacionSolicitadaAlSupervisor"/>
+  		<property name="origen" ref="cob_pend_supervisor_cobranza"/>
+  		<property name="destino" ref="cob_rechazado"/>	
+  	</bean>
+  	<bean id="anularCobroRechazado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular Cobro Rechazado"/>
+  		<property name="evento" value="anularCobroRechazado"/>
+  		<property name="origen" ref="cob_rechazado"/>
+  		<property name="destino" ref="cob_anulado"/>	
+  	</bean>
+  	<bean id="solicitarVerificacionDebitosCobroRechazado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Verificacion de Debitos de Cobro Rechazado"/>
+  		<property name="evento" value="solicitarVerificacionDebitosCobroRechazado"/>
+  		<property name="origen" ref="cob_rechazado"/>
+  		<property name="destino" ref="cob_en_edicion_verificando_debitos"/>	
+  	</bean>
+  	<bean id="solicitarEdicionCobroRechazado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Edicion de Cobro Rechazado"/>
+  		<property name="evento" value="solicitarEdicionCobroRechazado"/>
+  		<property name="origen" ref="cob_en_edicion_verificando_debitos"/>
+  		<property name="destino" ref="cob_rechazado"/>	
+  	</bean>
+  	<bean id="solicitarImputacionCobroRechazado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Imputacion de Cobro Rechazado"/>
+  		<property name="evento" value="solicitarImputacionCobroRechazado"/>
+  		<property name="origen" ref="cob_rechazado"/>
+  		<property name="destino" ref="cob_pendiente"/>	
+  	</bean>
+  	<bean id="aprobarCobroSegunSupervisorSolicitandoImputacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Aprobar Cobro Segun Supervisor Solicitando Imputacion"/>
+  		<property name="evento" value="aprobarCobroSegunSupervisorSolicitandoImputacion"/>
+  		<property name="origen" ref="cob_pend_supervisor_cobranza"/>
+  		<property name="destino" ref="cob_pendiente"/>	
+  	</bean>
+  	<bean id="aprobarCobroSegunReferenteSolicitandoImputacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Aprobar Cobro Segun Referente Solicitando Imputacion"/>
+  		<property name="evento" value="aprobarCobroSegunReferenteSolicitandoImputacion"/>
+  		<property name="origen" ref="cob_pend_referente_cobranza"/>
+  		<property name="destino" ref="cob_pendiente"/>	
+  	</bean>
+  	<bean id="anularCobroEnEdicion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular Cobro en Edicion"/>
+  		<property name="evento" value="anularCobroEnEdicion"/>
+  		<property name="origen" ref="cob_en_edicion"/>
+  		<property name="destino" ref="cob_anulado"/>	
+  	</bean>
+  	<bean id="registrarErrorDesapropiacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Error en Desapropiacion"/>
+  		<property name="evento" value="registrarErrorDesapropiacion"/>
+  		<property name="origen" ref="cob_proceso"/>
+  		<property name="destino" ref="cob_error_desapropiacion"/>	
+  	</bean>
+  	
+  	<bean id="registrarErrorDesapropiacionAErrorEnDesapropiacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Error en Desapropiacion"/>
+  		<property name="evento" value="registrarErrorDesapropiacionAErrorEnDesapropiacion"/>
+  		<property name="origen" ref="cob_error_desapropiacion"/>
+  		<property name="destino" ref="cob_error_desapropiacion"/>	
+  	</bean>
+  	
+  	<bean id="reeditarCobroErrorEnApropiacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Reimputar Cobro con Error en Autorizacion"/>
+  		<property name="evento" value="reeditarCobroErrorEnApropiacion"/>
+  		<property name="origen" ref="cob_error_apropiacion"/>
+  		<property name="destino" ref="cob_reeditado"/>	
+  	</bean>
+  	<bean id="reeditarCobroErrorEnCobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Reimputar Cobro con Error en Cobro"/>
+  		<property name="evento" value="reeditarCobroErrorEnCobro"/>
+  		<property name="origen" ref="cob_error_cobro"/>
+  		<property name="destino" ref="cob_reeditado"/>	
+  	</bean>
+  	<bean id="reeditarCobroErrorConfirmacionParcial" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Reimputar Cobro con Error en Cobro Confirmacion Parcial"/>
+  		<property name="evento" value="reeditarCobroErrorConfirmacionParcial"/>
+  		<property name="origen" ref="cob_error_confirmacion_parcial"/>
+  		<property name="destino" ref="cob_reeditado_parcial"/>
+  	</bean>
+  	<bean id="anularCobroErrorEnApropiacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular Cobro con Error en Apropiacion"/>
+  		<property name="evento" value="anularCobroErrorEnApropiacion"/>
+  		<property name="origen" ref="cob_error_apropiacion"/>
+  		<property name="destino" ref="cob_anulado"/>	
+  	</bean>
+  	<bean id="anularCobroErrorEnCobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular Cobro con Error en Cobro"/>
+  		<property name="evento" value="anularCobroErrorEnCobro"/>
+ 		<property name="origen" ref="cob_error_cobro"/>
+  		<property name="destino" ref="cob_anulado"/>	
+  	</bean>
+  	<bean id="solicitarAutorizacionCobroRechazadoAlReferente" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Autorizacion de Cobro Rechazado Al Referente"/>
+  		<property name="evento" value="solicitarAutorizacionCobroRechazadoAlReferente"/>
+  		<property name="origen" ref="cob_rechazado"/>
+  		<property name="destino" ref="cob_pend_referente_cobranza"/>	
+  	</bean>
+  	
+	<!-- Sprint 5: Fin -->
+
+	<!-- Sprint 7 u 8: Inicio -->
+  	<bean id="aprobarCobroSegunSupervisorConMedioDePagoEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Aprobar Cobro segun Supervisor Con Medio de Pago en Proceso"/>
+  		<property name="evento" value="aprobarCobroSegunSupervisorConMedioDePagoEnProceso"/>
+  		<property name="origen" ref="cob_pend_supervisor_cobranza"/>
+  		<property name="destino" ref="cob_medio_pago_en_proceso"/>	
+  	</bean>
+  	<bean id="aprobarCobroSegunReferenteConMedioDePagoEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Aprobar Cobro segun Referente con Medio de Pago en Proceso"/>
+  		<property name="evento" value="aprobarCobroSegunReferenteConMedioDePagoEnProceso"/>
+  		<property name="origen" ref="cob_pend_referente_cobranza"/>
+  		<property name="destino" ref="cob_medio_pago_en_proceso"/>	
+  	</bean>
+  	<bean id="rechazarPorTiempoCobroConMedioDePagoEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rechazar por Tiempo Cobro con Medio de Pago en Proceso"/>
+  		<property name="evento" value="rechazarPorTiempoCobroConMedioDePagoEnProceso"/>
+  		<property name="origen" ref="cob_medio_pago_en_proceso"/>
+  		<property name="destino" ref="cob_rechazado"/>	
+  	</bean>
+  	<bean id="editarCobroConMedioDePagoEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Editar Cobro con Medio de Pago en Proceso"/>
+  		<property name="evento" value="editarCobroConMedioDePagoEnProceso"/>
+  		<property name="origen" ref="cob_medio_pago_en_proceso"/>
+  		<property name="destino" ref="cob_en_edicion"/>	
+  	</bean>
+  	<bean id="solicitarImputacionCobroConMedioPagoDefinitivo" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Imputacion de Cobro con Medio de Pago Definitivo"/>
+  		<property name="evento" value="solicitarImputacionCobroConMedioPagoDefinitivo"/>
+  		<property name="origen" ref="cob_medio_pago_en_proceso"/>
+  		<property name="destino" ref="cob_pendiente"/>	
+  	</bean>
+  	<bean id="anularCobroConMedioDePagoEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular Cobro con Medio de Pago en Proceso"/>
+  		<property name="evento" value="anularCobroConMedioDePagoEnProceso"/>
+  		<property name="origen" ref="cob_medio_pago_en_proceso"/>
+  		<property name="destino" ref="cob_anulado"/>	
+  	</bean>
+  	<!--  u578936 -->
+  	<bean id="solicitarEnviarDesapropiacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Enviar a Desapropiacion"/>
+  		<property name="evento" value="solicitarEnviarDesapropiacion"/>
+  		<property name="origen" ref="cob_error_desapropiacion"/>
+  		<property name="destino" ref="cob_proceso"/>
+  	</bean>
+	<!--  -->
+	<!-- Sprint 7 u 8: Fin -->
+
+	<!-- Sprint 8: Inicio -->
+  	<bean id="registrarCobroMasivoPendienteCobrado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Cobro Masivo Pendiente Cobrado"/>
+  		<property name="evento" value="registrarCobroMasivoPendienteCobrado"/>
+  		<property name="origen" ref="cob_pendiente"/>
+  		<property name="destino" ref="cob_cobrado"/>	
+  	</bean>
+  	<bean id="registrarCobroMasivoInicioCobrado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Cobro Masivo Pendiente Cobrado"/>
+  		<property name="evento" value="registrarCobroMasivoInicioCobrado"/>
+  		<property name="origen" ref="cob_no_disponible"/>
+  		<property name="destino" ref="cob_cobrado"/>	
+  	</bean>
+	<!-- Sprint 8: Fin -->
+
+	<!-- Sprint reingenieria: Inicio -->
+	<bean id="registrarCobroDeEnProcesoAPendienteMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Cobro con Respuesta Pendiente de MIC"/>
+  		<property name="evento" value="registrarCobroDeEnProcesoAPendienteMic"/>
+  		<property name="origen" ref="cob_proceso"/>
+  		<property name="destino" ref="cob_pendiente_mic"/>	
+  	</bean>
+  	<bean id="registrarCobroDePendienteMicAPendienteProcesarMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Cobro Pendiente Procesar Mic"/>
+  		<property name="evento" value="registrarCobroDePendienteMicAPendienteProcesarMic"/>
+  		<property name="origen" ref="cob_pendiente_mic"/>
+  		<property name="destino" ref="cob_pend_procesar_mic"/>
+  	</bean>
+  	<bean id="registrarCobroPendienteProcesarMicAEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Cobro En proceso"/>
+  		<property name="evento" value="registrarCobroPendienteProcesarMicAEnProceso"/>
+  		<property name="origen" ref="cob_pend_procesar_mic"/>
+  		<property name="destino" ref="cob_proceso"/>	
+  	</bean>
+  	<!-- Sprint reingenieria: Fin -->
+  	
+  	<!-- Fusion: paquete 1: Inicio -->
+  	<bean id="registrarCobroEnProcesoAPendienteDeConfirmacionManual" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Cobro Pendiente de Confirmacion Manual"/>
+  		<property name="evento" value="registrarCobroEnProcesoAPendienteDeConfirmacionManual"/>
+  		<property name="origen" ref="cob_proceso"/>
+  		<property name="destino" ref="cob_pendiente_confirmacion_manual"/>
+  	</bean>
+  	<bean id="registrarCobroPendienteDeConfirmacionManualAEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Cobro En proceso"/>
+  		<property name="evento" value="registrarCobroPendienteDeConfirmacionManualAEnProceso"/>
+  		<property name="origen" ref="cob_pendiente_confirmacion_manual"/>
+  		<property name="destino" ref="cob_proceso"/>
+  	</bean>
+  	<!-- Fusion: paquete 1: Fin -->
+  	<!-- NeedIT72562 -->
+  	<bean id="registrarCobroEnProcesoDeAplicacionExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Cobro En Proceso de Aplicacion Externa"/>
+		<property name="evento" value="registrarCobroEnProcesoDeAplicacionExterna"/>
+		<property name="origen" ref="cob_proceso"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa"/>
+	</bean>
+	
+	<bean id="registrarCobroCobradoParcialmente" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Cobro Cobrado Parcialmente"/>
+		<property name="evento" value="registrarCobroCobradoParcialmente"/>
+		<property name="origen" ref="cob_proceso"/>
+		<property name="destino" ref="cob_cobrado_parcialmente"/>
+	</bean>
+	
+	<bean id="registrarCobroEnErrorConfirmacionParcial" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Cobro En Error Confirmacion Parcial"/>
+		<property name="evento" value="registrarCobroEnErrorConfirmacionParcial"/>
+		<property name="origen" ref="cob_proceso"/>
+		<property name="destino" ref="cob_error_confirmacion_parcial"/>
+	</bean>
+	
+	<bean id="registrarCobroDeEnProcesoDeAplicacionExternaAErrorEnDesapropiacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Cobro De En Proceso De Aplicacion Externa A Error En Desapropiacion"/>
+		<property name="evento" value="registrarCobroDeEnProcesoDeAplicacionExternaAErrorEnDesapropiacion"/>
+		<property name="origen" ref="cob_proceso_aplicacion_externa"/>
+		<property name="destino" ref="cob_error_desapropiacion"/>
+	</bean>
+	
+	<bean id="registrarCobroDePendienteConfirmacionManualYEnProcesoDeAplicacionExternaAErrorEnDesapropiacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Cobro De Pendiente Confirmacion Manual Y En Proceso De Aplicacion Externa A Error En Desapropiacion"/>
+		<property name="evento" value="registrarCobroDePendienteConfirmacionManualYEnProcesoDeAplicacionExternaAErrorEnDesapropiacion"/>
+		<property name="origen" ref="cob_pendiente_confirmacion_manual_y_proceso_aplicacion_externa"/>
+		<property name="destino" ref="cob_error_desapropiacion"/>
+	</bean>
+	
+	<bean id="registrarCobroDeErrorEnDesapropiacionAEnProcesoDeAplicacionExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Cobro De Error En Desapropiacion A En Proceso De Aplicacion Externa"/>
+		<property name="evento" value="registrarCobroDeErrorEnDesapropiacionAEnProcesoDeAplicacionExterna"/>
+		<property name="origen" ref="cob_error_desapropiacion"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa"/>
+	</bean>
+	
+	<bean id="registrarCobroDeEnErrorEnDesapropiacionAEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Cobro de En Error En Desapropiacion a En Proceso"/>
+		<property name="evento" value="registrarCobroDeEnErrorEnDesapropiacionAEnProceso"/>
+		<property name="origen" ref="cob_error_desapropiacion"/>
+		<property name="destino" ref="cob_proceso"/>
+	</bean>
+	
+	<bean id="registrarCobroDeErrorEnDesapropiacionAPendienteConfirmacionManualYEnProcesoDeAplicacionExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Cobro De Error En Desapropiacion A Pendiente Confirmacion Manual Y En Proceso De Aplicacion Externa"/>
+		<property name="evento" value="registrarCobroDeErrorEnDesapropiacionAPendienteConfirmacionManualYEnProcesoDeAplicacionExterna"/>
+		<property name="origen" ref="cob_error_desapropiacion"/>
+		<property name="destino" ref="cob_pendiente_confirmacion_manual_y_proceso_aplicacion_externa"/>
+	</bean>
+	
+	
+	
+	<bean id="registrarCobroConfirmadoParcialmenteConError" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Cobro Confirmado Parcialmente Con Error"/>
+		<property name="evento" value="registrarCobroConfirmadoParcialmenteConError"/>
+		<property name="origen" ref="cob_error_confirmacion_parcial"/>
+		<property name="destino" ref="cob_confirmado_parcialmente_con_error"/>
+	</bean>
+	
+  	<!--  -->
+  	<bean id="registrarProcesoDeAplicacionManualAEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Proceso De Aplicacion Manual A En Proceso"/>
+		<property name="evento" value="registrarProcesoDeAplicacionManualAEnProceso"/>
+		<property name="origen" ref="cob_proceso_aplicacion_externa"/>
+		<property name="destino" ref="cob_proceso"/>
+	</bean>
+	
+	<bean id="registrarProcesoDeAplicacionExternaAEnProcesoAplicacionExternaConRtaPendienteMIC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Proceso De Aplicacion Externa A En Proceso Aplicacion Externa Con Rta Pendiente MIC"/>
+		<property name="evento" value="registrarProcesoDeAplicacionExternaAEnProcesoAplicacionExternaConRtaPendienteMIC"/>
+		<property name="origen" ref="cob_proceso_aplicacion_externa"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa_y_pendiente_mic"/>
+	</bean>
+	
+	<bean id="registrarProcesoDeAplicacionExternaAEnPendienteDeConfirmacionManual" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Proceso De Aplicacion Externa A En Pendiente De Confirmacion Manual"/>
+		<property name="evento" value="registrarProcesoDeAplicacionExternaAEnPendienteDeConfirmacionManual"/>
+		<property name="origen" ref="cob_proceso_aplicacion_externa"/>
+		<property name="destino" ref="cob_pendiente_confirmacion_manual"/>
+	</bean>
+	
+	<bean id="registrarProcesoDeAplicacionExternaAEnPendienteDeConfirmacionManualYEnProcesoAplicacionExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Proceso De Aplicacion Externa A En Pendiente De Confirmacion Manual Y En ProcesoAplicacionExterna"/>
+		<property name="evento" value="registrarProcesoDeAplicacionExternaAEnPendienteDeConfirmacionManualYEnProcesoAplicacionExterna"/>
+		<property name="origen" ref="cob_proceso_aplicacion_externa"/>
+		<property name="destino" ref="cob_pendiente_confirmacion_manual_y_proceso_aplicacion_externa"/>
+	</bean>
+	
+	<bean id="registrarProcesoDeAplicacionExternaAEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Proceso De Aplicacion Externa A En Proceso"/>
+		<property name="evento" value="registrarProcesoDeAplicacionExternaAEnProceso"/>
+		<property name="origen" ref="cob_proceso_aplicacion_externa"/>
+		<property name="destino" ref="cob_proceso"/>
+	</bean>
+	
+	<!--  -->
+	<bean id="registrarProcesoDeAplicacionExternaPendienteMICAEnProcesoDeAplicacionExternaPendienteProcesarMIC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Proceso De Aplicacion Externa Pendiente MIC A En Proceso De Aplicacion Externa Pendiente Procesar MIC"/>
+		<property name="evento" value="registrarProcesoDeAplicacionExternaPendienteMICAEnProcesoDeAplicacionExternaPendienteProcesarMIC"/>
+		<property name="origen" ref="cob_proceso_aplicacion_externa_y_pendiente_mic"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa_y_pendiente_procesar_mic"/>
+	</bean>
+	
+	<bean id="registrarProcesoDeAplicacionExternaPendienteProcesarMICAEnProcesoDeAplicacionExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Proceso De A plicacion Externa Pendiente Procesar MIC A En Proceso De Aplicacion Externa"/>
+		<property name="evento" value="registrarProcesoDeAplicacionExternaPendienteProcesarMICAEnProcesoDeAplicacionExterna"/>
+		<property name="origen" ref="cob_proceso_aplicacion_externa_y_pendiente_procesar_mic"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa"/>
+	</bean>
+	
+	<bean id="registrarPendienteConfirmacionManualAEnProcesoDeAplicacionExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Pendiente Confirmacion Manual A En Proceso De Aplicacion Externa"/>
+		<property name="evento" value="registrarPendienteConfirmacionManualAEnProcesoDeAplicacionExterna"/>
+		<property name="origen" ref="cob_pendiente_confirmacion_manual"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa"/>
+	</bean>
+	<bean id="registrarPendienteConfirmacionManualAPendienteConfirmacionManual" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Pendiente Confirmacion Manual A Pendiente Confirmacion Manual"/>
+		<property name="evento" value="registrarPendienteConfirmacionManualAPendienteConfirmacionManual"/>
+		<property name="origen" ref="cob_pendiente_confirmacion_manual"/>
+		<property name="destino" ref="cob_pendiente_confirmacion_manual"/>
+	</bean>
+	<!--  -->
+	<bean id="registrarPendienteConfirmacionManualEnProcesoApliExternaAEnPendienteConfirmacionManual" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Pendiente Confirmacion Manual y En ProcesoApli Externa A En Pendiente Confirmacion Manual"/>
+		<property name="evento" value="registrarPendienteConfirmacionManualEnProcesoApliExternaAEnPendienteConfirmacionManual"/>
+		<property name="origen" ref="cob_pendiente_confirmacion_manual_y_proceso_aplicacion_externa"/>
+		<property name="destino" ref="cob_pendiente_confirmacion_manual"/>
+	</bean>
+
+	<bean id="registrarPendienteConfirmacionManualAEnPendienteConfirmacionManualEnProcesoApliExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Pendiente Confirmacion Manual A En Pendiente Confirmacion Manual y En ProcesoApli Externa"/>
+		<property name="evento" value="registrarPendienteConfirmacionManualAEnPendienteConfirmacionManualEnProcesoApliExterna"/>
+		<property name="origen" ref="cob_pendiente_confirmacion_manual"/>
+		<property name="destino" ref="cob_pendiente_confirmacion_manual_y_proceso_aplicacion_externa"/>
+	</bean>
+	<bean id="registrarPendienteConfirmacionManualEnProcesoApliExternaAEnPendienteConfirmacionManualEnProcesoApliExternaPendienteMIC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Pendiente Confirmacion Manual En Proceso Apli Externa A En Pendiente Confirmacion Manual En Proceso Apli Externa Pendiente MIC"/>
+		<property name="evento" value="registrarPendienteConfirmacionManualEnProcesoApliExternaAEnPendienteConfirmacionManualEnProcesoApliExternaPendienteMIC"/>
+		<property name="origen" ref="cob_pendiente_confirmacion_manual_y_proceso_aplicacion_externa"/>
+		<property name="destino" ref="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pendiente_mic"/>
+	</bean>
+	
+	<bean id="registrarPendienteConfirmacionManualEnProcesoApliExternaAEnProcesoDeAplicacionExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Pendiente Confirmacion Manual En Proceso Apli Externa A En Proceso De Aplicacion Externa"/>
+		<property name="evento" value="registrarPendienteConfirmacionManualEnProcesoApliExternaAEnProcesoDeAplicacionExterna"/>
+		<property name="origen" ref="cob_pendiente_confirmacion_manual_y_proceso_aplicacion_externa"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa"/>
+	</bean>
+	
+	<bean id="registrarPendienteConfirmacionManualEnProcesoApliExternaAPendienteConfirmacionManualEnProcesoDeAplicacionExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Pendiente Confirmacion Manual En Proceso Apli Externa A Pendiente Confirmacion Manual En Proceso De Aplicacion Externa"/>
+		<property name="evento" value="registrarPendienteConfirmacionManualEnProcesoApliExternaAPendienteConfirmacionManualEnProcesoDeAplicacionExterna"/>
+		<property name="origen" ref="cob_pendiente_confirmacion_manual_y_proceso_aplicacion_externa"/>
+		<property name="destino" ref="cob_pendiente_confirmacion_manual_y_proceso_aplicacion_externa"/>
+	</bean>
+	<!--  -->
+	
+	<bean id="registrarPendienteConfirmacionManualEnProcesoApliExternaPendienteMICAEnProcesoDeAplicacionExternaPendienteMIC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Pendiente Confirmacion Manual En Proceso Apli Externa Pendiente MIC A En Proceso De Aplicacion Externa Pendiente MIC"/>
+		<property name="evento" value="registrarPendienteConfirmacionManualEnProcesoApliExternaPendienteMICAEnProcesoDeAplicacionExternaPendienteMIC"/>
+		<property name="origen" ref="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pendiente_mic"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa_y_pendiente_mic"/>
+	</bean>
+	<bean id="registrarPendienteConfirmacionManualEnProcesoApliExternaPendienteMICAPendienteConfirmacionManualEnProcesoDeAplicacionExternaPendienteMIC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Pendiente Confirmacion Manual En Proceso Apli Externa Pendiente MIC A Pendiente Confirmacion Manual En Proceso De Aplicacion Externa Pendiente MIC"/>
+		<property name="evento" value="registrarPendienteConfirmacionManualEnProcesoApliExternaPendienteMICAPendienteConfirmacionManualEnProcesoDeAplicacionExternaPendienteMIC"/>
+		<property name="origen" ref="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pendiente_mic"/>
+		<property name="destino" ref="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pendiente_mic"/>
+	</bean>
+	
+	<bean id="registrarPendienteConfirmacionManualEnProcesoApliExternaPendienteMICAEnPendienteConfirmacionManualEnProcesoApliExternaPendienteProcesarMIC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Pendiente Confirmacion Manual En Proceso Apli Externa Pendiente MIC A En Pendiente Confirmacion Manual En Proceso Apli Externa Pendiente Procesar MIC"/>
+		<property name="evento" value="registrarPendienteConfirmacionManualEnProcesoApliExternaPendienteMICAEnPendienteConfirmacionManualEnProcesoApliExternaPendienteProcesarMIC"/>
+		<property name="origen" ref="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pendiente_mic"/>
+		<property name="destino" ref="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pend_proc_mic"/>
+	</bean>
+	<!--  -->
+	
+	<bean id="registrarConfirmacionManualEnProcesoApliExternaYPendienteProcesarMICAEnPendienteConfirmacionManualYEnProcesoApliExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Confirmacion Manual En Proceso Apli Externa Y Pendiente Procesar MIC A En Pendiente Confirmacion Manual Y En Proceso Apli Externa"/>
+		<property name="evento" value="registrarConfirmacionManualEnProcesoApliExternaYPendienteProcesarMICAEnPendienteConfirmacionManualYEnProcesoApliExterna"/>
+		<property name="origen" ref="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pend_proc_mic"/>
+		<property name="destino" ref="cob_pendiente_confirmacion_manual_y_proceso_aplicacion_externa"/>
+	</bean>
+	
+	<bean id="registrarConfirmacionManualEnProcesoApliExternaYPendienteMICAEnProcesoAplicExternaYPendienteProcesarMIC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Confirmacion Manual En Proceso Apli Externa Y Pendiente MIC A En Proceso Aplic Externa Y Pendiente Procesar MIC"/>
+		<property name="evento" value="registrarConfirmacionManualEnProcesoApliExternaYPendienteMICAEnProcesoAplicExternaYPendienteProcesarMIC"/>
+		<property name="origen" ref="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pendiente_mic"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa_y_pendiente_procesar_mic"/>
+	</bean>
+	
+	<!--  -->
+	
+	<bean id="registrarConfirmacionManualEnProcesoApliExternaYPendienteProcesarMICAEnProcesoApliExternaYPendienteProcesarMIC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Confirmacion Manual En Proceso Apli Externa Y Pendiente Procesar MIC A En Proceso Apli Externa y Pendiente Procesar Mic"/>
+		<property name="evento" value="registrarConfirmacionManualEnProcesoApliExternaYPendienteProcesarMICAEnProcesoApliExternaYPendienteProcesarMIC"/>
+		<property name="origen" ref="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pend_proc_mic"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa_y_pendiente_procesar_mic"/>
+	</bean>
+	
+		<bean id="registrarConfirmacionManualEnProcesoApliExternaYPendienteProcesarMICAConfirmacionManualEnProcesoApliExternaYPendienteProcesarMIC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Confirmacion Manual En Proceso Apli Externa Y Pendiente Procesar MIC A Confirmacion Manual En Proceso Apli Externa y Pendiente Procesar Mic"/>
+		<property name="evento" value="registrarConfirmacionManualEnProcesoApliExternaYPendienteProcesarMICAConfirmacionManualEnProcesoApliExternaYPendienteProcesarMIC"/>
+		<property name="origen" ref="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pend_proc_mic"/>
+		<property name="destino" ref="cob_pend_conf_manual_y_proceso_aplicacion_externa_y_pend_proc_mic"/>
+	</bean>
+	
+	<!--  -->
+
+
+	<bean id="registrarProcesoAplicacionExternaYPendienteProcesarMICAEnProcesoAplicacionExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Proceso Aplicacion Externa Y Pendiente Procesar MIC A En Proceso Aplicacion Externa"/>
+		<property name="evento" value="registrarProcesoAplicacionExternaYPendienteProcesarMICAEnProcesoAplicacionExterna"/>
+		<property name="origen" ref="cob_proceso_aplicacion_externa_y_pendiente_procesar_mic"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa"/>
+	</bean>
+	
+	<bean id="registrarErrorConfirmacionParcialAEnConfrimadoParcialmenteConError" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Error Confirmacion Parcial A En Confrimado Parcialmente Con Error"/>
+		<property name="evento" value="registrarErrorConfirmacionParcialAEnConfrimadoParcialmenteConError"/>
+		<property name="origen" ref="cob_error_confirmacion_parcial"/>
+		<property name="destino" ref="cob_confirmado_parcialmente_con_error"/>
+	</bean>
+	
+	<bean id="registrarErrorDesapropiacionAEnProcesoAplicacionExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Error Desapropiacion A En Proceso Aplicacion Externa"/>
+		<property name="evento" value="registrarErrorDesapropiacionAEnProcesoAplicacionExterna"/>
+		<property name="origen" ref="cob_error_desapropiacion"/>
+		<property name="destino" ref="cob_proceso_aplicacion_externa"/>
+	</bean>
+	
+	<bean id="registrarErrorDesapropiacionAEnCobroProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Registrar Error Desapropiacion A En Cobro Proceso"/>
+		<property name="evento" value="registrarErrorDesapropiacionAEnCobroProceso"/>
+		<property name="origen" ref="cob_error_desapropiacion"/>
+		<property name="destino" ref="cob_proceso"/>
+	</bean>
+	
+	<bean id="registrarEnProcesoACobroPendienteDesapropiacionManualExterna" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="registrar en Proceso A Cobro Pendiente Desapropiacion Manual Externa"/>
+		<property name="evento" value="registrarEnProcesoACobroPendienteDesapropiacionManualExterna"/>
+		<property name="origen" ref="cob_proceso"/>
+		<property name="destino" ref="cob_pend_desapropiacion_manual_externa"/>
+	</bean>
+	
+	<bean id="registrarCobroPendienteDesapropiacionManualExternaEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="registrar Cobro Pendiente Desapropiacion Manual Externa En Proceso"/>
+		<property name="evento" value="registrarCobroPendienteDesapropiacionManualExternaEnProceso"/>
+		<property name="origen" ref="cob_pend_desapropiacion_manual_externa"/>
+		<property name="destino" ref="cob_error_cobro"/>
+	</bean>
+	
+	<bean id="registrarCobroEnProcesoACobroParcialmenteEnError" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="registrar Cobro Parcialmente Reeditado A Cobro Reeditado"/>
+		<property name="evento" value="registrarCobroEnProcesoACobroParcialmenteEnError"/>
+		<property name="origen" ref="cob_proceso"/>
+		<property name="destino" ref="cob_parcialmente_en_error"/>
+	</bean>
+
+	<bean id="registrarCobroParcialmenteEnErrorACobroParcialmenteImputado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="registrar Cobro Parcialmente En Error A Cobro Parcialmente Imputado"/>
+		<property name="evento" value="registrarCobroParcialmenteEnErrorACobroParcialmenteImputado"/>
+		<property name="origen" ref="cob_parcialmente_en_error"/>
+		<property name="destino" ref="cob_cobrado_parcialmente"/>
+	</bean>
+
+	<bean id="registrarCobroParcialmenteEnErrorACobroParcialmenteReeditado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="registrar Cobro Parcialmente En Error A Cobro Parcialmente Reeditado"/>
+		<property name="evento" value="registrarCobroParcialmenteEnErrorACobroParcialmenteReeditado"/>
+		<property name="origen" ref="cob_parcialmente_en_error"/>
+		<property name="destino" ref="cob_reeditado_parcial"/>
+	</bean>
+
+	<bean id="registrarCobroParcialmenteReeditadoACobroReeditado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="registrar Cobro Parcialmente Reeditado A Cobro Reeditado"/>
+		<property name="evento" value="registrarCobroParcialmenteReeditadoACobroReeditado"/>
+		<property name="origen" ref="cob_reeditado_parcial"/>
+		<property name="destino" ref="cob_reeditado"/>
+	</bean>
+
+	<bean id="reeditarParcialmenteCobroErrorEnCobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="reeditar Parcialmente Cobro Error En Cobro"/>
+		<property name="evento" value="reeditarParcialmenteCobroErrorEnCobro"/>
+		<property name="origen" ref="cob_error_cobro"/>
+		<property name="destino" ref="cob_reeditado_parcial"/>
+	</bean>
+</beans>

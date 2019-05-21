@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/responseMessage" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rsm="http://www.telecom.com.ar/XMLSchema/bios/cliente/responseMessage" xmlns:rqh="http://www.telecom.com.ar/XMLSchema/bios/responseHeader" xmlns:err="http://www.telecom.com.ar/XMLSchema/bios/errorMessage">
+	<xs:import namespace="http://www.telecom.com.ar/XMLSchema/bios/responseHeader" schemaLocation="responseMessageHeader.xsd"/>
+	<xs:include schemaLocation="asociarIDsClienteResp.xsd"/>
+	<xs:include schemaLocation="oficinasComercialesDeUnClienteResp.xsd"/>
+	<xs:include schemaLocation="consultarClienteResp.xsd"/>
+	<xs:include schemaLocation="novedadAltaClienteResp.xsd"/>
+	<xs:include schemaLocation="novedadModificacionClienteResp.xsd"/>
+	<xs:include schemaLocation="resultadoActualizacionClienteResp.xsd"/>
+	<xs:include schemaLocation="consFactibilidadInactivarClieEnLegResp.xsd"/>
+	<xs:include schemaLocation="inactivarClienteEnLegadosResp.xsd"/>
+	<xs:include schemaLocation="resultadoInactivacionClienteResp.xsd"/>
+	<xs:include schemaLocation="notificarReplicaClienteEnLegadoResp.xsd"/>
+	<xs:include schemaLocation="crearCRMIdClienteResp.xsd"/>
+	<xs:include schemaLocation="publicarNovedadClienteDiariaResp.xsd"/>
+	<xs:include schemaLocation="consultarMorosidadClienteResp.xsd"/>
+	<xs:import namespace="http://www.telecom.com.ar/XMLSchema/bios/errorMessage" schemaLocation="error.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+            Skeleton schema - Copyright 2007 Telecom.com.ar. All rights reserved.
+        </xs:documentation>
+	</xs:annotation>
+	<xs:element name="responseMessage">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="rqh:header"/>
+				<xs:element name="body">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element ref="rsm:asociarIDsClienteResp"/>
+							<xs:element ref="rsm:oficinasComercialesDeUnClienteResp"/>
+							<xs:element ref="rsm:consultarClienteResp"/>
+							<xs:element ref="rsm:notificarReplicaClienteEnLegadoResp"/>
+							<xs:element ref="rsm:novedadAltaClienteResp"/>
+							<xs:element ref="rsm:novedadModificacionClienteResp"/>
+							<xs:element ref="rsm:resultadoActualizacionClienteResp"/>
+							<xs:element ref="rsm:consultarFactibilidadInactivarClienteEnLegadoResp"/>
+							<xs:element ref="rsm:inactivarClienteEnLegadosResp"/>
+							<xs:element ref="rsm:resultadoInactivacionClienteResp"/>
+							<xs:element ref="err:error">
+								<xs:annotation>
+									<xs:documentation/>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="rsm:crearCRMIdClienteResp"/>
+							<xs:element ref="rsm:publicarNovedadClienteDiariaResp"/>
+							<xs:element ref="rsm:consultarMorosidadClienteResp"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

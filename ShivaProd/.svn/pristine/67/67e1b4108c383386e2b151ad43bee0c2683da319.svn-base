@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+ 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+ 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 	
+ 	<!-- Configuración para la capa de negocio/persistencia -->
+	
+	<!-- Workflow -->
+	<import resource="classpath*:/workflow/motorWorkflow.xml" />
+	<bean id="workflowDao" class="ar.com.telecom.shiva.persistencia.dao.impl.WorkflowDaoImpl" parent="soporteDao" />
+  	<bean name="workflowService" class="ar.com.telecom.shiva.negocio.workflow.WorkflowServiceImpl">
+		<property name="dao" ref="workflowDao" />
+		<property name="motorWorkflow" ref="motorWorkflow" />
+	</bean>
+	<bean name="workflowBoletas" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowBoletasImpl" />
+	<bean name="workflowRegistrosAVC" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowRegistrosAVCImpl" />
+	<bean name="workflowCobros" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowCobrosImpl" />
+	<bean name="workflowTalonarios" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowTalonariosImpl" />
+	<bean name="workflowValores" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowValoresImpl" />
+	<bean name="workflowDescobros" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowDescobrosImpl" />
+	<bean name="workflowRecibosPreImpresos" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowRecibosPreImpresosImpl" />
+	<bean name="workflowValoresPorReversion" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowValoresPorReversionImpl" />
+	<bean name="workflowOperacionesMasivas" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowOperacionesMasivasImpl" />
+	<bean name="workflowDescobroOrigenCobrador" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowDescobroOrigenCobradorImpl" />
+	<bean id="workflowLegajoChequesRechazadosServicio" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowLegajosChequesRechazados"/>
+	
+	
+	<!-- Fin - Workflow -->
+	
+	<!-- Menu -->
+	<bean name="menuServicio" class="ar.com.telecom.shiva.negocio.menu.impl.MenuServicioImpl"/>
+	<bean name="perfilServicio" class="ar.com.telecom.shiva.negocio.menu.impl.PerfilServicioImpl"/>
+	<bean name="permisosServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.PermisosServicioImpl">
+		<property name="menuServicio" ref="menuServicio"/>
+		<property name="perfilServicio" ref="perfilServicio"/>
+	</bean>
+	<!-- Fin Menu -->
+	
+	<!-- Boletas sin Valor -->
+	<bean id="boletaSinValorMapeo" class="ar.com.telecom.shiva.negocio.mapeos.BoletaSinValorMapeador">
+		<property name="empresaDao" ref="empresaDao" />
+		<property name="segmentoDao" ref="segmentoDao" />
+		<property name="acuerdoDao" ref="acuerdoDao" />
+		<property name="motivoDao" ref="motivoDao" />
+		<property name="origenDao" ref="origenDao" />
+		<property name="boletaDao" ref="boletaDao" />
+	</bean>
+	<bean id="boletaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.BoletaDaoImpl" parent="soporteDao" />
+	<bean id="boletaSinValorDao" class="ar.com.telecom.shiva.persistencia.dao.impl.BoletaSinValorDaoImpl" parent="soporteDao" />
+	<bean name="boletaSinValorServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.BoletaSinValorServicioImpl">
+		<property name="boletaSinValorMapeador" ref="boletaSinValorMapeo"/>
+		<property name="boletaDao" ref="boletaDao" />
+		<property name="boletaSinValorDao" ref="boletaSinValorDao" />
+		<property name="workflowBoletas" ref="workflowBoletas" />
+		<property name="valorDao" ref="valorDao" />
+	</bean>
+	<!-- Fin - Boletas sin Valor -->
+	<!--  Contabilidad -->
+	<bean id="contabilidadDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ContabilidadDaoImpl" />
+	<bean name="contabilidadServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ContabilidadServicioImpl">
+		<property name="genericoDao" ref="genericoDao" />
+		<property name="bancoDao" ref="bancoDao" />
+		<property name="contabilidadDao" ref="contabilidadDao" />
+	</bean>
+	<!--  Fin - Contabilidad -->
+	<!-- Valor -->
+	<bean id="valorMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ValorMapeador">
+		<property name="empresaDao" ref="empresaDao" />
+		<property name="segmentoDao" ref="segmentoDao" />
+		<property name="acuerdoDao" ref="acuerdoDao" />
+		<property name="motivoDao" ref="motivoDao" />
+		<property name="tipoValorDao" ref="tipoValorDao" />
+	</bean>
+	<bean id="valorVistaMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ValorVistaMapeador"/>
+	
+	<bean id="valorEfectivoMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ValorEfectivoMapeador"/>
+	<bean id="valorChequeMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ValorChequeMapeador">
+		<property name="bancoDao" ref="bancoDao" />
+	</bean>
+	<bean id="valorChequeDiferidoMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ValorChequeDiferidoMapeador">
+		<property name="bancoDao" ref="bancoDao" />
+	</bean>
+	<bean id="valorInterdepositoMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ValorInterdepositoMapeador">
+		<property name="bancoDao" ref="bancoDao" />
+	</bean>
+	<bean id="valorTransferenciaMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ValorTransferenciaMapeador">
+		<property name="bancoDao" ref="bancoDao" />
+	</bean>
+	
+	<bean id="valorBoletaDepositoEfectivoMapeado" class="ar.com.telecom.shiva.negocio.mapeos.ValorBoletaDepositoEfectivoMapeador"/>
+	<bean id="valorBoletaDepositoChequeMapeado" class="ar.com.telecom.shiva.negocio.mapeos.ValorBoletaDepositoChequeMapeador">
+		<property name="bancoDao" ref="bancoDao" />
+	</bean>
+	<bean id="valorBoletaDepositoChequeDiferidoMapeado" class="ar.com.telecom.shiva.negocio.mapeos.ValorBoletaDepositoChequeDiferidoMapeador">
+		<property name="bancoDao" ref="bancoDao" />
+	</bean>
+	<bean id="valorRetencionMapeado" class="ar.com.telecom.shiva.negocio.mapeos.ValorRetencionMapeador">
+		<property name="jurisdiccionDao" ref="jurisdiccionDao" />
+		<property name="retencionImpuestoDao" ref="retencionImpuestoDao" />
+	</bean>
+	<bean id="valorDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ValorDaoImpl" parent="soporteDao" />
+	<bean name="valorServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ValorServicioImpl">
+		<property name="defaultMapeador" ref="valorMapeo"/>
+		<property name="valorDao" ref="valorDao" />
+		<property name="workflowValores" ref="workflowValores" />
+		<property name="valorVistaMapeador" ref="valorVistaMapeo" />
+		<property name="acuerdoDao" ref="acuerdoDao" />
+		<property name="boletaDao" ref="boletaDao" />
+		<property name="workflowDao" ref="workflowDao" />
+		<property name="resultadoBusquedaValorMapeador" ref="resultadoBusquedaValorMapeador" />
+		<property name="teamComercialServicio" ref="teamComercialServicio" />
+		<property name="valorConstanciaRecepcionServicio" ref="valorConstanciaRecepcionServicio" />
+	</bean>
+	<bean name="reporteValoresPorEmpresaServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ReporteValoresPorEmpresaServicioImpl">
+	</bean>
+	<bean name="reporteValoresPorEmpresaDisponiblesServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ReporteValoresPorEmpresaDisponiblesServicioImpl">
+	</bean>
+	<bean name="reporteAplicacionManualPendientesServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ReporteAplicacionManualPendientesServicioImpl">
+	</bean>
+	<bean name="reporteTareasPendientesAplicacionManualServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ReporteTareasPendientesAplicacionManualServicioImpl">
+	</bean>
+	<bean name="reportePerfilesAuditoriaServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ReportePerfilesAuditoriaServicioImpl">
+	</bean>
+	<bean id="exportacionBusquedaValores" class="ar.com.telecom.shiva.negocio.servicios.impl.ExportacionBusquedaValoresImpl" />
+	<bean id="reporteValoresPorEmpresaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ReporteValoresPorEmpresaDaoImpl" parent="soporteDao" />
+	<bean id="reporteValoresPorEmpresaDisponiblesDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ReporteValoresPorEmpresaDisponiblesDaoImpl" parent="soporteDao" />
+	<bean id="reporteAplicacionManualPendientesDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ReporteAplicacionManualPendientesDaoImpl" parent="soporteDao" />
+	<bean id="reporteTareasPendientesAplicacionManualDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ReporteTareasPendientesAplicacionManualDaoImpl" parent="soporteDao" />
+	<!-- Fin - Valor -->
+	
+	<!-- Valor Por Reversion -->
+	<bean name="valorPorReversionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ValorPorReversionServicioImpl">
+		<property name="genericoDao" ref="genericoDao" />
+		<property name="organismoDao" ref="organismoDao" />
+		<property name="bancoDao" ref="bancoDao" />
+		<property name="acuerdoDao" ref="acuerdoDao" />
+		<property name="valorDao" ref="valorDao" />
+		<property name="reversionValorDao" ref="reversionValorDao" />
+ 		<property name="parametroServicio" ref="parametroServicio" />
+ 		<property name="tareaServicio" ref="tareaServicio" />
+ 		<property name="defaultMapeador" ref="valorPorReversionMapeo"/>
+	</bean>
+	<bean id="valorPorReversionMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ValorPorReversionMapeador">
+		<property name="acuerdoDao" ref="acuerdoDao" />
+		<property name="origenDao" ref="origenDao" />
+	</bean>
+	<bean id="reversionValorDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ReversionValorDaoImpl" parent="soporteDao" />
+	
+	<!-- Fin - Valor Por Reversion-->
+	
+	<!-- Constancia Recepcion -->
+	<bean id="valorConstanciaRecepcionDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ValorConstanciaRecepcionDaoImpl" parent="soporteDao" />
+	<bean name="valorConstanciaRecepcionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ValorConstanciaRecepcionServicioImpl">
+		<property name="valorConstanciaRecepcionDao" ref="valorConstanciaRecepcionDao" />
+	</bean>
+	<!-- Fin - Constancia Recepcion-->
+	
+	<!-- Talonario -->
+	<bean id="reciboPreImpresoMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ReciboPreImpresoMapeador"/>
+	
+	<bean id="talonarioMapeo" class="ar.com.telecom.shiva.negocio.mapeos.TalonarioMapeador">
+		<property name="empresaDao" ref="empresaDao" />
+		<property name="segmentoDao" ref="segmentoDao" />
+		<property name="gestorDao" ref="gestorDao" />
+	</bean>
+	
+	<bean id="reciboPreImpresoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ReciboPreImpresoDaoImpl" parent="soporteDao" />
+	
+	<bean name="ReciboPreImpresoServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ReciboPreImpresoServicioImpl">
+		<property name="defaultMapeador" ref="reciboPreImpresoMapeo"/>
+		<property name="reciboPreImpresoDao" ref="reciboPreImpresoDao" />
+	</bean>
+	<bean id="talonarioDao" class="ar.com.telecom.shiva.persistencia.dao.impl.TalonarioDaoImpl" parent="soporteDao" />
+	<bean name="talonarioServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.TalonarioServicioImpl">
+		<property name="defaultMapeador" ref="talonarioMapeo"/>
+		<property name="talonarioDao" ref="talonarioDao" />
+ 		<property name="workflowTalonarios" ref="workflowTalonarios" />
+ 		<property name="reciboPreImpresoMapeo" ref="reciboPreImpresoMapeo"/>
+ 		<property name="resultadoBusquedaReciboPreImpresoMapeo" ref="resultadoBusquedaReciboPreImpresoMapeo"/>
+ 		<property name="mailServicio" ref="mailServicio" />
+ 		<property name="valorServicio" ref="valorServicio"/>
+ 		<property name="compensacionDao" ref="compensacionDao"/>
+ 		<property name="gestorDao" ref="gestorDao" />
+ 		<property name="resultadoBusquedaTalonarioMapeador" ref="resultadoBusquedaTalonarioMapeador" />
+	</bean>
+	<!-- Fin - Talonario -->
+	
+	<!-- Cobros -->
+	<bean id="cobroDao" class="ar.com.telecom.shiva.persistencia.dao.impl.CobroDaoImpl" parent="soporteDao" />
+	<bean id="descobroDao" class="ar.com.telecom.shiva.persistencia.dao.impl.DescobroDaoImpl" parent="soporteDao"/>
+	<bean id="tipoMedioPagoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.TipoMedioPagoDaoImpl" parent="soporteDao" />
+	<bean name="tipoMedioPagoServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.TipoMedioPagoServicioImpl">
+		<property name="tipoMedioPagoDao" ref="tipoMedioPagoDao"/>
+	</bean>
+	<bean id="medioPagoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.MedioPagoDaoImpl" parent="soporteDao" />
+
+	<bean id="valorMedioPagoServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ValorMedioPagoServicioImpl"/>
+
+	<bean id="mensajeriaTransaccionMapeo" class="ar.com.telecom.shiva.negocio.mapeos.MensajeriaTransaccionMapeador"/>
+	<bean id="mensajeriaTransaccionDao" class="ar.com.telecom.shiva.persistencia.dao.impl.MensajeriaTransaccionDaoImpl" parent="soporteDao"/>
+	<bean id="mensajeriaTransaccionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.MensajeriaTransaccionServicioImpl">
+		<property name="defaultMapeador" ref="mensajeriaTransaccionMapeo"></property>
+		<property name="mensajeriaTransaccionDao" ref="mensajeriaTransaccionDao"></property>
+	</bean>
+	
+	<bean name="cobroServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchImputacionServicioImpl"> 
+		<property name="cobroDao" ref="cobroDao" /> 
+  		<property name="workflowCobros" ref="workflowCobros" /> 
+  		<property name="valorServicio" ref="valorServicio" />
+  		<property name="organismoDao" ref="organismoDao" />
+	</bean>
+	
+	<bean name="cobroManualServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchImputacionManualServicioImpl"> 
+		<property name="cobroDao" ref="cobroDao" /> 
+  		<property name="workflowCobros" ref="workflowCobros" /> 
+  		<property name="valorServicio" ref="valorServicio" />
+  		<property name="organismoDao" ref="organismoDao" />
+	</bean>
+	
+	<bean name="cobroSoporteServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchSoporteImputacionServicioImpl"></bean>
+	<bean name="cobroSoporteCalipsoServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchSoporteImputacionCalipsoServicioImpl"></bean>
+	<bean name="cobroSoporteMicServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchSoporteImputacionMicServicioImpl"></bean>
+	<bean name="cobroSoporteContabilidadServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchSoporteImputacionContabilidadServicioImpl"></bean>
+
+	<bean name="transaccionSoporteServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.TransaccionSoporteServicioImpl"></bean>
+	
+	<bean id="cobroBatchServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchServicioImpl"/>
+	<bean id="cobroImputacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchImputacionServicioImpl"/>
+	<bean id="exportacionBusquedaCobros" class="ar.com.telecom.shiva.negocio.servicios.impl.ExportacionBusquedaCobrosImpl" />
+	<bean id="reglaCobroDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ReglaCobroDaoImpl"/>
+	<bean id="reglaCobroServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ReglaCobroServicioImpl"/>
+	<bean id="hilosCobrosDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ProcesamientoHilosCobrosDaoImpl" parent="soporteDao" />
+	<bean name="procesamientoHilosCobrosServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ProcesamientoHilosCobrosServicioImpl"> 
+		<property name="hilosCobrosDao" ref="hilosCobrosDao" /> 
+	</bean>
+	<bean id="cotizacionDao" class="ar.com.telecom.shiva.persistencia.dao.impl.CotizacionDaoImpl" parent="soporteDao"/>	
+	<!-- Fin - Cobros -->
+		
+	<!-- Inicio - Descobros -->
+	
+	<bean id="descobroMapeador" class="ar.com.telecom.shiva.negocio.mapeos.DescobroMapeador"/>
+	
+	<bean id="descobroVistaMapeo" class="ar.com.telecom.shiva.negocio.mapeos.DescobroVistaMapeador"/>
+	<bean id="descobroHistorialMapeo" class="ar.com.telecom.shiva.negocio.mapeos.DescobroHistorialMapeador" />
+	<bean id="descobroTransaccionesMapeador" class="ar.com.telecom.shiva.negocio.mapeos.DescobroTransaccionesMapeador" />
+	<bean id="descobroOperacionesRelacionadasMapeo" class="ar.com.telecom.shiva.negocio.mapeos.DescobroOperacionesRelacionadasMapeador" />
+	<bean id="descobroDocRelacionadosMapeo" class="ar.com.telecom.shiva.negocio.mapeos.DescobroDocRelacionadosMapeador" />
+	
+	<bean name="descobroOrigenCobradorServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.DescobroOrigenCobradorServicioImpl">
+		<property name="descobroDao" ref="descobroDao"/>
+  		<property name="workflowDescobroOrigenCobrador" ref="workflowDescobroOrigenCobrador" /> 
+  		<property name="cobroDao" ref="cobroDao" />
+  		<property name="cobroServicio" ref="cobroServicio" />
+  		<property name="valorServicio" ref="valorServicio" />
+	</bean>
+	
+	<bean name="descobroServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.DescobroServicioImpl">
+		<property name="descobroDao" ref="descobroDao"/>
+  		<property name="workflowDescobros" ref="workflowDescobros" /> 
+  		<property name="cobroDao" ref="cobroDao" />
+  		<property name="cobroServicio" ref="cobroServicio" />
+  		<property name="valorServicio" ref="valorServicio" />
+  		<property name="defaultMapeador" ref="descobroMapeador" />
+  		<property name="descobroBatchSimulacionServicio" ref="descobroBatchSimulacionServicio" />
+  		<property name="excelDescobroServicio" ref="excelDescobroServicio" />
+	</bean>
+	
+	<bean name="descobroImputacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.DescobroBatchImputacionServicioImpl"> 
+		<property name="cobroDao" ref="cobroDao" /> 
+  		<property name="workflowDescobros" ref="workflowDescobros" /> 
+  		<property name="descobroServicio" ref="descobroServicio" />
+	</bean>
+	
+	<bean name="descobroBatchSimulacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.DescobroBatchSimulacionServicioImpl"/>
+	
+	<bean id="excelDescobroServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ExportacionDetalleDescobroImpl" />
+	
+	<!-- Fin - Descobros -->
+	
+	<!-- CobroOnlineServicio -->
+	<bean id="exportacionDetalleCobro" class="ar.com.telecom.shiva.negocio.servicios.impl.ExportacionDetalleCobroImpl" />
+	<bean id="cobroOnlineDao" class="ar.com.telecom.shiva.persistencia.dao.impl.CobroOnlineDaoImpl" parent="soporteDao" />
+	<bean id="cobroDebitoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.CobroOnlineDebitoDaoImpl" parent="soporteDao"/>
+	<bean id="cobroOtrosDebitoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.CobroOnlineOtrosDebitoDaoImpl" parent="soporteDao"/>
+	<bean id="cobroCreditoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.CobroOnlineCreditoDaoImpl" parent="soporteDao"/>
+	<bean id="cobroClienteDao" class="ar.com.telecom.shiva.persistencia.dao.impl.CobroOnlineClienteDaoImpl" parent="soporteDao"/>
+	<bean id="cobroMedioPagoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.CobroOnlineMedioPagoDaoImpl" parent="soporteDao"/>
+	<bean id="parametroConfReglaCampoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ParametroConfReglaCampoDaoImpl" parent="soporteDao"/>
+	
+	<bean id="clienteMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineClienteMapeador"/>
+	<bean id="creditoMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineCreditoMapeador"/>
+	<bean id="debitoMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineDebitoMapeador"/>
+	<bean id="otrosDebitoMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineOtrosDebitoMapeador"/>
+	<bean id="adjuntoMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineDocumentoAdjuntoMapeador"/>
+
+	<bean id="medioPagoClienteMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineMedioPagoClienteMapeador"/>
+	<bean id="medioPagoDocumentoCapMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineDocumentoCapMapeador"/>
+	<bean id="medioPagoMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineOtroMedioPagoMapeador">
+		<property name="medioPagoClienteMapeador" ref="medioPagoClienteMapeador"/>
+		<property name="medioPagoDocumentoCapMapeador" ref="medioPagoDocumentoCapMapeador"/>
+	</bean>
+	<bean id="tratamientoDiferenciaMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineTratamientoDiferenciaMapeador"/>
+	<bean id="cobroOnlineMapeo" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineMapeador">
+		<property name="clienteMapeador" ref="clienteMapeador" />
+		<property name="creditoMapeador" ref="creditoMapeador" />
+		<property name="debitoMapeador" ref="debitoMapeador" />
+		<property name="otrosDebitoMapeador" ref="otrosDebitoMapeador" />
+		<property name="medioPagoMapeador" ref="medioPagoMapeador" />
+		<property name="tratamientoDiferenciaMapeador" ref="tratamientoDiferenciaMapeador" />
+		<property name="cobroOnlineCodigoOperacionExternaMapeador" ref="cobroOnlineCodigoOperacionExternaMapeador" />
+		<property name="adjuntoMapeador" ref="adjuntoMapeador"/>
+	</bean>
+	<bean id="cobroOnlineVistaMapeo" class="ar.com.telecom.shiva.negocio.mapeos.CobrosOnlineVistaMapeador" />
+	<bean name="cobroOnlineServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroOnlineServicioImpl">
+		<property name="defaultMapeador" ref="cobroOnlineMapeo"/>
+		<property name="cobroDebitoDao" ref="cobroDebitoDao"/>
+	 	<property name="cobroOtrosDebitoDao" ref="cobroOtrosDebitoDao"/>
+		<property name="debitoMapeador" ref="debitoMapeador" />
+		<property name="otrosDebitoMapeador" ref="otrosDebitoMapeador" />
+		<property name="creditoMapeador" ref="creditoMapeador" />
+	</bean>
+	
+	<bean id="cobroDebitoSOAMapeador" class="ar.com.telecom.shiva.base.soa.mapeos.CobroDebitoMapeadorSOA"/>
+	<bean id="cobroCreditoSOAMapeador" class="ar.com.telecom.shiva.base.soa.mapeos.CobroCreditoMapeadorSOA"/>
+	<!--  <bean id="cobroPartidaCapMapeadorSOA" class="ar.com.telecom.shiva.base.soa.mapeos.CobroPartidaCapMapeadorSOA"/>-->
+	<bean id="cobroCreditoMapeadorShiva" class="ar.com.telecom.shiva.negocio.mapeos.CobroCreditoMapeadorShiva"/>
+	<bean id="cobroOnlineBusquedaServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroOnlinePaginadoServicioImpl">
+		<property name="mapeadorDeudas" ref="cobroDebitoSOAMapeador" />
+		<property name="mapeadorCreditos" ref="cobroCreditoSOAMapeador" />
+		<property name="cobroCreditoMapeadorShiva" ref="cobroCreditoMapeadorShiva" />
+	</bean>
+	<bean id="cobroOnlineHistorialMapeo" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineHistorialMapeador" />
+	<bean id="cobroOnlineTransaccionesMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineTransaccionesMapeador" />
+	<bean id="cobroOnlineCodigoOperacionExternaMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CobroOnlineCodigoOperacionExternaMapeador"/>
+    <!-- Fin - CobroOnlineServicio -->
+    
+    <!-- CobroOnlineSoporteServicio -->
+    <bean name="cobroOnlineSoporteServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroOnlineSoporteServicioImpl"/>
+    <!-- Fin - CobroOnlineSoporteServicio -->
+    
+    
+    <!-- Inicio: CobroBatchSimulacionServicio -->
+    <bean name="cobroBatchSimulacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchSimulacionServicioImpl"/>
+    <!-- Inicio: CobroBatchSimulacionServicio -->
+ 	
+	<!-- Conciliacion -->
+	<import resource="classpath*:/conciliacion/motorProcesoConciliacion.xml" />
+	<bean name="conciliacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ConciliacionServicioImpl">
+		<property name="parametroServicio" ref="parametroServicio"/>
+		<property name="depositoMapeadorBatch" ref="depositoMapeoBatch"/>
+		<property name="interdepositoMapeadorBatch" ref="interdepositoMapeoBatch"/>
+		<property name="transferenciaMapeadorBatch" ref="transferenciaMapeoBatch"/>
+		<property name="archivoAVCServicio" ref="archivoAVCServicio"/>
+		<property name="valorServicio" ref="valorServicio"/>
+		<property name="boletaSinValorServicio" ref="boletaSinValorServicio"/>
+		<property name="conciliacionSugeridaMapeo" ref="conciliacionSugeridaMapeo"/>
+		<property name="conciliacionDao" ref="conciliacionDao"/>
+	</bean>
+	<bean name="archivoAVCServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ArchivoAVCServicioImpl">
+		<property name="archivoAvcMapeador" ref="archivoAVCMapeo"/>
+		<property name="parametroServicio" ref="parametroServicio"/>
+		<property name="depositoMapeador" ref="depositoMapeo"/>
+		<property name="interdepositoMapeador" ref="interdepositoMapeo"/>
+		<property name="transferenciaMapeador" ref="transferenciaMapeo"/>
+		<property name="registroAVCDao" ref="registroAVCDao"/>
+		<property name="archivoAVCDao" ref="archivoAVCDao"/>
+		<property name="workflowRegistrosAVC" ref="workflowRegistrosAVC"/>
+	</bean>
+	<bean name="archivoAVCSoporteServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ArchivoAVCSoporteServicioImpl"/>
+
+	<bean name="registroAVCServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.RegistroAVCServicioImpl">
+		<property name="registroAVCDao" ref="registroAVCDao"/>
+		<property name="depositoMapeador" ref="depositoMapeo"/>
+		<property name="interdepositoMapeador" ref="interdepositoMapeo"/>
+		<property name="workflowRegistrosAVC" ref="workflowRegistrosAVC"/>
+		<property name="documentoAdjuntoDao" ref="documentoAdjuntoDao"/>
+		<property name="valorServicio" ref="valorServicio"/>
+		<property name="organismoDao" ref="organismoDao"/>
+		<property name="resultadoBusquedaReversionSinConciliarMapeador" ref="resultadoBusquedaReversionSinConciliarMapeador"/>
+		<property name="resultadoBusquedaDepositoSinConciliarMapeador" ref="resultadoBusquedaDepositoSinConciliarMapeador"/>
+		<property name="resultadoBusquedaInterdepositoSinConciliarMapeador" ref="resultadoBusquedaInterdepositoSinConciliarMapeador"/>
+		<property name="resultadoBusquedaTransferenciaSinConciliarMapeador" ref="resultadoBusquedaTransferenciaSinConciliarMapeador"/>
+	</bean>
+	<bean id="registroAvcSoporteServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.RegistroAvcSoporteServicioImpl"/>
+
+	<bean name="reglaConciliacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ReglaConciliacionServicioImpl">
+		<property name="reglaConciliacionMapeador" ref="reglaConciliacionMapeo"/>
+		<property name="reglaConciliacionDao" ref="reglaConciliacionDao"/>
+	</bean>
+	
+	<bean name="motorProcesamientoConciliacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.MotorProcesamientoConciliacionServicioImpl">
+		<property name="parametroServicio" ref="parametroServicio"/>
+		<property name="registroServicio" ref="registroAVCServicio"/>
+		<property name="boletaSinValorServicio" ref="boletaSinValorServicio"/>
+		<property name="conciliacionServicio" ref="conciliacionServicio"/>
+		<property name="valorServicio" ref="valorServicio"/>
+		<property name="vistaSoporteServicio" ref="vistaSoporteServicio"/>
+	</bean>
+	<bean name="motorProcesamientoConciliacionAltaServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.MotorProcesamientoConciliacionAltaServicioImpl">
+		<property name="motorProcesoConciliacion" ref="motorProcesoConciliacion"/>
+		<property name="parametroServicio" ref="parametroServicio"/>
+		<property name="reglaConciliacionValidacionServicio" ref="reglaConciliacionValidacionServicio"/>
+		<property name="reglaConciliacionServicio" ref="reglaConciliacionServicio"/>
+		<property name="registroServicio" ref="registroAVCServicio"/>
+		<property name="boletaSinValorServicio" ref="boletaSinValorServicio"/>
+		<property name="conciliacionServicio" ref="conciliacionServicio"/>
+		<property name="clienteSiebelServicio" ref="clienteSiebelServicio"/>
+		<property name="valorServicio" ref="valorServicio"/>
+		<property name="organismoDao" ref="organismoDao"/>
+		<property name="teamComercialServicio" ref="teamComercialServicio"/>
+	</bean>
+	
+	<bean id="depositoMapeoBatch" class="ar.com.telecom.shiva.negocio.batch.mapeos.DepositoMapeadorBatch"/>
+	<bean id="interdepositoMapeoBatch" class="ar.com.telecom.shiva.negocio.batch.mapeos.InterdepositoMapeadorBatch"/>
+	<bean id="transferenciaMapeoBatch" class="ar.com.telecom.shiva.negocio.batch.mapeos.TransferenciaMapeadorBatch"/>
+	
+	<bean id="archivoAVCMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ArchivoAVCMapeador"/>
+	<bean id="registroAVCMapeo" class="ar.com.telecom.shiva.negocio.mapeos.RegistroAVCMapeador">
+		<property name="acuerdoDao" ref="acuerdoDao" />
+	</bean>
+	<bean id="depositoMapeo" class="ar.com.telecom.shiva.negocio.mapeos.RegistroAVCDepositoMapeador">
+		<property name="registroAVCMapeador" ref="registroAVCMapeo" />
+	</bean>
+	<bean id="interdepositoMapeo" class="ar.com.telecom.shiva.negocio.mapeos.RegistroAVCInterdepositoMapeador">
+		<property name="registroAVCMapeador" ref="registroAVCMapeo" />
+		<property name="organismoDao" ref="organismoDao" />
+	</bean>
+	<bean id="transferenciaMapeo" class="ar.com.telecom.shiva.negocio.mapeos.RegistroAVCTransferenciaMapeador">
+		<property name="registroAVCMapeador" ref="registroAVCMapeo" />
+	</bean>
+	<bean id="reglaConciliacionMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ReglaConciliacionMapeador"/>
+	<bean id="conciliacionSugeridaMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ConciliacionSugeridaMapeador"/>
+	
+	<bean id="registroAVCDao" class="ar.com.telecom.shiva.persistencia.dao.impl.RegistroAVCDaoImpl" parent="soporteDao" />
+	<bean id="registroAvcSoporteDao" class="ar.com.telecom.shiva.persistencia.dao.impl.RegistroAvcSoporteDaoImpl" parent="soporteDao" />
+	<bean id="archivoAVCDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ArchivoAVCDaoImpl" parent="soporteDao" />
+	<bean id="organismoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.OrganismoDaoImpl" parent="soporteDao" />
+	<bean id="reglaConciliacionDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ReglaConciliacionDaoImpl" parent="soporteDao" />
+	<bean id="conciliacionDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ConciliacionDaoImpl" parent="soporteDao" />
+	<bean id="documentoAdjuntoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.DocumentoAdjuntoDaoImpl" parent="soporteDao" />
+	<!-- Fin - Conciliacion -->
+	
+	<!-- Parametro -->
+	<bean id="parametroServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ParametroServicioImpl">
+		<property name="parametroDao" ref="parametroDao" />
+	</bean>
+	<bean id="parametroDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ParametroDaoImpl" parent="soporteDao" />
+
+	<!-- Generico -->
+	<bean id="genericoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.GenericoDaoImpl" parent="soporteDao" />
+	<!-- Fin Generico -->
+	<!-- Combos -->
+	<bean id="combosServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CombosServicioImpl">
+		<property name="parametroDao" ref="parametroDao" />
+		<property name="genericoDao" ref="genericoDao" />
+		<property name="empresaDao" ref="empresaDao" />
+		<property name="segmentoDao" ref="segmentoDao" />
+		<property name="origenDao" ref="origenDao" />
+		<property name="acuerdoDao" ref="acuerdoDao" />
+		<property name="bancoCuentaDao" ref="bancoCuentaDao" />
+		<property name="talonarioServicio" ref="talonarioServicio" />
+		<property name="cobroOnlineServicio" ref="cobroOnlineServicio" />
+		<property name="legajoChequeRechazadoServicio" ref="legajoChequeRechazadoServicio" />
+		<property name="bancoDao" ref="bancoDao" />	
+		<property name="tipoValorDao" ref="tipoValorDao" />
+		<property name="jurisdiccionDao" ref="jurisdiccionDao" />
+		<property name="tipoComprobanteDao" ref="tipoComprobanteDao" />
+		<property name="motivoSuspensionDao" ref="motivoSuspensionDao" />
+		<property name="motivoCobroDao" ref="motivoCobroDao" />
+		<property name="motivoLegajoDao" ref="motivoLegajoDao" />
+		<property name="provinciaDao" ref="provinciaDao" />
+	</bean>
+	<!-- Fin - Combos -->
+	<!--  Migracion -->
+	<bean name="migracionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.MigracionServicioImpl">
+		<property name="genericoDao" ref="genericoDao"/>
+		<property name="valorServicio" ref="valorServicio"/>
+		<property name="clienteSiebelServicio" ref="clienteSiebelServicio"/>
+		<property name="parametroServicio" ref="parametroServicio"/>
+	</bean>
+	<!-- Fin Migracion -->
+	<!-- Scard -->
+	<bean name="scardServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ScardServicioImpl">
+		<property name="genericoDao" ref="genericoDao"/>
+		<property name="documentoDao" ref="documentoDao"/>
+		<property name="parametroDao" ref="parametroDao"/>
+		<property name="cobroServicio" ref="cobroServicio"/>
+		<property name="descobroServicio" ref="descobroServicio"/>
+		<property name="vistaSoporteServicio" ref="vistaSoporteServicio" />
+	</bean>
+		<bean id="documentoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.DocumentoDaoImpl" parent="soporteDao" />
+	<!-- Fin Scard -->
+	<!-- Retenciones IIBB -->
+	<bean name="retencionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.RetencionServicioImpl">
+		<property name="valorServicio" ref="valorServicio"/>
+		<property name="cobroServicio" ref="cobroServicio"/>
+	</bean>
+	<!-- Fin Retenciones IIBB -->
+	<!-- Subdiario Cobranzas-->
+	<bean name="subdiarioServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.SubdiarioServicioImpl">
+		<property name="cobroServicio" ref="cobroServicio"/>
+	</bean>
+	<!-- Fin Subdiario Cobranzas -->
+	<!-- Motivo Suspension -->
+	<bean id="motivoSuspensionDao" class="ar.com.telecom.shiva.persistencia.dao.impl.MotivoSuspensionDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Motivo Suspension -->
+
+	<!--  Tarea -->
+	<bean id="tareaMapeo" class="ar.com.telecom.shiva.negocio.mapeos.TareaMapeador"/>
+	<bean id="tareaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.TareaDaoImpl" parent="soporteDao" />
+	<bean name="tareaServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.TareaServicioImpl">
+		<property name="defaultMapeador" ref="tareaMapeo" />
+		<property name="tareaDao" ref="tareaDao" />
+		<property name="mailServicio" ref="mailServicio" />
+		<property name="vistaSoporteServicio" ref="vistaSoporteServicio" />
+		<property name="resultadoBusquedaTareaPendienteMapeador" ref="resultadoBusquedaTareaPendienteMapeador" />
+	</bean>
+	<bean id="paramRespWfTareaServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ParamRespWfTareaServicioImpl"/>
+	<bean id="paramRespWfTareaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ParamRespWfTareaDaoImpl" parent="soporteDao" />
+	<!--  Fin - Tarea -->
+
+	<!--  Operaciones Truncas -->
+	<bean name="operacionesTruncasServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.OperacionesTruncasServicioImpl">
+		<property name="operacionTruncaDao" ref="operacionTruncaDao"/>
+		<property name="parametroServicio" ref="parametroServicio"/>
+		<property name="operacionTruncaMapeador" ref="operacionTruncaMapeador"/>
+	</bean>
+	
+	<bean id="operacionTruncaMapeador" class="ar.com.telecom.shiva.negocio.mapeos.OperacionTruncaMapeador"/>
+	
+	<!--  Fin - Operaciones Truncas -->
+	
+	<!--  Operaciones Tagetik -->
+		<bean id="operacionesTagetikServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.OperacionesTagetikServicioImpl">
+<!-- 		<property name="parametroServicio" ref="parametroServicio"> -->
+<!-- 		<property name="operacionTagetikDao" ref="operacionTagetikDao"> -->
+<!-- 		<property name="operacionTruncaMapeador" ref="operacionTruncaMapeador"> -->
+<!-- 		<property name="mailServicio" ref="mailServicio"> -->
+	</bean>
+	<!--  Fin - Operaciones Tagetik -->
+	
+	<!-- Caja -->
+	<bean id="cajaServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CajaServicioImpl">
+		<property name="cajaDao" ref="cajaDao"/>
+	</bean>
+	<!-- Fin Caja -->	
+	
+	<bean id="transaccionCobroServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.TransaccionCobroServicioImpl">
+		<property name="transaccionCobroDao" ref="transaccionCobroDao"/>
+	</bean>
+	
+	
+	
+	<!-- Empresa -->
+	<bean id="empresaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.EmpresaDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Empresa -->
+	
+	<!-- Segmento -->
+	<bean id="segmentoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.SegmentoDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Segmento -->
+	
+	<!-- Origen -->
+	<bean id="origenDao" class="ar.com.telecom.shiva.persistencia.dao.impl.OrigenDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Origen -->
+	
+	<!-- Acuerdo -->
+	<bean id="acuerdoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.AcuerdoDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Acuerdo -->
+	
+	<!-- Banco Cuenta -->
+	<bean id="bancoCuentaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.BancoCuentaDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Banco Cuenta -->
+	
+	<!-- Motivo -->
+	<bean id="motivoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.MotivoDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Motivo -->
+	
+	<!-- Tipo Valor -->
+	<bean id="tipoValorDao" class="ar.com.telecom.shiva.persistencia.dao.impl.TipoValorDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Tipo Valor -->
+	
+	<!-- Banco -->
+	<bean id="bancoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.BancoDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Banco -->
+	
+	<!-- Banco Cliente -->
+	<bean id="bancoClienteDao" class="ar.com.telecom.shiva.persistencia.dao.impl.BancoClienteDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Banco Cliente -->
+
+	<!-- Gestor -->
+	<bean id="gestorDao" class="ar.com.telecom.shiva.persistencia.dao.impl.GestorDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Gestor -->
+	
+	<!-- 	Compensacion -->
+	<bean id="compensacionDao" class="ar.com.telecom.shiva.persistencia.dao.impl.CompensacionDaoImpl" parent="soporteDao" />
+	<!-- 	Fin - Compensacion -->
+	
+	<!-- Tipo Comprobante -->
+	<bean id="tipoComprobanteDao" class="ar.com.telecom.shiva.persistencia.dao.impl.TipoComprobanteDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Tipo Comprobante -->
+	
+	<!-- Jurisdiccion -->
+	<bean id="jurisdiccionDao" class="ar.com.telecom.shiva.persistencia.dao.impl.JurisdiccionDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Jurisdiccion -->
+
+	<!-- Retencion valor -->
+	<bean id="retencionImpuestoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.RetencionImpuestoImpl" parent="soporteDao"/>
+	<!-- Fin - Retencion valor -->
+
+	<!-- Transaccion Mensajeria -->
+	<bean id="transaccionMensajeriaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.MensajeriaTransaccionDaoImpl" parent="soporteDao"/>
+	<!-- Fin - Transaccion Mensajeria -->
+	
+	<!-- Valor Medio Pago -->
+	<bean id="valorMedioPagoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ValorMedioPagoDaoImpl" parent="soporteDao" />
+	<!-- Fin - Valor Medio Pago -->
+	
+	<!-- Operacion Trunca -->
+	<bean id="operacionTruncaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.OperacionesTruncasDaoImpl" parent="soporteDao" />
+	<!-- Fin - Operacion Trunca -->
+	
+	<!-- Operacion Tagetik -->
+	<bean id="operacionTagetikDao" class="ar.com.telecom.shiva.persistencia.dao.impl.OperacionesTagetikDaoImpl" parent="soporteDao"></bean>
+	<!-- Fin - Operacion Tagetik -->
+	
+	<!-- Caja -->
+	<bean id="cajaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.CajaDaoImpl" parent="soporteDao"></bean>
+	<!-- Fin Caja -->
+	
+	<!-- Provincia -->
+	<bean id="provinciaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ProvinciaDaoImpl" parent="soporteDao"/>
+	<!-- Fin Provincia -->
+	
+	<!-- Operacion Masiva -->
+	<bean name="operacionMasivaServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.OperacionMasivaServicioImpl">
+		<property name="operacionMasivaVistaMapeo" ref="operacionMasivaVistaMapeador"/>
+	</bean>
+	<bean id="archivoOperacionMasivaMapeador" class="ar.com.telecom.shiva.negocio.mapeos.ArchivoOperacionMasivaMapeador"/>
+	<bean id="registroOperacionMasivaMapeador" class="ar.com.telecom.shiva.negocio.mapeos.RegistroOperacionMasivaMapeador"/>
+	<bean id="registroAplicarDeudaMapeador" class="ar.com.telecom.shiva.negocio.mapeos.RegistroAplicarDeudaMapeador"/>
+	<bean id="registroCuotaConvenioMapeador" class="ar.com.telecom.shiva.negocio.mapeos.RegistroCuotaConvenioMapeador"/>
+	<bean id="registroDesistimientoMapeador" class="ar.com.telecom.shiva.negocio.mapeos.RegistroDesistimientoMapeador"/>
+	<bean id="registroGananciasMapeador" class="ar.com.telecom.shiva.negocio.mapeos.RegistroGananciasMapeador"/>
+	<bean id="registroReintegroMapeador" class="ar.com.telecom.shiva.negocio.mapeos.RegistroReintegroMapeador"/>
+	<bean id="operacionMasivaMapeador" class="ar.com.telecom.shiva.negocio.mapeos.OperacionMasivaMapeador"/>
+	<bean id="operacionMasivaVistaMapeador" class="ar.com.telecom.shiva.negocio.mapeos.OperacionesMasivasVistaMapeador"/>
+	<bean id="operacionMasivaHistorialMapeo" class="ar.com.telecom.shiva.negocio.mapeos.OperacionesMasivasHistorialMapeador" />
+	
+	<bean id="operacionMasivaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.OperacionMasivaDaoImpl" parent="soporteDao"/>
+	<bean id="registroOperacionMasivaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.RegistroOperacionMasivaDaoImpl" parent="soporteDao"/>	
+	<bean id="archivoOperacionMasivaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ArchivoOperacionMasivaDaoImpl" parent="soporteDao"/>	
+	<bean id="operacionMasivaAdjuntoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.OperacionMasivaAdjuntoDaoImpl" parent="soporteDao"/>
+	<!-- Fin Operacion Masiva -->
+	<!-- Operacion Masiva registros -->
+	<bean name="operacionMasivaRegistroServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.OperacionMasivaRegistroServicioImpl"/>
+	<bean name="micOperacionMasivaRegistroMapeador" class="ar.com.telecom.shiva.base.registros.mapeos.MicOperacionMasivaRegistroMapeador"/>
+	<bean name="operacionMasivaArchivaServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.OperacionMasivaArchivoServicioImpl"/>
+	<bean name="operacionMasivaCobroServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.OperacionMasivaCobroServicioImpl">
+		<property name="defaultMapeador" ref="cobroOnlineMapeo"/>
+	</bean>
+	<bean name="operacionMasivaRegistroValidacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.OperacionMasivaRegistroValidacionServicioImp"/>
+	
+	
+	<!--  Fin Operacion Masiva registros -->
+	
+	<!-- Transaccion Cobro -->
+	<bean id="transaccionCobroDao" class="ar.com.telecom.shiva.persistencia.dao.impl.TransaccionCobroDaoImpl" parent="soporteDao"/>
+	<!-- Fin Transaccion cobro -->
+	
+	<!-- Proceso Transacciones -->
+	<bean id="procesoTransaccionesDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ProcesoTransaccionesDaoImpl" parent="soporteDao" />
+	<!-- Fin Proceso Transacciones -->
+	
+	<!-- Vista Soporte -->
+	<bean id="vistaSoporteDao" class="ar.com.telecom.shiva.persistencia.dao.impl.VistaSoporteDaoImpl" parent="soporteDao"/>
+
+	<bean name="vistaSoporteServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.VistaSoporteServicioImpl">
+		<property name="vistaSoporteDao" ref="vistaSoporteDao" />
+	</bean>
+	
+	
+	<!-- Mapeadores Resultado Busqueda -->
+	<bean id="resultadoBusquedaTareaPendienteMapeador" class="ar.com.telecom.shiva.negocio.mapeos.ResultadoBusquedaTareaPendienteMapeador"/>
+	<bean id="resultadoBusquedaValorMapeador" class="ar.com.telecom.shiva.negocio.mapeos.ResultadoBusquedaValorMapeador"/>
+	<bean id="resultadoBusquedaTalonarioMapeador" class="ar.com.telecom.shiva.negocio.mapeos.ResultadoBusquedaTalonarioMapeador"/>
+	<bean id="resultadoBusquedaReversionSinConciliarMapeador" class="ar.com.telecom.shiva.negocio.mapeos.ResultadoBusquedaReversionSinConciliarMapeador"/>
+	<bean id="resultadoBusquedaDepositoSinConciliarMapeador" class="ar.com.telecom.shiva.negocio.mapeos.ResultadoBusquedaDepositoSinConciliarMapeador"/>
+	<bean id="resultadoBusquedaInterdepositoSinConciliarMapeador" class="ar.com.telecom.shiva.negocio.mapeos.ResultadoBusquedaInterdepositoSinConciliarMapeador"/>
+	<bean id="resultadoBusquedaTransferenciaSinConciliarMapeador" class="ar.com.telecom.shiva.negocio.mapeos.ResultadoBusquedaTransferenciaSinConciliarMapeador"/>	
+		
+	<!--  -->
+	
+	<!-- Encriptacion Archivos -->
+	<bean name="encriptacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.EncriptacionServicioImpl">
+		<property name="documentoAdjuntoDao" ref="documentoAdjuntoDao" />
+		<property name="genericoDao" ref="genericoDao" />
+	</bean>
+
+	<!-- Team Comercial -->	
+	<bean name="teamComercialDao" class="ar.com.telecom.shiva.persistencia.dao.impl.TeamComercialDaoImpl" parent="soporteDao"/>
+	<bean name="teamComercialServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.TeamComercialServicioImpl">
+		<property name="teamComercialDao" ref="teamComercialDao" />
+		<property name="defaultMapeador" ref="teamComercialMapeo"/>
+	</bean>
+	<bean id="teamComercialMapeo" class="ar.com.telecom.shiva.negocio.mapeos.TeamComercialMapeador"/>
+
+	<!-- Motivo Cobro -->
+	<bean id="motivoCobroDao" class="ar.com.telecom.shiva.persistencia.dao.impl.MotivoCobroDaoImpl" parent="soporteDao"/>
+
+	<!-- Motivo Descobro -->	
+	<bean id="motivoDescobroDao" class="ar.com.telecom.shiva.persistencia.dao.impl.MotivoDescobroDaoImpl" parent="soporteDao"/>
+
+	<!-- Motivo Legajo -->
+	<bean id="motivoLegajoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.MotivoLegajoDaoImpl" parent="soporteDao"/>
+	<!-- Legajo Cheque Rechazado Cobro Relacionado Mapeador -->
+	<bean id="legajoChequeRechazadoCobroRelacionadoMapeador" class="ar.com.telecom.shiva.negocio.mapeos.LegajoChequeRechazadoCobroRelacionadoMapeador"/>
+	
+	<!-- Cotizaciones -->
+	<bean id="cotizacionMapeador" class="ar.com.telecom.shiva.negocio.mapeos.CotizacionMapeador"/>
+	<bean id="cotizacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CotizacionServicioImpl"/>
+	<bean id="cotizacionBatchServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CotizacionBatchServicioImpl"/>
+	
+	<!-- Recepcion Novedades Documentos SAP -->
+	<bean id="recepcionNovedadesDocumentosSAPWSServicio" class="ar.com.telecom.shiva.base.ws.servidor.servicios.impl.RecepcionNovedadesDocumentosSAPWSServicioImpl"/>
+	
+	<!-- Documentos Cap -->	
+	<bean id="documentoCapDao" class="ar.com.telecom.shiva.persistencia.dao.impl.DocumentoCapDaoImpl" parent="soporteDao"/>
+	
+	<!-- Excepcion Morosidad -->
+	<bean name="interfazExcepcionMorosidadServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.InterfazExcepcionMorosidadServicioImpl">
+		<property name="vistaSoporteServicio" ref="vistaSoporteServicio" />
+	</bean>
+	
+	<!-- Parametrizacion de Dias feriados -->
+	<bean id="parametroCalendarioDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ParametroCalendarioDaoImpl" parent="soporteDao" />
+	<bean id="parametroCalendarioServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ParametroCalendarioServicioImpl"/>
+	<!--  Fin Excepcion Morosidad -->
+	
+	<!-- Legajos de Cheques Rechazados -->
+	<bean id="legajoChequeRechazadoServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.LegajoChequeRechazadoServicioImpl"/>
+	<bean id="legajoChequeRechazadoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.LegajoChequeRechazadoDaoImpl" parent="soporteDao"/>
+	<bean id="legajoChequeRechazadoValidacionServicio" class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.LegajoChequeRechazadoValidacionServicioImpl"/>
+	
+	<bean id="legajoChequeRechazadoReversionIceServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.LegajoChequeRechazadoReversionIceServicioImpl">
+		<property name="legajoChequeRechazadoDao" ref="legajoChequeRechazadoDao" />
+	</bean>
+	
+	
+	<bean id="observacionesWorkflowServicio" class="ar.com.telecom.shiva.negocio.workflow.servicios.util.impl.ObservacionesWorkflowServicioImpl">
+		<property name="observacionesWorkflowDao" ref="observacionesWorkflowDao" />
+	</bean>
+	<bean id="observacionesWorkflowDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ObservacionesWorkflowDaoImpl" parent="soporteDao" />
+	
+	
+	<!-- Consulta cheques ICE -->
+	<bean id="clienteIceServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.ClienteIceServicio"/>
+	
+	<bean id="chequeRechazadoPaginadoServicio" class="ar.com.telecom.shiva.negocio.servicios.paginado.impl.ChequeRechazadoPaginadorImpl"/>
+	<bean id="legajoChequeRechazadoCobroRelacionadoDocumentoMapeador" class="ar.com.telecom.shiva.negocio.mapeos.LegajoChequeRechazadoCobroRelacionadoDocumentoMapeador"></bean>
+	<!-- Servicio de notificacion de Legajo cheque rechazado -->
+	
+	<bean id="legajoChequeRechazadoNotificacionMapeador" class="ar.com.telecom.shiva.negocio.mapeos.LegajoChequeRechazadoNotificacionMapeador"></bean>
+	<bean id="legajoChequeRechazadoNotificacionDao" class="ar.com.telecom.shiva.persistencia.dao.impl.LegajoChequeRechazadoNotificacionDaoImp"/>
+	<bean id="legajoChequeRechazadoNotificacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.LegajoChequeRechazadoNotificacionServicioImpl"/>
+	
+	
+	<bean id="exportacionDetalleLegajo" class="ar.com.telecom.shiva.negocio.servicios.impl.ExportacionDetalleLegajoServImpl" />
+
+
+
+	<!-- Fusion clientes  -->
+	<bean id="paramClienteDao" class=" ar.com.telecom.shiva.persistencia.dao.impl.ParamClienteDaoImpl" />
+	<bean id="clienteServicio" class=" ar.com.telecom.shiva.negocio.servicios.impl.ClienteServicioImpl" />
+	<bean id="paramClienteServicio" class=" ar.com.telecom.shiva.negocio.servicios.impl.ParamClienteServicioImpl" />
+	<!-- Fin - Fusion clientes -->
+	
+	<!-- Codigo de operacion externa -->
+	<bean id="descobroCodigoOperacionExternaDao" class=" ar.com.telecom.shiva.persistencia.dao.impl.DescobroCodigoOperacionExternaDaoImpl" />
+	<bean id="cobroCodigoOperacionExternaDao" class=" ar.com.telecom.shiva.persistencia.dao.impl.CobroCodigoOperacionExternaDaoImpl" />
+	
+	<!-- Automatizacion de la Confirmacion de la aplicacion manual -->
+	<!-- Archivo de salida -->
+	<bean id="generarSalidaDetalleAplicacionesManualesServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.GenerarSalidaDetalleAplicacionesManualesServicioImpl">
+		<property name="generarSalidaDetalleAplicacionesManualesDao" ref="generarSalidaDetalleAplicacionesManualesDao" />
+	</bean>
+	<bean id="generarSalidaDetalleAplicacionesManualesDao" class="ar.com.telecom.shiva.persistencia.dao.impl.GenerarSalidaDetalleAplicacionesManualesDaoImpl" parent="soporteDao" />
+	<!-- Archivo de entrada -->
+	<bean id="procesarArchivoEntradaApliManualServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ProcesarEntradaDetalleAplicacionesManualesServicioImpl"></bean>
+	
+	<bean id="procesarEntradaDetalleAplicacionesManualesDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ProcesarEntradaDetalleAplicacionesManualesDaoImpl" parent="soporteDao" />
+	
+	<bean id="reportePerfilesAuditoriaDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ReportePerfilesAuditoriaDaoImpl" parent="soporteDao" />
+	<!-- Cobros Automatica de Valores pertenecientes a Clientes Puros -->
+	<bean id="imputacionAutomaticaValoresClientesPuroServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ImputacionAutomaticaValoresClientesPuroServicioImpl">
+		<property name="imputacionValoresClientesPurosDao" ref="imputacionValoresClientesPurosDao" />
+	</bean>
+	<bean id="imputacionValoresClientesPurosDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ImputacionValoresClientesPurosDaoImpl" parent="soporteDao" />
+	
+	<bean name="reporteRegistrosAvcPendienteConciliarServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ReporteRegistrosAVCPendienteConciliarServicioImpl"> 	</bean>
+	
+	<bean id="proveedorCapServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ProveedorCapServicioImpl"/>
+	<bean name="resultadoBusquedaReciboPreImpresoMapeo" class="ar.com.telecom.shiva.negocio.mapeos.ResultadoBusquedaReciboPreimpresoMapeador"/>
+	
+	<bean id="parametroConfReglaCampoDaoImpl" class=" ar.com.telecom.shiva.persistencia.dao.impl.ParametroConfReglaCampoDaoImpl" />
+	
+	<bean id="cobroCodigoOperacionExternaSimplificadoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.CobroCodigoOperacionExternaSimplificadoDaoImpl"/>
+	<bean id="descobroCodigoOperacionExternaSimplificadoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.DescobroCodigoOperacionExternaSimplificadoDaoImpl"/>
+	
+	<bean name="controlHilosCobrosServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ControlHilosCobrosServicioImpl"> 
+		<property name="cobroDao" ref="cobroDao" /> 
+	</bean>
+</beans>

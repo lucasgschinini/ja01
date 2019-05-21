@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="ar.com.telecom.shiva.base.ws.cliente.servicios" />
+	<context:component-scan base-package="ar.com.telecom.shiva.presentacion.wsdl.siebel" />
+										  
+	<!-- 
+	Instalar Apche CXF y configurar en Eclipse
+	1. Copiar el archivo WSDL a la carpeta /src/main/resources/wsdl
+	2. Agregar al pom.xml el archivo WSDL a generar 
+	3. Maven plugin genera automaticamente los artefactos del WSDL
+	4. Una vez que lo genere, mapear las siguientes propiedades
+	 
+	serviceInterface is our business interface the clients will use
+	wsdlDocumentUrl is the URL for the WSDL file. Spring needs this a startup time to create the JAX-WS Service
+	namespaceUri corresponds to the targetNamespace in the .wsdl file
+	serviceName corresponds to the service name in the .wsdl file
+	portName corresponds to the port name in the .wsdl file.
+ 		
+ 	Ejemplo:
+ 	<bean id="stockQuote" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="net.webservicex.StockQuoteSoap" />
+		<property name="wsdlDocumentUrl" value="wsdl/stockquote.wsdl" />
+		<property name="namespaceUri" value="http://www.webserviceX.NET/" />
+		<property name="serviceName" value="StockQuote" />
+		<property name="portName" value="StockQuoteSoap" />
+	</bean>
+	-->
+		
+	<!-- Interceptor de mensajes SOAP -->
+	<bean id="soapClienteInterceptor" class="ar.com.telecom.shiva.base.soa.interceptores.SoapClienteInterceptor"/>
+	
+	<!-- WS Siebel -->
+	<bean id="clienteSiebelServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.dummy.DummySiebelServicio" />
+	
+	<!-- WS Delta -->
+	<bean id="clienteDeltaServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.dummy.DummyDeltaServicio" />
+	
+	<!-- WS Movika -->
+	<bean id="clienteMovikaServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.dummy.DummyMovikaServicio" />
+
+	<!-- WS Proveedor: Calipso -->
+	<bean id="clienteCalipsoServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.dummy.DummyCalipsoServicio"/>
+
+	<!-- WS Proveedor: Deimos -->
+	<bean id="clienteDeimosServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.dummy.DummyDeimosServicio"/>
+</beans>

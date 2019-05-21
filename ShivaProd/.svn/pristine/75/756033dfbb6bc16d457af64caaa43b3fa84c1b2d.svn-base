@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%-50([%d][%thread]) %-13([%X{nivel}]) [%logger{50}] %msg%n</Pattern>
+		</encoder>
+ 	</appender>
+ 
+ 	<appender name="file-thread" class="ch.qos.logback.classic.sift.SiftingAppender">
+
+		<!-- This is MDC value -->
+		<!-- We will assign a value to 'logFileName' via Java code -->
+		<discriminator>
+			<key>logFileName</key>
+			<defaultValue>${nombreLog}</defaultValue>
+		</discriminator>
+
+		<sift>
+		
+			<appender name="file-${logFileName}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<file>${jboss.server.base.dir}/logs/${logFileName}.log</file>
+				
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		      		<!-- rollover daily -->
+		      		<fileNamePattern>${jboss.server.base.dir}/logs/${logFileName}-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+		      		<timeBasedFileNamingAndTriggeringPolicy
+		            		class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+		        		
+		        		<!-- or whenever the file size reaches 100MB -->
+		        		<maxFileSize>100MB</maxFileSize>
+		      		</timeBasedFileNamingAndTriggeringPolicy>
+		      		
+		      		<!-- keep 30 days' worth of history -->
+		      		<maxHistory>30</maxHistory>
+		    	</rollingPolicy>
+		    	
+				<encoder>
+					<pattern>%-50([%d][%thread]) %-13([%X{nivel}]) [%logger{50}] %msg%n</pattern>
+				</encoder>
+			</appender>
+	
+		</sift>
+	</appender>
+	
+	<appender name="WS_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${jboss.server.base.dir}/logs/shivaWs.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${jboss.server.base.dir}/logs/shivaWs.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${layout}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- Spring Webservice XML -->
+   	<logger name="org.springframework.ws.client.MessageTracing">
+   		<level value="TRACE" />	
+    	<appender-ref ref="file-thread" />
+  	</logger>
+   	<logger name="org.springframework.ws.server.MessageTracing">
+   		<level value="TRACE" />	
+    	<appender-ref ref="file-thread" />
+   	</logger>
+   
+   	<!-- Spring -->
+   	<logger name="org.springframework" level="error">
+  		<appender-ref ref="file-thread" />
+	</logger>
+	<!-- Spring JMS -->
+	<logger name="org.springframework.jms" level="debug">
+	  <appender-ref ref="file-thread"/>
+	</logger>
+	
+	<!-- SHIVA -->
+	<logger name="ar.com.telecom.shiva" level="info">
+  		<appender-ref ref="file-thread" />
+	</logger>
+	
+	<!-- Logueo de información especifica de clientes de webServices de CXF -->
+	<logger name="org.apache.cxf.services" level="INFO" additivity="false">
+	    <!-- specify a dedicated appender for the SOAP messages -->
+	    <appender-ref ref="WS_LOG_FILE" />
+	</logger>
+</configuration>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cm="http://www.telecom.com.ar/XMLSchema/bios/common" xmlns:rqm="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage">
+	<xs:import namespace="http://www.telecom.com.ar/XMLSchema/bios/common" schemaLocation="biosGenericMessage.xsd"/>
+	<xs:element name="crearCRMIdClienteReq">
+		<xs:complexType>
+			<xs:attribute name="crmClienteID" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>ID del Cliente en CRM-Siebel</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="origen" use="required">
+				<xs:annotation>
+					<xs:documentation>Origen del Alta:
+M = Migracion
+A = Proceso de Alta</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="M"/>
+						<xs:enumeration value="A"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

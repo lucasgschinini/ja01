@@ -1,0 +1,167 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 
+ 	<bean id="props" class="ar.com.telecom.shiva.base.utils.UtilPropertiesHolder">
+  		<property name="locations">
+  			<list>
+  				<value>classpath:shiva_${entorno}_interno.properties</value>
+  				<value>file:${configuracion}</value>
+  			</list>
+  		</property>
+	</bean>
+	
+ 	<security:http pattern="/css/**" security="none" />
+    <security:http pattern="/img/**" security="none" />
+    <security:http pattern="/js/**" security="none" />
+    <security:http pattern="/fonts/**" security="none" />
+    <security:http pattern="/less/**" security="none" />
+    <security:http pattern="/media/**" security="none" />
+    <security:http pattern="/swf/**" security="none" />
+    	
+	
+ 	<!-- Configurar todas las url que tienen que ser protegidas -->
+	<!-- Los roles vienen del atributo "member" y se le prepone el texto "ROLE_" adelante -->
+	<security:http auto-config="true" use-expressions="true" entry-point-ref="web_o_ajax_AuthenticationEntryPoint" >
+		
+		<security:access-denied-handler ref="accessDeniedHandler"/>
+		
+		<security:form-login login-page="/ingresar"
+			authentication-details-source-ref="customAuthenticationDetailsHandler"
+							 authentication-failure-handler-ref="customAuthenticationFailureHandler"
+    						 default-target-url="/principal"/>
+    	
+    	<security:intercept-url pattern="/jsp/index.jsp" access="permitAll" />
+    	<security:intercept-url pattern="/*WS**" access="permitAll"/>
+    	
+    	<security:intercept-url pattern="/jsp/**" access="isAuthenticated()"/>
+    	<security:intercept-url pattern="/principal/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/template/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/sesion/**" access="isAuthenticated()"/>
+		
+		<!-- hasRole('ROLE_SHIVADESARROLLO')  -->
+		<security:intercept-url pattern="/bandeja-de-entrada*/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/boleta*/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/*conciliacion*/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/talonario*/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/*cobro*/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/*descobro*/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/valor*/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/operacion-masiva*/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/mantenimiento*/**" access="hasAnyRole('MANTENIMIENTO')"/>
+		<security:intercept-url pattern="/cheques-rechazados*/**" access="isAuthenticated()"/>
+		
+		<security:csrf request-matcher-ref="csrfSecurityRequestMatcher" />
+	</security:http>
+	
+	<!-- Para los Web services y algunas urls que no necesitan csrf -->
+	<bean id="csrfSecurityRequestMatcher" class="ar.com.telecom.shiva.presentacion.seguridad.CsrfSecurityRequestMatcher">
+		<property name="unprotectedUrls">
+  			<list>
+  				<value>/RecepcionNovedadesDocumentosSAPWS</value>
+  				<value>/index.jsp</value>
+  				<value>/ingresar</value>
+  				<value>/j_spring_security_check</value>
+				<value>/actualizarCaptcha</value>
+  				<value>/regresar-bandeja-de-entrada</value>
+  				<value>/valores-autorizacion</value>
+  			</list>
+  		</property>
+	</bean>
+	
+	<bean id="customAuthenticationDetailsHandler"
+		class="ar.com.telecom.shiva.presentacion.seguridad.CustomAuthenticationDetailsHandler">
+		<property name="captchaService" ref="captchaService" />
+	</bean>
+	<bean id="customAuthenticationFailureHandler" class="ar.com.telecom.shiva.presentacion.seguridad.CustomAuthenticationFailureHandler">
+    	<property name="defaultFailureUrl" value="/errorLogin"/>
+	</bean>
+	<bean id="web_o_ajax_AuthenticationEntryPoint" class="ar.com.telecom.shiva.presentacion.seguridad.AjaxOWebAuthenticationEntryPoint">
+		<constructor-arg name="loginFormUrl" value="/denegarAcceso" />
+	</bean>
+	
+	<bean id="accessDeniedHandler" class="ar.com.telecom.shiva.presentacion.seguridad.AccesoDenegadoHandler">
+    	<property name="accessDeniedUrl" value="/usuarioNoAutorizado" />
+	</bean>
+
+	<!-- 
+	Para desarrollo utilizando un ldif local no necesita manager-dn ni manager-password. 
+	Necesita root para que spring no utilice su default dc=springframework,dc=org
+	Ejemplo: 
+	<security:ldap-server id="ldapServer" ldif="classpath*:shiva.ldif" root="o=Telecom" />
+		 
+	Cuando haya un ldap externo, utilizar el siguiente ldap-server de ejemplo 
+	<security:ldap-server id="ldapServer" url="ldap://127.0.0.1:389/o=telecom" manager-dn="cn=admin,o=Telecom" manager-password="admin" />
+	-->
+	
+	<!-- Buscar el usuario que intente hacer login -->
+	<!-- 
+  	Para autenticacion:
+	user-search-filter: atributo del nombre del usuario 
+	user-search-base: ruta donde encontrar informacion
+	La contraseña la maneja Spring
+	 
+	Para autorizacion:
+	group-search-filter: atributo que contiene DN completo del usuario
+	group-search-base: ruta donde encontrar informacion de roles
+	group-role-attribute: atributo que contiene el tipo de rol
+	role-prefix: prefijo que se le agrega al rol para utilizarlo en intercept-url
+	
+	user-search-filter="cn={0}"
+	user-search-filter="uid={0}" necesita buscar por uid en vez de cn={0}
+	
+	Colocando esto, nos permite crear manualmente los perfiles del shiva desde un archivo de texto
+	user-context-mapper-ref="ldapDesaMapper" : usarlo en caso de emergencia cuando no funcione el ldap  
+ 	-->
+	
+	<!-- Manejo de autenticacion/autorizacion -->
+	<security:ldap-server id="ldapServer"
+			url="${ldap.url.puerto}/${ldap.dn.root}"
+			manager-dn="${ldap.usuario.generico.shiva}"
+			manager-password="${ldap.password.generico.shiva}" />
+ 	
+	<security:authentication-manager alias="authenticationManager">
+		<security:ldap-authentication-provider server-ref="ldapServer"
+			user-search-base="ou=Usuarios"
+            user-search-filter="uid={0}"
+     		group-search-base="ou=Servicios"       
+            group-search-filter="(&amp;(objectClass=TelecomPermission)(equivalentToMe={0}))"
+            group-role-attribute="tValue"
+            user-context-mapper-ref="ldapMapper" 
+		/>
+		<security:authentication-provider ref="nullAuthenticationProvider"/>
+	</security:authentication-manager>
+	
+	<bean id="ldapDesaMapper" class="ar.com.telecom.shiva.presentacion.seguridad.LdapDesaMapper" />
+	<bean id="ldapMapper" class="ar.com.telecom.shiva.presentacion.seguridad.LdapMapper" />
+	
+	<bean id="nullAuthenticationProvider" 
+		class="org.springframework.security.config.authentication.AuthenticationManagerBeanDefinitionParser.NullAuthenticationProvider" />
+	
+	<!-- Conectar al ldap para tener su contexto enlazado a un usuario con privilegio -->
+	<bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
+		<property name="url" value="${ldap.url.puerto}" />
+		<property name="base" value="${ldap.dn.root}" />
+		<property name="userDn" value="${ldap.usuario.generico.shiva}" />
+		<property name="password" value="${ldap.password.generico.shiva}" />
+		<property name="baseEnvironmentProperties">
+	        <map>
+	            <entry key="com.sun.jndi.ldap.connect.timeout" value="30000" />          
+	        </map>  
+   	 	</property>
+	</bean>
+	
+	<!-- Utilizando el ldapTemplate, se puede hacer busquedas y filtros -->
+	<bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
+		<constructor-arg ref="contextSource" />
+	</bean>
+	
+	<bean id="ldapServicio" class="ar.com.telecom.shiva.base.ldap.impl.LdapServicioImpl">
+       	<property name="ldapTemplate" ref="ldapTemplate" />
+    </bean>
+ 		
+</beans>

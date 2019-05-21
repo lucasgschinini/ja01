@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	
+  	<bean id="DESCOBROS" class="ar.com.telecom.shiva.negocio.workflow.definicion.Workflow">
+  		<property name="tipoWorkflow">
+  			<util:constant 
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.TipoWorkflow.DESCOBRO" />
+ 		</property>
+  		
+  		<property name="transiciones">
+  			<list>
+  				<ref bean="inicioDESCOBRO" />
+  				<ref bean="guardarDescobroEnEdicion" />
+   				<ref bean="solicitarDescobro" />
+  				<ref bean="solicitarAnulacionDeDescobro" />
+  				<ref bean="iniciarDescobro" /> 
+  				<ref bean="aplicarDescobro" /> 
+  				<ref bean="registrarDescobroEnError" /> 
+  				<ref bean="reintentarDescobroEnError" /> 
+   				<ref bean="registrarErrorEnPrimerDescobro" />
+  				<ref bean="revertirDescobroEnErrorEnPrimerDescobro" />
+  				<ref bean="anularDescobroEnErrorEnPrimerDescobro" />
+  				<ref bean="anularDescobroEnEdicion" />
+  				<ref bean="reintentarDescobro" />  
+  				<!-- Sprint reingenieria: Inicio -->
+  				<ref bean="registrarDescobroDeEnProcesoAPendienteMic"/>
+  				<ref bean="registrarDescobroDePendienteMicAPendienteProcesarMic"/>
+  				<ref bean="registrarDescobroPendienteProcesarMicAEnProceso"/>
+<!--   				<ref bean="registrarDescobroDePendienteMicAEnProceso"/> -->
+  				<!-- Sprint reingenieria: Fin -->
+  				<ref bean="registrarDescobroEnProcesoAPendienteConfirmacionManual" />
+  				<ref bean="registrarDescobroPendienteConfirmacionManualAEnProceso" />
+  			</list>
+  		</property>	
+  		
+  	</bean>
+  	
+  	<!-- Estados (8) + inicial -->
+  	<util:constant id="des_no_disponible"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_NO_DISPONIBLE" />
+  	<util:constant id="des_en_edicion"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_EN_EDICION" />
+  	<util:constant id="des_pendiente"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_PENDIENTE" />
+  	<util:constant id="des_descobro_en_proceso"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_DESCOBRO_PROCESO" />
+  	<util:constant id="des_en_error"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_EN_ERROR" />
+  	<util:constant id="des_error_en_primer_descobro"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_ERROR_EN_PRIMER_DESCOBRO" />
+  	<util:constant id="des_anulado"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_ANULADO" />
+  	<util:constant id="des_descobrado"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_DESCOBRADO" />
+  	
+	<!-- Sprint reingieneria: Inicio -->
+	<util:constant id="des_pendiente_mic"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_PENDIENTE_MIC" />
+	<util:constant id="des_pend_procesar_mic"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_PEND_PROCESAR_MIC" />
+	<!-- Sprint reingieneria: Fin -->
+	<util:constant id="des_pendiente_confirmacion_manual"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_PENDIENTE_CONFIRMACION_MANUAL" />
+
+
+
+
+
+
+
+
+  			
+  	
+  	  	<!-- Transiciones (16) -->
+  	<bean id="inicioDESCOBRO" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Inicio"/>
+  		<property name="evento" value="crearWorkflow"/>
+  		<property name="origen">
+  			<util:constant 
+  				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.INICIO" />
+  		</property>
+  		<property name="destino" ref="des_no_disponible"/>	
+  	</bean>
+
+  	<bean id="guardarDescobroEnEdicion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Guardar descobro en edicion"/>
+  		<property name="evento" value="guardarDescobroEnEdicion"/>
+  		<property name="origen" ref="des_no_disponible"/>
+  		<property name="destino" ref="des_en_edicion"/>	
+  	</bean>		
+  		
+  	
+  	
+  	<bean id="solicitarDescobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar descobro"/>
+  		<property name="evento" value="solicitarDescobro"/>
+  		<property name="origen" ref="des_en_edicion"/>
+  		<property name="destino" ref="des_pendiente"/>	
+  	</bean>	
+  	
+  	<bean id="solicitarAnulacionDeDescobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar anulación de descobro"/>
+  		<property name="evento" value="solicitarAnulacionDeDescobro"/>
+  		<property name="origen" ref="des_en_edicion"/>
+  		<property name="destino" ref="des_anulado"/>	
+  	</bean>
+  	
+  	<bean id="iniciarDescobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Iniciar descobro"/>
+  		<property name="evento" value="iniciarDescobro"/>
+  		<property name="origen" ref="des_pendiente"/>
+  		<property name="destino" ref="des_descobro_en_proceso"/>	
+  	</bean>
+  	
+  	<bean id="aplicarDescobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Aplicar descobro"/>
+  		<property name="evento" value="aplicarDescobro"/>
+  		<property name="origen" ref="des_descobro_en_proceso"/>
+  		<property name="destino" ref="des_descobrado"/>	
+  	</bean>
+  	
+  	<bean id="registrarDescobroEnError" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar descobro en error"/>
+  		<property name="evento" value="registrarDescobroEnError"/>
+  		<property name="origen" ref="des_descobro_en_proceso"/>
+  		<property name="destino" ref="des_en_error"/>	
+  	</bean>
+  	
+  	<bean id="reintentarDescobroEnError" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Reintentar descobro en error"/>
+  		<property name="evento" value="reintentarDescobroEnError"/>
+  		<property name="origen" ref="des_en_error"/>
+  		<property name="destino" ref="des_pendiente"/>	
+  	</bean>	
+  	
+  	<bean id="registrarErrorEnPrimerDescobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar error en primer descobro"/>
+  		<property name="evento" value="registrarErrorEnPrimerDescobro"/>
+  		<property name="origen" ref="des_descobro_en_proceso"/>
+  		<property name="destino" ref="des_error_en_primer_descobro"/>	
+  	</bean>
+  	
+  	<bean id="revertirDescobroEnErrorEnPrimerDescobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Revertir descobro en error en primer descobro"/>
+  		<property name="evento" value="revertirDescobroEnErrorEnPrimerDescobro"/>
+  		<property name="origen" ref="des_error_en_primer_descobro"/>
+  		<property name="destino" ref="des_pendiente"/>	
+  	</bean>
+  	
+  	<bean id="anularDescobroEnErrorEnPrimerDescobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular descobro en error en primer descobro"/>
+  		<property name="evento" value="anularDescobroEnErrorEnPrimerDescobro"/>
+  		<property name="origen" ref="des_error_en_primer_descobro"/>
+  		<property name="destino" ref="des_anulado"/>	
+  	</bean>
+
+	<bean id="anularDescobroEnEdicion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Anular Descobro en Edicion" />
+		<property name="evento" value="anularDescobroEnEdicion" />
+		<property name="origen" ref="des_en_edicion" />
+		<property name="destino" ref="des_anulado" />
+	</bean>
+
+	<bean id="reintentarDescobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Reintentar Descobro" />
+		<property name="evento" value="reintentarDescobro" />
+		<property name="origen" ref="des_en_error" />
+		<property name="destino" ref="des_pendiente" />
+	</bean>
+  	
+  	<!-- Sprint reingenieria: Inicio -->
+	<bean id="registrarDescobroDeEnProcesoAPendienteMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Descobro con Respuesta Pendiente de MIC"/>
+  		<property name="evento" value="registrarDescobroDeEnProcesoAPendienteMic"/>
+  		<property name="origen" ref="des_descobro_en_proceso"/>
+  		<property name="destino" ref="des_pendiente_mic"/>	
+  	</bean>
+  	<bean id="registrarDescobroDePendienteMicAPendienteProcesarMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Descobro En proceso"/>
+  		<property name="evento" value="registrarDescobroDePendienteMicAPendienteProcesarMic"/>
+  		<property name="origen" ref="des_pendiente_mic"/>
+  		<property name="destino" ref="des_pend_procesar_mic"/>	
+  	</bean>   
+  	<bean id="registrarDescobroPendienteProcesarMicAEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Descobro En proceso"/>
+  		<property name="evento" value="registrarDescobroPendienteProcesarMicAEnProceso"/>
+  		<property name="origen" ref="des_pend_procesar_mic"/>
+  		<property name="destino" ref="des_descobro_en_proceso"/>	
+  	</bean>
+  	<bean id="registrarDescobroEnProcesoAPendienteConfirmacionManual" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Descobro En proceso"/>
+  		<property name="evento" value="registrarDescobroEnProcesoAPendienteConfirmacionManual"/>
+  		<property name="origen" ref="des_descobro_en_proceso"/>
+  		<property name="destino" ref="des_pendiente_confirmacion_manual"/>	
+  	</bean>
+  	<bean id="registrarDescobroPendienteConfirmacionManualAEnProceso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Registrar Pendiente Confirmacion Manual"/>
+  		<property name="evento" value="registrarDescobroPendienteConfirmacionManualAEnProceso"/>
+  		<property name="origen" ref="des_pendiente_confirmacion_manual"/>
+  		<property name="destino" ref="des_descobro_en_proceso"/>	
+  	</bean>
+	<!-- Sprint reingenieria: Fin -->
+</beans>

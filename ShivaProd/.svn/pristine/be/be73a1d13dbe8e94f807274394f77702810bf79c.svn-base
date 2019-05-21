@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+    
+    <!-- 
+	Configuracion para utilizar WebSphere MQ
+ 	A partir de la version 7.1, MQ tiene 3 reglas obligatorias definidas
+ 		 1. Solamente permiso adminitrador puede utilizar MQ Explorer
+ 		 2. No se permite usar el canal SYSTEM
+ 		 3. La comunicacion no puede ser establecida con usuarios con privilegios altos
+ 		 
+ 	No hace falta pasar usuario/contraseña si se utiliza MCA
+ 	Si no se utiliza MCA con usuario es suficiente, no hay falta pasar contraseña porque MQ no tiene lógica
+ 		<bean id="wmqUserCredentialConnectionFactory" class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter">
+        	<property name="targetConnectionFactory" ref="wmqConnectionFactory" />
+        	<property name="username" value="mquser" />
+        	<property name="password" value="password" />
+    	</bean>
+    	
+    En MQ, crear un QueueManager, un Queue, un Channel, y un usuario sin privilegios elevados.
+ 	-->
+ 	
+ 	<context:component-scan base-package="ar.com.telecom.shiva.base.jms" />
+    
+    <import resource="spring-jms-servicios.xml" />
+    <import resource="spring-jms-mapeos.xml" />
+    
+    <!-- Factory Conection -->
+    <bean id="micJmsAutenticacion" class="ar.com.telecom.shiva.base.jms.util.mq.MQAutenticacion">
+	    <property name="user" value="${mq.mic.auth.user}" />
+	    <property name="pass" value="${mq.mic.auth.pass}" />
+	</bean>
+	
+	<bean id="micJmsConnectionFactory" class="com.ibm.mq.jms.MQQueueConnectionFactory">
+	    <property name="hostName" value="${mq.mic.host}" />
+	    <property name="port" value="${mq.mic.port}" />
+	    <property name="queueManager" value="${mq.mic.queueManager}" />
+	    <property name="transportType" value="${mq.mic.transportType}" />
+	    <property name="channel" value="${mq.mic.channel}" />
+	</bean>
+	
+	<bean id="micEnvioJmsQueue" class="com.ibm.mq.jms.MQQueue"> 
+        <property name="baseQueueName" value="${mq.mic.queue.envio}" />
+        <property name="targetClient" value="1" />      
+    </bean>
+    
+    <bean id="micRecepcionJmsQueue" class="com.ibm.mq.jms.MQQueue"> 
+        <property name="baseQueueName" value="${mq.mic.queue.recepcion}" />
+		<property name="targetClient" value="1" />    
+    </bean>
+    
+    <bean id="micMQSeries" class="ar.com.telecom.shiva.base.jms.util.mq.MQSeriesBase">
+    	<property name="connectionFactory" ref="micJmsConnectionFactory"/>
+    	<property name="queueEmisor" ref="micEnvioJmsQueue"/>
+		<property name="queueReceptor" ref="micRecepcionJmsQueue"/>
+		<property name="autenticacion" ref="micJmsAutenticacion"/>
+    </bean>
+    
+    <bean id="micJmsUserCredentialConnectionFactory" class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter">
+        <property name="targetConnectionFactory" ref="micJmsConnectionFactory" />
+        <property name="username" value="${mq.mic.auth.user}" />
+        <property name="password" value="${mq.mic.auth.pass}" />
+    </bean>
+
+	<!-- A cached connection to wrap the Connection -->
+	<bean id="micCachedConnectionFactory"
+    	class="org.springframework.jms.connection.CachingConnectionFactory"
+		p:targetConnectionFactory-ref="micJmsUserCredentialConnectionFactory"
+		p:sessionCacheSize="10" 
+		p:reconnectOnException="true"/>
+    
+    <bean id="micJmsEnvioTemplate" class="org.springframework.jms.core.JmsTemplate">
+    	<property name="connectionFactory" ref="micCachedConnectionFactory" />
+		<!--<property name="connectionFactory" ref="micJmsUserCredentialConnectionFactory" />-->
+	    <property name="defaultDestination" ref="micEnvioJmsQueue" />
+	</bean>
+	
+	<bean id="micJmsRecepcionTemplate" class="org.springframework.jms.core.JmsTemplate">
+    	<property name="connectionFactory" ref="micCachedConnectionFactory" />
+		<!--<property name="connectionFactory" ref="micJmsUserCredentialConnectionFactory" />-->
+	    <property name="defaultDestination" ref="micRecepcionJmsQueue" />
+	</bean>
+	
+	<bean id="micJmsPropiedades" class="ar.com.telecom.shiva.base.jms.util.JmsPropiedades">
+		<property name="aplicacion" value="${mq.mic.aplicacion}" />
+		<property name="servicio" value="${mq.mic.servicio}" />
+	</bean>
+	
+	<bean id="micControlMQ" class="ar.com.telecom.shiva.base.jms.impl.MicControlMqSeriesImpl">
+    	<property name="micMqServidor" ref="micMQSeries"/>
+    	<property name="micJmsEnvioTemplate" ref="micJmsEnvioTemplate"/>
+    	<property name="micJmsRecepcionTemplate" ref="micJmsRecepcionTemplate"/>
+    	<property name="micJmsPropiedades" ref="micJmsPropiedades"/>
+    </bean>
+
+</beans>

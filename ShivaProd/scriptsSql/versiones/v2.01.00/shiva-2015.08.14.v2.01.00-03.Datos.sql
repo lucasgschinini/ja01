@@ -1,0 +1,1 @@
+update shv_mnu_menu set descripcion='Búsqueda de cobros' where id_menu=24;

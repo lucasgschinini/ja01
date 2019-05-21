@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+ 	http://www.springframework.org/schema/beans
+ 	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+ 
+	<!-- Validadores -->
+	<bean name="boletaSinValorValidacionWeb" 
+		class="ar.com.telecom.shiva.presentacion.bean.validacion.BoletaSinValorValidacionWeb" >
+		<property name="boletaSinValorValidacionServicio" ref="boletaSinValorValidacionServicio"/>
+	</bean>
+	<bean name="boletaSinValorValidacionServicio" 
+		class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.BoletaSinValorValidacionServicioImpl" />
+	
+	<bean name="procesarArchivoValidacionServicio" 
+		class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.ProcesarArchivoValidacionServicioImpl" />
+		
+	<bean name="boletaConValorValidacionWeb"
+		class="ar.com.telecom.shiva.presentacion.bean.validacion.BoletaConValorValidacionWeb">
+		<property name="boletaConValorValidacionServicio" ref="boletaConValorValidacionServicio" />
+	</bean>
+	
+	<bean name="boletaConValorValidacionServicio"
+		class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.BoletaConValorValidacionServicioImpl" />
+		
+	<bean name="talonarioValidacionWeb" 
+		class="ar.com.telecom.shiva.presentacion.bean.validacion.TalonarioValidacionWeb" >
+		<property name="talonarioValidacionServicio" ref="talonarioValidacionServicio"/>
+	</bean>
+	<bean name="talonarioValidacionServicio" 
+		class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.TalonarioValidacionServicioImpl" />
+	
+	<bean id="reglaConciliacionValidacionServicio" class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.ReglaConciliacionValidacionServicioImpl" />
+
+	<bean name="archivoAvcValidacionWeb"
+		class="ar.com.telecom.shiva.presentacion.bean.validacion.ArchivoAvcValidacionWeb">
+		<property name="archivoAvcValidacionServicio" ref="archivoAvcValidacionServicio" />
+	</bean>
+	<bean name="archivoAvcValidacionServicio"
+		class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.ArchivoAvcValidacionServicioImpl" />
+	
+	<bean name="registroAvcValidacionWeb"
+		class="ar.com.telecom.shiva.presentacion.bean.validacion.RegistroAvcValidacionWeb">
+	</bean>
+	<bean name="registroAvcValorValidacionWeb"
+		class="ar.com.telecom.shiva.presentacion.bean.validacion.RegistroAvcValorValidacionWeb">
+	</bean>
+	<bean name="validadorGenericoDeArchivo" class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.ValidadorGenericoDeArchivoImpl"/>
+	
+	
+	<bean name="cobroOnlineValidacionServicio"
+		class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.CobroOnlineValidacionServicioImpl" />
+		
+	<bean name="descobroValidacionServicio"
+		class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.DescobroValidacionServicioImpl" />
+		
+	<bean name="operacionMasivaValidacionWeb"
+		class="ar.com.telecom.shiva.presentacion.bean.validacion.OperacionMasivaValidacionWeb" />	
+		
+	<bean name="operacionMasivaValidacionServicio"	
+		class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.OperacionMasivaValidacionServicioImpl" />
+
+	<bean name="novedadesSapValidacionServicio"	
+		class="ar.com.telecom.shiva.base.ws.servidor.servicios.validacion.impl.RecepcionNovedadesDocumentosSAPValidacionServicioImpl" />
+	
+	<bean id="cotizacionValidacionServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.CotizacionValidacionServicioImpl"/>
+	
+	<bean name="clienteValidacionServicio" class="ar.com.telecom.shiva.negocio.servicios.validacion.impl.ClienteValidacionServicioImpl" />
+</beans>

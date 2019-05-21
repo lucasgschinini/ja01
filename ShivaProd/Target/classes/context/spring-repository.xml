@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.1.xsd">
+
+	<!-- 
+	http://gordondickens.com/wordpress/2011/08/01/simpler-jpa-with-spring-data-jpa/
+	http://gordondickens.com/wordpress/2011/08/02/adding-queries-to-spring-data-jpa/
+	Añadir queries para busquedas complejas ya que JPA solamente tiene findAll 
+	-->
+	<jpa:repositories base-package="ar.com.telecom.shiva.persistencia.repository" />
+
+</beans>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	
+  	<bean id="RECIBO_PRE_IMPRESOS" class="ar.com.telecom.shiva.negocio.workflow.definicion.Workflow">
+  		<property name="tipoWorkflow">
+  			<util:constant 
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.TipoWorkflow.RECIBO_PRE_IMPRESO" />
+ 		</property>
+ 		
+  		<property name="transiciones">
+  			<list>
+  				<ref bean="inicioREC" />
+  				<ref bean="asociarCompensacion" />
+  				<ref bean="eliminarCompensacion" />
+  				<ref bean="anularRecibo" />
+  				<ref bean="establecerReciboPendiente" />  				
+  				<ref bean="establecerReciboConciliado" />  				
+  				<ref bean="eliminarConciliado" />  				
+  				<ref bean="eliminarPendiente" />  				
+  				<ref bean="eliminarPendienteCompensaciones" />  				
+  				<ref bean="eliminarConciliadoCompensaciones" />  				
+  				<ref bean="eliminarPendienteConciliado" />  				
+  				<ref bean="actCompensacionesConciliado" />  				
+  				<ref bean="actConciliadoPendiente" />  				
+  				<ref bean="actCompensacionesPendiente" />
+  			</list>
+  		</property>	
+  	</bean>
+  	
+  	<!-- Estados (5) + inicial -->
+  	<util:constant id="rec_pendiente"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.REC_PENDIENTE" />
+  	<util:constant id="rec_compensacion"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.REC_COMPENSACION" />
+  	<util:constant id="rec_valores_conciliados"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.REC_VALORES_CONCILIADOS" />  	
+  	<util:constant id="rec_valores_pendiente"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.REC_VALORES_PENDIENTE" />
+	<util:constant id="rec_anulado"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.REC_ANULADO" />
+
+  	<!-- Transiciones (14) -->
+  	<bean id="inicioREC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Inicio"/>
+  		<property name="evento" value="crearWorkflow"/>
+  		<property name="origen">
+  			<util:constant 
+  				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.INICIO" />
+  		</property>
+  		<property name="destino" ref="rec_pendiente"/>	
+  	</bean>
+  	<bean id="asociarCompensacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Asociar Compensacion"/>
+  		<property name="evento" value="asociarCompensacion"/>
+  		<property name="origen" ref="rec_pendiente"/>
+  		<property name="destino" ref="rec_compensacion"/>	
+  	</bean>
+  	<bean id="eliminarCompensacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Eliminar Compensacion"/>
+  		<property name="evento" value="eliminarCompensacion"/>
+  		<property name="origen" ref="rec_compensacion"/>
+  		<property name="destino" ref="rec_pendiente"/>	
+  	</bean>
+  	<bean id="establecerReciboPendiente" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Establecer Recibo con Valor Pendiente de Conciliar"/>
+  		<property name="evento" value="establecerReciboPendiente"/>
+  		<property name="origen" ref="rec_pendiente"/>
+  		<property name="destino" ref="rec_valores_pendiente"/>	
+  	</bean>
+  	<bean id="establecerReciboConciliado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Establecer Recibo con Valor Conciliado"/>
+  		<property name="evento" value="establecerReciboConciliado"/>
+  		<property name="origen" ref="rec_pendiente"/>
+  		<property name="destino" ref="rec_valores_conciliados"/>	
+  	</bean>
+  	<bean id="eliminarConciliado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Eliminar Valor Conciliado"/>
+  		<property name="evento" value="eliminarConciliado"/>
+  		<property name="origen" ref="rec_valores_conciliados"/>
+  		<property name="destino" ref="rec_pendiente"/>	
+  	</bean>
+  	<bean id="eliminarPendiente" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Eliminar Valor Pendiente de Conciliar"/>
+  		<property name="evento" value="eliminarPendiente"/>
+  		<property name="origen" ref="rec_valores_pendiente"/>
+  		<property name="destino" ref="rec_pendiente"/>	
+  	</bean>
+  	<bean id="eliminarConciliadoCompensaciones" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Eliminar Valor Conciliado a Recibo con Compensacion"/>
+  		<property name="evento" value="eliminarConciliadoCompensaciones"/>
+  		<property name="origen" ref="rec_valores_conciliados"/>
+  		<property name="destino" ref="rec_compensacion"/>	
+  	</bean>
+  	<bean id="eliminarPendienteCompensaciones" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Eliminar Valor Pendiente de Conciliar a Recibo con Compensacion"/>
+  		<property name="evento" value="eliminarPendienteCompensaciones"/>
+  		<property name="origen" ref="rec_valores_pendiente"/>
+  		<property name="destino" ref="rec_compensacion"/>	
+  	</bean>
+  	<bean id="eliminarPendienteConciliado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Actualizar Recibo en Valor Pendiente de Conciliar a Recibo con Valor Conciliado"/>
+  		<property name="evento" value="eliminarPendienteConciliado"/>
+  		<property name="origen" ref="rec_valores_pendiente"/>
+  		<property name="destino" ref="rec_valores_conciliados"/>	
+  	</bean>
+  	<bean id="actCompensacionesConciliado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Actualizar Recibo con Compensaciones por Valor Conciliado"/>
+  		<property name="evento" value="actCompensacionesConciliado"/>
+  		<property name="origen" ref="rec_compensacion"/>
+  		<property name="destino" ref="rec_valores_conciliados"/>	
+  	</bean>
+  	<bean id="actConciliadoPendiente" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Actualizar Recibo con Valor Conciliado por Valor Pendiente de Conciliar"/>
+  		<property name="evento" value="actConciliadoPendiente"/>
+  		<property name="origen" ref="rec_valores_conciliados"/>
+  		<property name="destino" ref="rec_valores_pendiente"/>	
+  	</bean>
+  	<bean id="actCompensacionesPendiente" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Actualizar Recibo con Compensaciones por Valor Pendiente de Conciliar"/>
+  		<property name="evento" value="actCompensacionesPendiente"/>
+  		<property name="origen" ref="rec_compensacion"/>
+  		<property name="destino" ref="rec_valores_pendiente"/>	
+  	</bean>
+  	<bean id="anularRecibo" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular Recibo"/>
+  		<property name="evento" value="anularRecibo"/>
+  		<property name="origen" ref="rec_pendiente"/>
+  		<property name="destino" ref="rec_anulado"/>	
+  	</bean>
+    	
+</beans>

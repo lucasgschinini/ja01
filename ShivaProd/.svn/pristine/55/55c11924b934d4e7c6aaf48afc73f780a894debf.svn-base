@@ -1,0 +1,4 @@
+alter table SHV_COB_ED_CLIENTE add ID_PROVINCIA VARCHAR2(1 BYTE);
+
+/
+Exit;

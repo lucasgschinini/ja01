@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+  	<bean id="REGISTROS-AVC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Workflow">
+  		<property name="tipoWorkflow">
+  			<util:constant 
+  				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.TipoWorkflow.REGISTRO_AVC"/>
+ 		</property>
+  		
+  		<property name="transiciones">
+  			<list>
+  				<ref bean="inicioAVC" />
+  				<ref bean="solicitarRegistroAnulacion" />
+  				<ref bean="confirmarAnulacion" />
+  				<ref bean="rechazarPedidoDeAnulacion" />
+  				<ref bean="establecerRegistroPendienteConciliadoSinBoleta" />
+  				<ref bean="establecerRegistroConciliadoSinBoleta" />
+  				<ref bean="conciliarRegistroConDiferencias" />
+  				<ref bean="establecerRegistroConciliado" />
+  				<ref bean="deshacerRegistroConciliacionSugerida" />
+  				<ref bean="rechazarAltaValor" />
+  				<ref bean="solicitarReconfirmacionAltaValor" />
+  				<ref bean="establecerRegistroConciliacionSugerida" />
+  				<ref bean="solicitarConfirmacionAltaValor" />
+  				<ref bean="rechazarSolicitudAnulacionRegistroPendienteConfirmarValor" />
+  				<ref bean="solicitarAnulacionRegistroPendienteConfirmarValor" />
+  				<ref bean="solicitarAnulacionAltaValorRechazada" />
+  				
+  			</list>
+  		</property>	
+  	</bean>
+  	
+  	<!-- Estados (9) + inicial -->
+  	<util:constant id="avc_pendiente"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.AVC_PENDIENTE" />
+  	<util:constant id="avc_pendiente_anulacion"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.AVC_PENDIENTE_ANULACION" />
+  	<util:constant id="avc_anulado"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.AVC_ANULADO" />
+  	<util:constant id="avc_conciliado_sin_boleta"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.AVC_CONCILIADO_SIN_BOLETA" />
+  	<util:constant id="avc_conciliado"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.AVC_CONCILIADO" />
+  	<util:constant id="avc_conciliacion_sugerida"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.AVC_CONCILIACION_SUGERIDA" />
+  	<util:constant id="avc_diferencia"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.AVC_DIFERENCIA" />
+  	<util:constant id="avc_alta_valor_rechazada"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.AVC_ALTA_VALOR_RECHAZADA" />
+  	<util:constant id="avc_pendiente_confirmar_alta_valor"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.AVC_PENDIENTE_CONFIRMAR_ALTA_VALOR" />
+  			
+  	<!-- Transiciones (6) -->
+  	<bean id="inicioAVC" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Inicio"/>
+  		<property name="evento" value="crearWorkflow"/>
+  		<property name="origen">
+  			<util:constant 
+  				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.INICIO" />
+  		</property>
+  		<property name="destino" ref="avc_pendiente"/>	
+  	</bean>
+  	<bean id="solicitarRegistroAnulacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  	  	<property name="nombre" value="Solicitar Registro Anulacion"/>
+  		<property name="evento" value="solicitarRegistroAnulacion"/>
+  		<property name="origen" ref="avc_pendiente"/>
+  		<property name="destino" ref="avc_pendiente_anulacion"/>	
+  	</bean>
+  	<bean id="confirmarAnulacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Confirmar Anulacion"/>
+  		<property name="evento" value="confirmarAnulacion"/>
+  		<property name="origen" ref="avc_pendiente_anulacion"/>
+  		<property name="destino" ref="avc_anulado"/>	
+  	</bean>
+  	<bean id="rechazarPedidoDeAnulacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rechazar pedido de Anulacion"/>
+  		<property name="evento" value="rechazarPedidoDeAnulacion"/>
+  		<property name="origen" ref="avc_pendiente_anulacion"/>
+  		<property name="destino" ref="avc_pendiente"/>	
+  	</bean>
+  	<bean id="establecerRegistroConciliacionSugerida" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Establecer Registro Conciliacion Sugerida"/>
+  		<property name="evento" value="establecerRegistroConciliacionSugerida"/>
+  		<property name="origen" ref="avc_pendiente"/>
+  		<property name="destino" ref="avc_conciliacion_sugerida"/>	
+  	</bean>
+  	<bean id="deshacerRegistroConciliacionSugerida" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Deshacer Registro Conciliacion Sugerida"/>
+  		<property name="evento" value="deshacerRegistroConciliacionSugerida"/>
+  		<property name="origen" ref="avc_conciliacion_sugerida"/>
+  		<property name="destino" ref="avc_pendiente"/>	
+  	</bean>
+  	<bean id="conciliarRegistroConDiferencias" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Conciliar Registro con Diferencias"/>
+  		<property name="evento" value="conciliarRegistroConDiferencias"/>
+  		<property name="origen" ref="avc_conciliacion_sugerida"/>
+  		<property name="destino" ref="avc_diferencia"/>	
+  	</bean>
+  	
+  	<bean id="rechazarAltaValor" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rechazar alta de valor"/>
+  		<property name="evento" value="rechazarAltaValor"/>
+  		<property name="origen" ref="avc_pendiente_confirmar_alta_valor"/>
+  		<property name="destino" ref="avc_alta_valor_rechazada"/>	
+  	</bean>
+  	<bean id="solicitarReconfirmacionAltaValor" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Reconfirmacion Alta de Valor"/>
+  		<property name="evento" value="solicitarReconfirmacionAltaValor"/>
+  		<property name="origen" ref="avc_alta_valor_rechazada"/>
+  		<property name="destino" ref="avc_pendiente_confirmar_alta_valor"/>	
+  	</bean>
+  	<bean id="solicitarAnulacionRegistroPendienteConfirmarValor" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Anulacion Registro Pendiente Confirmar Valor"/>
+  		<property name="evento" value="solicitarAnulacionRegistroPendienteConfirmarValor"/>
+  		<property name="origen" ref="avc_pendiente_confirmar_alta_valor"/>
+  		<property name="destino" ref="avc_pendiente_anulacion"/>	
+  	</bean>
+  	<bean id="rechazarSolicitudAnulacionRegistroPendienteConfirmarValor" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rechazar Solicitud Anulacion Registro Pendiente Confirmar Valor"/>
+  		<property name="evento" value="rechazarSolicitudAnulacionRegistroPendienteConfirmarValor"/>
+  		<property name="origen" ref="avc_pendiente_anulacion"/>
+  		<property name="destino" ref="avc_pendiente_confirmar_alta_valor"/>	
+  	</bean>
+  	<bean id="establecerRegistroConciliado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Establecer Registro Conciliado"/>
+  		<property name="evento" value="establecerRegistroConciliado"/>
+  		<property name="origen" ref="avc_pendiente"/>
+  		<property name="destino" ref="avc_conciliado"/>	
+  	</bean>
+  	<bean id="solicitarConfirmacionAltaValor" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Confirmacion Alta de Valor"/>
+  		<property name="evento" value="solicitarConfirmacionAltaValor"/>
+  		<property name="origen" ref="avc_pendiente"/>
+  		<property name="destino" ref="avc_pendiente_confirmar_alta_valor"/>	
+  	</bean>
+  	<bean id="establecerRegistroPendienteConciliadoSinBoleta" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Establecer Registro Pendiente Conciliado Sin Boleta"/>
+  		<property name="evento" value="establecerRegistroPendienteConciliadoSinBoleta"/>
+  		<property name="origen" ref="avc_pendiente"/>
+  		<property name="destino" ref="avc_conciliado_sin_boleta"/>	
+  	</bean>
+  	<bean id="establecerRegistroConciliadoSinBoleta" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Establecer Registro Conciliado Sin Boleta"/>
+  		<property name="evento" value="establecerRegistroConciliadoSinBoleta"/>
+  		<property name="origen" ref="avc_pendiente_confirmar_alta_valor"/>
+  		<property name="destino" ref="avc_conciliado_sin_boleta"/>	
+  	</bean>
+  	<bean id="solicitarAnulacionAltaValorRechazada" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Anulacion Alta de Valor Rechazada"/>
+  		<property name="evento" value="solicitarAnulacionAltaValorRechazada"/>
+  		<property name="origen" ref="avc_alta_valor_rechazada"/>
+  		<property name="destino" ref="avc_pendiente_anulacion"/>
+  	</bean>
+</beans>

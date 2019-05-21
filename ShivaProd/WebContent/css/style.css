@@ -1,0 +1,837 @@
+/*----------------------------------------------------------------------*/
+/*	Reset Styles
+/*----------------------------------------------------------------------*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block;}
+body {line-height:1;}
+ol, ul {list-style:none;}
+blockquote, q {quotes:none;}
+blockquote:before, blockquote:after, q:before, q:after {content:'';content:none;}
+table {border-collapse:collapse;border-spacing:0;}
+strong {font-weight: bold;}
+
+
+/*----------------------------------------------------------------------*/
+/*	General Styles
+/*----------------------------------------------------------------------*/
+
+	body {background: #f0f0f0; font: normal 11px/16px Verdana;}
+
+	#container {}
+	.wrap {width: 960px; margin: 0 auto; overflow: hidden;}
+	.bottom {bottom:0px;}
+	#main {background: #fff; padding: 0; margin: 5px 0 0;}
+
+	#tooltip {position: absolute; z-index: 9999; color: #000; font-size: 10px;  background: url(../images/bg-tooltip.png) no-repeat left bottom; padding: 0 0 9px;}
+
+	#tag708x90 {margin: 30px 0 0;}
+
+	/* IE hack */
+	*html #tooltip .tipHeader {margin-bottom: -6px;}
+	#tooltip .tipBody {background: #ffcc00; font-weight: bold; padding: 0 5px; border: 1px solid #ffcc00; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; line-height: 18px;}
+
+#mask {position:absolute; left:0; top:0; z-index:9000; background-color:#000; display:none;}
+#boxes .window {position:fixed; left:50%; top:50%; width:618px; height:188px; display:none; z-index:9999; padding:20px; margin: -94px 0 0 -309px;}
+#boxes #dialog {width:618px; height:188px; padding:10px; background: url(../images/bg-modal.png) no-repeat 0 0;}
+	#boxes #dialog .title {color: #0a89c2; font-size: 14px; background: #e6e5e5; padding: 7px 20px; width: 558px; overflow: hidden;}
+		#boxes #dialog .title .close {float: right;}
+	#boxes #dialog p {text-align: center; font-size: 16px; margin: 30px 0;}
+	#boxes #dialog .actions {float: none; padding: 20px 0 0; margin: 0 auto; background: url(../images/border-shadow-small.png) no-repeat center top;}
+
+#boxestyc .window {position:fixed; left:50%; top:50%; width:618px; height:400px; display:none; z-index:9999; padding:20px; margin: -200px 0 0 -309px;}
+#boxestyc #dialog {width:618px; height:400px; padding:10px; background: url(../images/bg-modal-tyc.png) no-repeat 0 0;}
+	#boxestyc #dialog .title {color: #0a89c2; font-size: 14px; background: #e6e5e5; padding: 7px 20px; width: 558px; overflow: hidden;}
+		#boxestyc #dialog .title .close {float: right;}
+	#boxestyc #dialog p {text-align: left; font-size: 12px; margin: 15px 0; padding: 0 20px; width: 565px;}
+	#boxestyc #dialog .actions {float: none; padding: 20px 0 0; margin: 0 auto; background: url(../images/border-shadow-small.png) no-repeat center top;}
+
+/*
+.boton {
+border:1px solid #3D8CBD; -webkit-border-radius: 4px; -moz-border-radius: 4px;border-radius: 4px;width:100px;font-size:12px;font-family:arial, helvetica, sans-serif; padding: 0px 5px; text-align: center; color: #FFFFFF; background-color: #15A3FC; text-decoration: none; float: left; height: 24px; cursor: pointer;
+ background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #29acfe), color-stop(100%, #1081C7));
+ background-image: -webkit-linear-gradient(top, #29acfe, #1081C7);
+ background-image: -moz-linear-gradient(top, #29acfe, #1081C7);
+ background-image: -ms-linear-gradient(top, #29acfe, #1081C7);
+ background-image: -o-linear-gradient(top, #29acfe, #1081C7);
+ background-image: linear-gradient(top, #29acfe, #1081C7);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#29acfe, endColorstr=#1081C7);
+}
+*/
+
+/*----------------------------------------------------------------------*/
+/*	Header
+/*----------------------------------------------------------------------*/
+
+	#header {background: #fff; height: 63px;}
+		#header #top {overflow: hidden; background: url(../img/header/border.gif) no-repeat right 6px;}
+			#header #top li {float: left; background: url(../img/header/border.gif) no-repeat 0 6px; padding: 0 0 0 1px;}
+				#header #top a {width: 159px; color: #fff; text-transform: uppercase; font-weight: bold; font-family: Arial; display: block; line-height: 20px; text-align: center; font-size: 10px; text-decoration: none;}
+				#header #top a:hover {background: url(../img/header/bg-header-hover.gif) no-repeat center bottom;}
+		
+		#header #logos {padding: 0 10px; overflow: hidden;}
+			#header #logos a {margin: 10px 10px; float: left;}
+				#header #logos a img {display: block; float: left;}
+
+		#sso {line-height: 30px; background: url(../img/header/bg-sso.gif) repeat-x left top; overflow: hidden;}
+			#sso .wrap {background: url(../img/header/border-blue.gif) no-repeat 0 4px; padding: 0 0 0 25px;}
+			#sso p {float: left; color: #fff; font-family: Arial;}
+				#sso ul {float: right; overflow: hidden;}
+					#sso li {float: right; color: #fff;}
+						#sso li a {color: #fff; margin: 0 10px; text-decoration: none;}
+						#sso li a:hover {text-decoration: underline;}
+
+
+/*----------------------------------------------------------------------*/
+/*	Home
+/*----------------------------------------------------------------------*/
+
+
+/*----------------------------------------------------------------------*/
+/*	Accordion
+/*----------------------------------------------------------------------*/
+	#sidebar {float: left; background: #f2f1f1; width: 220px; margin: 20px 0 40px; padding: 10px 5px; border: 1px solid #ededed; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
+		#sidebar ul {widows: 220px;}
+/*			#sidebar ul li {border-top: 1px solid #f2f1f1;}*/
+			
+			#sidebar div.account {color: #fff; font-size: 12px; font-weight: bold; background: #0c86c7; padding:4px 0 4px 10px; text-decoration: none;}
+			
+				#sidebar ul li a {width: 205px; background: #f2f1f1; font-size: 12px; display: block; text-decoration: none; padding: 4px 5px 4px 10px; color: #8a8989; font-weight: normal; border-top: 1px solid #dcdbdb;}
+				
+				#sidebar ul li a.less {background: #dcdbdb url(../img/menos.gif) no-repeat 198px 4px;}
+				#sidebar ul li a.more {background: #dcdbdb url(../img/mas.gif) no-repeat 198px 4px;}
+/*				#sidebar ul li a.toggleLink {width: 16px; display: inline; padding: 0; float: right;}*/
+				#sidebar ul li a.nav18 {color: #1185cd;}
+					#sidebar ul ul {border: none; padding: 0;}
+						#sidebar ul ul li {padding: 0px 5px 0px 0; border: none;}
+							#sidebar ul ul li a {background: #f2f1f1; color: #8a8989; font-weight: normal; border-top: 1px solid #dcdbdb;}
+		/*#sidebar .minitag {margin: 25px 0 0;}*/
+			/*#sidebar .minitag, #sidebar .minitag a {display: block;}*/
+		
+		#sidebar a.less {background: #dcdbdb url(../img/menos.gif) no-repeat 198px 4px;}
+		#sidebar a.more {background: #dcdbdb url(../img/mas.gif) no-repeat 198px 4px;}
+		#content a.less {background: url(../img/menos.gif) no-repeat 655px 4px;}
+		#content a.more {background: url(../img/mas.gif) no-repeat 655px 4px;}
+		
+		a:ACTIVE, a:VISITED, a:FOCUS{
+			border:none;
+			outline: none;
+		}
+
+
+	#main.bgdash {background: url(../images/bg-dashboard.gif) repeat-y center top;}
+	#content {float: left; width: 708px; overflow: hidden; padding: 20px 0; margin: 0 0 0 20px;}
+		#content.dash {width: 470px; background: white url(../images/border-dashboard.gif) repeat-y right top; padding: 20px 20px 0 0;}
+		/*
+		#dashboard {float:left; padding: 0 0 15px;}
+		#dashboard .box {width: 470px; color: #787878; border: 1px solid #f1f1f1; border-width: 1px 1px 2px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; margin: 0 0 15px;}
+			#dashboard .box .title {color: #0b88c6; font-size: 14px; background:#e6e5e5; padding: 7px 15px;}
+			*/
+
+			/*.box .loading {padding: 5px 15px; text-align: center;}*/
+				.box .loading p {margin: 5px 0; line-height: 24px;}
+			/*.box .error {margin-top: 0; padding-top: 0;}*/
+				/*.box .error p {text-align: center;}*/
+
+	/*
+			#dashboard .box ul.bullets {padding: 10px 15px;}
+				#dashboard .box .bullets li {background: url(../images/bullet.gif) no-repeat 0 6px; padding: 0 0 0 10px; margin: 2px 0 8px;}
+				#dashboard .box .list li {padding: 5px 15px; border-bottom: 1px solid #f0f0f0;}
+				#dashboard .box .list li.more {padding: 0; border: none; text-align: center; position: relative;}
+					#dashboard .box .list li a.toggleLink2 {position: absolute; left: 50%; top: 0; margin: 0 0 0 -12px;}
+						#dashboard .box .list li a.toggleLink2 img {display: block;}
+					#dashboard .box .bullets li a {color: #1185cd; font-weight: bold; text-decoration: none;}
+					#dashboard .box .bullets li a:hover {text-decoration: underline;}
+					#dashboard .box .list li strong {color: #424242;}
+		#dashboard table {text-align: left;}
+			#dashboard tr {display: block;}
+				#dashboard table th {background: #f7f7f7; color: #424242; font: normal 10px Tahoma; padding: 5px 10px;}
+				#dashboard table th.action {padding: 5px 10px;}
+				#dashboard table td {line-height: 28px; text-align: center; border-top: 1px solid #e1e1e1; vertical-align: middle;}
+				#dashboard #payments .title {margin: 0 0 10px;}
+				#dashboard #payments table .numero {width: 100px;}
+				#dashboard #payments table .importe {width: 50px; font-weight: bold;}
+				#dashboard #payments table .red {color: #ec1c24;}
+				#dashboard #payments table .venc1 {width: 70px;}
+				#dashboard #payments table .venc2 {width: 70px;}
+				#dashboard #payments table .estado {width: 60px;}
+				#dashboard #payments table td.action {width: 24px; padding: 0; text-align: center;}
+					#dashboard #payments table .action a {width:18px; display: block; margin: 0 auto;}
+						#dashboard #payments table .action img {display: block;}
+				#dashboard #payments p {font-size: 12px; padding: 0px 15px 10px;}
+				#dashboard #payments .more {text-align: center; border-top: 1px solid #e1e1e1;}
+					#dashboard #payments .more a {width: 24px; margin: 0 auto; display: block;}
+						#dashboard #payments .more img {display: block;}
+				#payments .red {color: #ec1c24;}
+				.medios-pago {border-top: 1px dotted #e1e1e1; text-align: center; padding: 10px 0; margin: 5px 0 0;}
+			#dashboard .box .actions {text-align: center; padding: 20px 0 5px;}
+		#dashboard #followings table {border-bottom: 1px solid #e1e1e1;}
+		#dashboard #followings .numero {width: 100px;}
+		#dashboard #followings .desc {width: 115px;}
+		#dashboard #followings .estado {width: 60px;}
+		#dashboard #followings .fecha {width: 70px;}
+		#dashboard #followings .canal {width: 70px;}
+		#dashboard #followings .accion {width: 55px;}
+			#dashboard #followings .accion a {width:18px; display: block; margin: 0 auto;}
+				#dashboard #followings .accion img {display: block;}
+		#dashboard #followings .thacciones {width: 55px; padding: 5px 0; text-align: center;}
+		#dashboard .legal {color: #787878; text-align: left; font-size: 8px; line-height: 10px; margin: 3px 10px;}
+		#dashboard #products .activar {color: #2ed3d9; text-decoration: underline; margin: 0 0 0 20px;}
+		
+
+		#dashboard #diccionario-acciones {margin: 0 0 20px;}
+			#dashboard #diccionario-acciones .title {color: #666; font-size: 15px; margin: 20px 0;}
+			#dashboard #diccionario-acciones ul {width: 480px; margin: 0 -5px; overflow: hidden;}
+				#dashboard #diccionario-acciones li {float: left; width: 70px; font-size: 10px; color: #707070; text-align: center; line-height: 12px; margin: 0 5px;}
+					#dashboard #diccionario-acciones li img {display: block; margin: 0 auto;}
+		
+		#banner160x400 {float: left; width: 160px; margin: 20px 0 0 20px;}
+
+*/
+/*----------------------------------------------------------------------*/
+/*	Footer
+/*----------------------------------------------------------------------*/
+
+	#footer {clear: both; background: url(../img/footer/bg-footer.gif) repeat-x 0 0; height: 30px; position: relative;}
+			#footer ul {overflow: hidden; margin: 0 12px;}
+				#footer ul li {float: left; width: 161px; background: url(../img/footer/bg-title-footer.gif) no-repeat 0 0; color: #fff; font-weight: bold; font-family: Arial; line-height: 24px; padding: 0 12px; margin: 0 2px 0 0;}
+					#footer ul li a {color: #fff; text-decoration: none;}
+					#footer ul ul {margin: 0;}
+						#footer ul ul li {background: none; padding: 0; font-weight: normal; margin: 0;}
+							#footer ul ul a {color: #fff; font-size: 11px; font-family: Arial;}
+							#footer ul ul a:hover {text-decoration: underline;}
+		#footer #backtop {position: absolute; bottom: 0; left: 50%; margin: 0 0 0 -12px;}
+
+
+/*----------------------------------------------------------------------*/
+/*	Facturas y Pagos
+/*----------------------------------------------------------------------*/
+
+	#inside .box {color: #787878; border: 1px solid #f1f1f1; border-width: 1px 1px 2px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; margin: 0 0 15px;}
+		#inside .box .title {color: #0b88c6; font-size: 14px; background:#e6e5e5; padding: 7px 15px;}
+		
+		#inside .box .tituloSecundario {
+			//color: #0b88c6; 
+			background:#f9f9f9;
+			font-size: 13px; 
+			font-weight: bold; 
+			padding: 7px 15px; 
+			//border: 1px solid #e6e5e5; 
+			margin-bottom: 20px;
+		}
+		
+		/*
+		#inside #payments table .numero {width: 120px;}
+		#inside #payments table .venc1 {width: 84px;}
+		#inside #payments table .venc2 {width: 84px;}
+		#inside #payments table .importe {width: 50px; font-weight: bold;}
+		#inside #payments table .red {color: #ec1c24;}
+		#inside #payments table .estado {width: 70px;}
+		#inside #payments table .forma-pago {width: 90px;}
+		#inside #payments table .fecha-pago {width: 90px;}
+		*/
+		#inside #payments table td.action {width: 24px; padding: 0; text-align: center;}
+			#inside #payments table .action a {width:18px; display: block; margin: 0 auto;}
+				#inside #payments table .action img {display: block;}
+		
+		/*
+		#i nside table tr {display: block;}
+		#i nside table th {background: #f7f7f7; color: #424242; font: normal 10px Tahoma; padding: 5px 0;}
+		#i nside table th.action {padding: 5px 10px;}
+		#i nside table td {line-height: 28px; text-align: center; border-top: 1px solid #e1e1e1; vertical-align: middle;}
+		*/
+		
+		#inside #payments p {font-size: 12px; padding: 10px 15px;}
+		/*#inside #payments .more {text-align: center; border-top: 1px solid #e1e1e1;}*/
+			/*#inside #payments .more a {width: 24px; margin: 0 auto; display: block;}*/
+				/*#inside #payments .more img {display: block;}*/
+	#inside .box .actions {text-align: center; padding: 20px 0 5px;}
+		#inside .box .actions a {margin: 0 5px;}
+		#inside .box .actions input {margin: 0 5px; width: 91px; height: 24px; float: none;}
+	
+	#inside #diccionario-acciones {margin: 0 0 20px;}
+		#inside #diccionario-acciones .title {color: #666; font-size: 15px; margin: 0 0 20px;}
+		#inside #diccionario-acciones ul {width: 718px; margin: 0 -5px 15px; overflow: hidden;}
+			#inside #diccionario-acciones li {float: left; width: 108px; font-size: 10px; color: #707070; text-align: center; line-height: 12px; margin: 0 5px;}
+				#inside #diccionario-acciones li img {display: block; margin: 0 auto;}
+
+	#factYpagos {}
+		#factYpagos .no-imputado {margin: 20px 15px; font-size: 12px;}
+			#factYpagos .no-imputado p {margin: 10px 0; line-height: 20px;}
+				#factYpagos .no-imputado p a {color: #0B88C6; text-decoration: none;}
+			#factYpagos .no-imputado ul {}
+				#factYpagos .no-imputado li {background: url(../images/bullet-circle.gif) no-repeat 0 6px; padding: 0 0 0 15px; margin: 0 0 15px;}
+					#factYpagos .no-imputado li strong {color: #0b87c7;}
+				#factYpagos .border-shadow {margin: 20px 0;}
+			#factYpagos .no-imputado form {margin: 0 auto; width: 340px;}
+				#factYpagos .no-imputado form div {clear: both; overflow: hidden; margin: 15px 0;}
+					#factYpagos .no-imputado form  label {float: left; display: block; width: 150px;}
+					#factYpagos .no-imputado form input {float: left; width: 170px;}
+					#factYpagos .no-imputado form select {float: left; width: 177px;}
+			#factYpagos .actions {border-top: 1px solid #f5f5f5; margin: 0 15px;}
+			#factYpagos .note {margin: 10px 15px 20px;}
+
+			#factYpagos .gracias {color: #454d24; background: #eefab7; font-weight: bold; font-size: 12px; padding: 15px; margin: 0 15px 15px !important; text-align: center;}
+				#factYpagos .gracias img {margin-right: 10px;}
+
+	#payments .imprimir_comprobantes {padding: 10px 0;}
+	#payments .imprimir_comprobantes .actions {margin: 20px 15px;}
+	#payments .imprimir_comprobantes_tabla {margin: 0 15px;}
+		#payments .imprimir_comprobantes_tabla .fecha_vencimiento {width: 128px;}
+		#payments .imprimir_comprobantes_tabla .nro_factura {width: 129px;}
+		#payments .imprimir_comprobantes_tabla .importe {width: 88px !important;}
+		#payments .imprimir_comprobantes_tabla .fecha_pago {width: 99px;}
+		#payments .imprimir_comprobantes_tabla .gestiones_administrativas {width: 99px;}
+		#payments .imprimir_comprobantes_tabla .acciones {width: 135px; line-height: 12px;}
+			#payments .imprimir_comprobantes_tabla .acciones a {color:#1295e3; line-height: 12px !important; text-decoration: none;}
+				#payments .imprimir_comprobantes_tabla .acciones a img {float: left; margin: 4px 5px 0 20px;}
+					#payments .imprimir_comprobantes_tabla .acciones a span {float: left; display: block; width: 90px; text-align: left;}
+		#payments .datos_persona {background: #f7f7f7; margin: 10px 15px 25px; padding: 10px 15px;}
+			#payments .datos_persona p {font-size: 11px !important; padding: 2px 0 !important;}
+			#payments p.center_text {text-align: center;}
+		#payments .action_border {border-top: 1px solid #f5f5f5; margin: 20px 0 0;}
+	#payments .anticipo_bifurcador {background: #ecf5fa; margin: 15px 15px 30px; padding: 20px 0;}
+		#payments .anticipo_bifurcador ul {text-align: center;}
+			#payments .anticipo_bifurcador li {display: inline; background: url(../images/bullet-circle.gif) no-repeat 0 5px; padding: 0 0 0 10px; margin: 0 40px;}
+				#payments .anticipo_bifurcador li a {color: #0c88c4; font-size: 14px; text-decoration: none;}
+	#payments .dataTableNuevo {}
+		#payments .dataTableNuevo .nroCuotaDEINuevo {width: 119px;}
+		#payments .dataTableNuevo .nroConvenioDEINuevo {width: 134px;}
+		#payments .dataTableNuevo .nroCuotaDEINuevo {width: 114px;}
+		#payments .dataTableNuevo .primerVencStringDEINuevo {width: 104px;}
+		#payments .dataTableNuevo .importeDEINuevo {width: 79px !important;}
+		#payments .dataTableNuevo .estadoNuevo {width: 84px !important;}
+		#payments .dataTableNuevo .pagarDEINuevo {width: 74px;}
+	
+	/*
+	#payments .pago_tarjeta_credito, #payments .pagar_deuda {margin: 15px 0;}	
+	#payments .pago_tarjeta_credito form {margin: 0 15px;}
+		#payments .pago_tarjeta_credito form div {overflow: hidden; margin: 15px 0;}
+		#payments .pago_tarjeta_credito form label {float: left; display: block; width: 45%; text-align: right; margin: 0 10px 0 0;}
+		#payments .pago_tarjeta_credito form input {float: left;}
+		#payments .pago_tarjeta_credito form select {float: left;}
+		#payments .pago_tarjeta_credito form span {float: left; margin: 0 5px;}
+		#payments .pago_tarjeta_credito form .titles {margin: 0 0 0 100px;}
+		#payments .pago_tarjeta_credito form .form_captcha {padding: 0 0 0 45%; margin: 15px 0 15px 10px;}
+		
+		#payments .pago_tarjeta_credito .operacionOK {color: #454d24; background: #eefab7; margin: 25px 15px 30px;}
+			#payments .pago_tarjeta_credito .operacionOK p {background: url(../images/ico-tick-big.png) no-repeat 0 25px; padding: 20px 0 20px 35px !important; display: block; margin: 0 auto; width: 550px;}
+		*/
+	#payments .pagos_anticipos {margin: 15px 10px;}
+	#payments .pagar_deuda form {margin: 25px 15px; text-align: center;}
+	
+	/*
+	#payments .modificar_cuenta {margin: 15px 0;}
+		#payments .modificar_cuenta .note {font-size: 10px !important;}
+		#payments .modificar_cuenta form {}
+			#payments .modificar_cuenta form div {overflow: hidden; margin: 10px 0;}
+			#payments .modificar_cuenta form label {float: left; display: block; width: 45%; text-align: right; margin: 0 10px 0 0;}
+			#payments .modificar_cuenta form input {float: left; margin: 0 5px 0 0;}
+			#payments .modificar_cuenta form select {float: left;}
+				#payments .modificar_cuenta form .checkbox {padding: 0 0 0 12px;}
+				#payments .modificar_cuenta form .checkbox input {margin-left: 45%; width: 15px;}
+				#payments .modificar_cuenta form .checkbox label {width: auto;}
+
+	#payments .medios_pago {margin: 15px 0;}
+		#payments .medios_pago .medios {overflow: hidden; margin: 10px;}
+			#payments .medios_pago .medios li {float: left; margin: 0 5px;}
+		#payments .medios_pago form {margin: 0 15px;}
+			#payments .medios_pago form div {margin: 10px 0;}
+	*/
+/*----------------------------------------------------------------------*/
+/*	Mis Consumos
+/*----------------------------------------------------------------------*/
+/*
+	#mis-consumos {padding: 0 0 15px;}
+		#mis-consumos .title {}
+		#mis-consumos .not {color: #9e7b00; background: #ffe073; font-size: 13px; text-align: center; line-height: 18px; padding: 20px 25px; margin: 35px 15px;}
+		#mis-consumos p {font-size: 12px;}
+			#mis-consumos p.note {color: #424242; font-size: 11px; margin: 0 15px 20px;}
+		#mis-consumos .infobox {padding: 30px 15px 0; overflow: hidden;}
+			#mis-consumos .infobox .thumb, #mis-consumos .infobox p, #mis-consumos .infobox ul {float: left;}
+			#mis-consumos .infobox .thumb {margin: 0 15px 30px 0;}
+			#mis-consumos .infobox p {font-size: 16px; line-height: 20px; width: 400px;}
+			#mis-consumos .infobox ul {margin: 15px 0 0;}
+				#mis-consumos .infobox li {background: url(../images/bullet2.gif) no-repeat 0 11px; font-size: 12px; line-height: 25px; padding: 0 0 0 15px;}
+			#mis-consumos .infobox .adherirse-texto, #mis-consumos .infobox .adherirse-factura-online {clear: both; background: url(../images/hr.gif) no-repeat center top; 
+			 padding: 20px 0 0; width: 100%; margin: 30px 0 0;}
+				#mis-consumos .infobox .adherirse-texto p, #mis-consumos .infobox .adherirse-factura-online p {clear: both; font-size: 12px; text-align: center; width: 100%; display: block; margin: 0 0 20px;}
+				#mis-consumos .infobox .adherirse-texto a {clear: both; width: 161px; margin: 0 auto; display: block;}
+				#mis-consumos .infobox .adherirse-factura-online a {clear: both; width: 224px; margin: 0 auto; display: block;}
+
+		#form-consumos {padding: 15px; overflow: hidden;}
+			#form-consumos p {font-size: 13px;}
+			#form-consumos .WPMCMenuSeleccion {text-align: center; width: 550px; margin: 25px auto 0;}
+				#form-consumos .WPMCMenuSeleccionOpciones, #form-consumos .WPMCMenuSeleccionDOMFactura, #form-consumos .WPMCMenuSeleccionFactura, #form-consumos .WPMCMenuSeleccionLinea, #form-consumos .WPMCMenuSeleccionFechas {width: 100%; overflow: hidden; margin-bottom: 3px; line-height: 30px;}
+					#form-consumos .WPMCMenuSeleccionTextos, #form-consumos .WPMCMenuSeleccionCampos {float: left;}
+						#form-consumos .WPMCMenuSeleccionTextos span, #form-consumos .WPMCMenuSeleccionFechasTextos span {width: 100px; display: block; text-align: right; margin: 0 10px 0 0; font-size: 12px;}
+							#form-consumos .WPMCMenuSeleccionDOMFactura .textos {line-height: 14px;}
+						#form-consumos .WPMCMenuSeleccionCampos select {width: 400px; height: 20px; margin: 0 40px 0 0;}
+						#form-consumos .WPMCMenuSeleccionFechasTextos, #form-consumos .WPMCMenuSeleccionFechasCampos {float: left;}
+						#form-consumos .WPMCMenuSeleccionFechasCampos input {width: 120px;}
+						#form-consumos .WPMCMenuSeleccionFechas div {float: left;}
+							#form-consumos .WPMCMenuSeleccionFechas .WPMCMenuSeleccionTextos span {margin: 0 10px 0 38px;}
+						#form-consumos .WPMCMenuSeleccionBoton {margin:15px 0 0;}
+							#form-consumos .WPMCMenuSeleccionBoton input {color: #fff; background: url(../images/btn-buscar.png) no-repeat 0 0; width: 98px; height: 24px; border: none; cursor: pointer;}
+			#graphTables {background: url(../images/border-shadow.png) no-repeat center top; width: 700px; margin: 20px -15px 0; padding: 25px 0 0;}
+				#graphTables .tables {overflow: hidden;}
+					#graphTables .tableLeft, #graphTables .tableRight {float: left;}
+					#graphTables table {width: 320px; margin: 0 15px;}
+						#graphTables .tables p, .tablePagination p {margin: 0 15px 10px;}
+						#graphTables table th, #graphTables table td {width: 108px;}
+							#graphTables table th {font-size: 9px;}
+							#graphTables table tfoot {color: #424242; background: #f7f7f7; border-bottom: 1px solid #E1E1E1;}
+				#graphTables .graphs {text-align: center; margin: 25px 0 0;}
+					#graphTables .graphs p {text-align: left; margin: 0 15px 10px;}
+				#graphTables .tablePagination {float: left;}
+					#graphTables .tablePagination table, #graphTables .tablePagination #pagination {width: 465px;}
+					#graphTables .tablePagination th, #graphTables .tablePagination td {width: 93px;}
+					#graphTables .tablePagination td.colspan {width: 372px; text-align: right;}
+					#graphTables #pagination { text-align: center; padding: 0 0 10px; border-bottom: 1px solid #e1e1e1; margin: 10px 15px 0;}
+						#graphTables #pagination li {color: #1183cb; font-weight: bold; display: inline-block; -webkit-border-radius: 2px; -moz-border-radius:2px; border-radius: 2px; text-indent: 0; width: 22px; height: 16px; text-align: center; padding: 3px 0; margin: 0 5px; cursor: pointer;}
+						#graphTables #pagination li.current {background: #b9b9b9; color: #fff;}
+						#graphTables #pagination li.prev {background: url(../images/prev.gif) no-repeat 0 0; text-indent: -9999px;}
+						#graphTables #pagination li.next  {background: url(../images/next.gif) no-repeat 0 0; text-indent: -9999px;}
+				#graphTables .tarifas {float: left; width: 165px; height: 190px; background: #f8f8f8; padding: 10px; border: 1px solid #f1f1f1; -webkit-border-radius: 2px; -moz-border-radius:2px; border-radius: 2px; margin: 30px 0 0 10px;}
+					#graphTables .tarifas p {font-size: 11px; color: #424242;}
+					#graphTables .tarifas .title {color: #107fc4; font-size: 14px; padding: 0 0 7px; background: none; border-bottom: 1px solid #e9e9e9; margin: 0 0 15px;}
+				#graphTables p.note {float: left; margin: 20px 15px 0;}
+				
+			.arnet-movil, .arnet-internet {padding: 0 15px; overflow: hidden;}
+				.arnet-movil .producto, .arnet-movil .producto-beneficios, .arnet-internet .producto, .arnet-internet .producto-beneficios {float: left;}
+				.arnet-movil .producto-beneficios, .arnet-internet .producto-beneficios {margin: 0 0 0 15px;}
+					.arnet-movil .producto-beneficios p, .arnet-internet .producto-beneficios p {font-size: 16px !important; font-weight: normal;}
+					.arnet-movil .producto-beneficios ul, .arnet-internet .producto-beneficios ul {margin: 20px 0 0;}
+						.arnet-movil .producto-beneficios li, .arnet-internet .producto-beneficios li {background: url(../images/bullet2.gif) no-repeat 0 8px; font-size: 12px; line-height: 20px; font-weight: normal; padding: 0 0 0 15px;}
+						.arnet-movil .producto-beneficios .comprar-servicio, .arnet-internet .producto-beneficios .comprar-servicio {background: url(../images/border-shadow-small.png) no-repeat center top; text-align: center; padding: 20px 0 0; margin: 20px 0 0;}
+							.arnet-movil .producto-beneficios .comprar-servicio p, .arnet-internet .producto-beneficios .comprar-servicio p {font-size: 12px !important;}
+							.arnet-movil .producto-beneficios .comprar-servicio a, .arnet-internet .producto-beneficios .comprar-servicio a {display: block; margin: 15px 0 0;}
+			.consumoArnetMovil, .saldo-movil {float: left;}
+				.saldo-movil {font-size: 12px !important; margin: 0 0 10px;}
+				.consumoArnetMovil p {margin: 0 15px 10px;}
+				.consumoArnetMovil table {width: 324px !important;}
+					.consumoArnetMovil th, .consumoArnetMovil td {width: 162px !important;}
+			.recarga-movil {float: left; width: 325px; background: #eff9ff; padding: 25px 0; border: 1px solid #dff2fe; -webkit-border-radius: 2px; -moz-border-radius:2px; border-radius: 2px; text-align: center;}
+				.recarga-movil p {color:#3d3d3d; margin: 0 0 20px;}
+			.producto-libre {padding: 15px;}
+				.producto-libre p {overflow: hidden; line-height: 22px; font-size: 12px !important;}
+
+					.producto-libre p select {margin: 0 10px;}
+			.producto-data {background: url(../images/border-shadow.png) no-repeat center top; padding: 25px 15px 0; line-height: 24px;}
+				.producto-data p.note {margin: 40px 0 0 !important;}
+			.internet-libre {font-size: 12px !important; line-height: 22px;}
+			.selectM {width:190px;}
+
+	*/
+
+			.datepicker {width: 90px; text-align: center;}
+			.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #cccccc; /* background: #f6f6f6; */ font-weight: bold; color: #1c94c4; text-align: center;}
+			.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #1c94c4; text-decoration: none; }
+			.ui-widget-content .ui-state-hover, .ui-widget-content .ui-state-focus { border: 1px solid #cccccc; background: #DFF2FE; font-weight: bold; color: #000; }
+			.ui-state-hover a, .ui-state-hover a:hover { color: #c77405; text-decoration: none; }
+			.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { background: #ffffff; font-weight: bold; color: #eb8f00; }
+			.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #eb8f00; text-decoration: none; }
+			.ui-widget :active { outline: none; }
+			.ui-widget { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.1em; }
+			.ui-widget .ui-widget { font-size: 1em; }
+			.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1em; }
+			.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee; color: #333333; }
+			.ui-widget-content a { color: #333333; }
+			.ui-widget-header { border: 1px solid #0C86C7; background: #0C86C7; color: #ffffff; font-weight: bold; }
+			.ui-widget-header a { color: #ffffff; }
+			.ui-helper-hidden { display: none; }
+			.ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px 1px 1px 1px); clip: rect(1px,1px,1px,1px); }
+			.ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1.3; text-decoration: none; font-size: 100%; list-style: none; }
+			.ui-helper-clearfix:before, .ui-helper-clearfix:after { content: ""; display: table; }
+			.ui-helper-clearfix:after { clear: both; }
+			.ui-helper-clearfix { zoom: 1; }
+			.ui-helper-zfix { width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter:Alpha(Opacity=0); }
+
+			.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; -khtml-border-top-left-radius: 4px; border-top-left-radius: 4px; }
+			.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr { -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; -khtml-border-top-right-radius: 4px; border-top-right-radius: 4px; }
+			.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl { -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; -khtml-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px; }
+			.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br { -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; -khtml-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; }
+
+			.ui-datepicker { width: 17em; padding: .2em .2em 0; display: none; font-size: 11px;}
+			.ui-datepicker .ui-datepicker-header { position:relative; padding:.2em 0; }
+			.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { position:absolute; top: 2px; width: 1.8em; height: 1.8em; }
+			.ui-datepicker .ui-datepicker-prev-hover, .ui-datepicker .ui-datepicker-next-hover { top: 1px; }
+			.ui-datepicker .ui-datepicker-prev { left:2px; }
+			.ui-datepicker .ui-datepicker-next { right:2px; }
+			.ui-datepicker .ui-datepicker-prev-hover { left:1px; }
+			.ui-datepicker .ui-datepicker-next-hover { right:1px; }
+			.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span { display: block; position: absolute; left: 50%; margin-left: -8px; top: 50%; margin-top: -8px;  text-indent: -9999px;}
+			.ui-datepicker .ui-datepicker-title { margin: 0 2.3em; line-height: 1.8em; text-align: center; }
+			.ui-datepicker .ui-datepicker-title select { font-size:1em; margin:1px 0; }
+			.ui-datepicker select.ui-datepicker-month-year {width: 100%;}
+			.ui-datepicker select.ui-datepicker-month, 
+			.ui-datepicker select.ui-datepicker-year { width: 49%;}
+			.ui-datepicker table {width: 100%; font-size: .9em; border-collapse: collapse; margin:0 0 .4em; }
+			.ui-datepicker th { padding: .7em .3em; text-align: center; font-weight: bold; border: 0;  }
+			.ui-datepicker td { border: 0; padding: 1px; }
+			.ui-datepicker td span, .ui-datepicker td a { display: block; padding: .2em; text-align: right; text-decoration: none; }
+			.ui-datepicker .ui-datepicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
+			.ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
+			.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
+
+/*----------------------------------------------------------------------*/
+/*	Seguimiento de Gestiones
+/*----------------------------------------------------------------------*/
+
+	#gestiones {overflow: hidden; padding: 0 0 20px;}
+		#gestiones ul#paginate {border-bottom: 1px dotted #e1e1e1;}
+		#gestiones table td {line-height: 16px; padding: 4px 0;}
+		#gestiones table td.desc {text-align: left;}
+			#gestiones table td a {width: 18px; display: block; margin: 0 auto;}
+				#gestiones table td a img {display: block;}
+
+		#gestiones #pagination {float: left; margin: 15px 0 20px 15px;}
+			#gestiones #pagination li {color: #1183cb; font-weight: bold; display: inline-block; -webkit-border-radius: 2px; -moz-border-radius:2px; border-radius: 2px; text-indent: 0; width: 22px; height: 16px; text-align: center; padding: 3px 0; margin: 0 5px; cursor: pointer;}
+			#gestiones #pagination li.current {background: #b9b9b9; color: #fff;}
+			#gestiones #pagination li.prev {background: url(../images/prev.gif) no-repeat 0 0; text-indent: -9999px;}
+			#gestiones #pagination li.next  {background: url(../images/next.gif) no-repeat 0 0; text-indent: -9999px;}
+			
+			.pagination {float: left; width: 335px; padding: 0 0 15px; margin: 15px 0 20px 15px; text-align: center;}
+				.pagination span {color: #1183cb; font-weight: bold; display: inline-block; -webkit-border-radius: 2px; -moz-border-radius:2px; border-radius: 2px; text-indent: 0; width: 22px; height: 16px; text-align: center; padding: 3px 0; margin: 0 2px; cursor: pointer;}
+				.pagination a {color: #1183cb; font-weight: bold; display: inline-block; -webkit-border-radius: 2px; -moz-border-radius:2px; border-radius: 2px; text-indent: 0; width: 22px; height: 16px; text-align: center; padding: 3px 0; margin: 0 2px; cursor: pointer; text-decoration: none;}
+				.pagination .current {background: #b9b9b9; color: #fff;}
+				.pagination .prev, .pagination .next {color: #1183cb; font-weight: bold;}
+				.pagination .prev {background: url(../images/prev.gif) no-repeat 0 0; text-indent: -9999px;}
+				.pagination .next {background: url(../images/next.gif) no-repeat 0 0; text-indent: -9999px;}
+				
+/*
+			.pagination {}
+			.pagination A {}
+			.pagination A {}
+			.pagination SPAN {PADDING-BOTTOM: 0.3em; PADDING-LEFT: 0.5em; PADDING-RIGHT: 0.5em; DISPLAY: block; MARGIN-BOTTOM: 5px; FLOAT: left; MARGIN-RIGHT: 5px; PADDING-TOP: 0.3em}
+			.pagination .current {BORDER-BOTTOM: #aae 1px solid; BORDER-LEFT: #aae 1px solid; BACKGROUND: #26b; COLOR: #fff; BORDER-TOP: #aae 1px solid; BORDER-RIGHT: #aae 1px solid;}
+			.pagination .prev.current {BORDER-BOTTOM-COLOR: #999; BORDER-TOP-COLOR: #999; BACKGROUND: #fff; COLOR: #999; BORDER-RIGHT-COLOR: #999; BORDER-LEFT-COLOR: #999}
+			.pagination .next.current {BORDER-BOTTOM-COLOR: #999; BORDER-TOP-COLOR: #999; BACKGROUND: #fff; COLOR: #999; BORDER-RIGHT-COLOR: #999; BORDER-LEFT-COLOR: #999}
+*/
+			
+			
+		#gestiones .actions {float: right; padding: 0 !important; margin: 15px 15px 20px 0;}
+		#gestiones .note {color: #424242; clear: both; margin: 0 15px;}
+		
+		#gestiones #centerTable {color: #424242; margin: 25px 0;}
+			#gestiones #centerTable tr {display: table-row;}
+				#gestiones #centerTable tr td {border: none; padding: 1px 3px;}
+				#gestiones #centerTable tr td.taRight {text-align: right;}
+				#gestiones #centerTable tr td.taLeft {text-align: left;}
+		
+		#gestiones .listItems {color: #424242; background: url(../images/border-shadow.png) no-repeat center top; padding: 30px 0 0; overflow: hidden;}
+			#gestiones .listItems {margin: 0 15px;}
+				#gestiones .listItems li {padding: 5px 10px; border-bottom: 1px solid #e1e1e1;}
+				#gestiones .listItems li.title {background: #f7f7f7; color: #5c5c5c; font-size: 12px; padding: 5px 10px; font-weight: bold;}
+				#gestiones .listItemsSmallLeft {float: left; width: 330px;}
+				#gestiones .listItemsSmallRight {float: right; width: 330px;}
+		
+		#gestiones .volver {float: none;}
+
+		#realizarGestiones {}
+			#realizarGestiones ul {}
+				#realizarGestiones ul li {border-bottom: 1px solid #e1e1e1; overflow: hidden;}
+				#realizarGestiones ul li.RGtitle {color: #787878; font-size: 11px; background: #f7f7f7;}
+					#realizarGestiones ul li p {float: left; width: 415px; overflow: hidden; vertical-align: middle; padding: 5px 15px;}
+						#realizarGestiones ul li p span, #realizarGestiones ul li p strong, #realizarGestiones ul li p a {float: left; margin: 3px 5px 0 0;}
+					#realizarGestiones ul li span, #realizarGestiones ul li strong {float: left; margin: 4px 5px 0 0;}
+					#realizarGestiones ul li .more {float: left;}
+					#realizarGestiones ul li span.accion {float: right; width: 244px; display: block; background: url(../images/bg-rgspan.png) repeat-y 0 0; overflow: hidden; padding: 9px 0 9px 15px;}
+					#realizarGestiones ul li span.creadaOK {float: left; width: 224px; color: #599722; background: #effab8 url(../images/ico-tick.png) no-repeat 15px 7px; padding: 5px 0 5px 35px; margin: 0;}
+					#realizarGestiones ul li span.creadaNO {float: left; width: 224px; color: #ce2d03; background: #fff9b5 url(../images/ico-cross.png) no-repeat 17px 9px; padding: 5px 0 5px 35px; margin: 0;}
+						#realizarGestiones ul li span a.action {float: left; color: #128dd9; font-size: 11px; font-family: Arial; background: #f0f0f0; border: 1px solid #ddd; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; text-decoration: none; display: block; width: 110px; text-align: center; margin: 0 10px 0 0;}
+						#realizarGestiones ul li span a.action:hover, #realizarGestiones ul li span a.actionRed:hover {text-decoration: underline;}
+						#realizarGestiones ul li span a.actionRed {float: left; color: #dc1a22; font-size: 11px; font-family: Arial; background: #f0f0f0; border: 1px solid #ddd; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; text-decoration: none; display: block; width: 110px; text-align: center; margin: 0 10px 0 0;}
+			#realizarGestiones .note {margin: 15px 15px 25px;}
+
+		#regularizarCasillas {padding: 15px;}
+			#regularizarCasillas .casillasActuales {background: url(../images/bg-regularizarcasillas-div.jpg) no-repeat 0 0; overflow: hidden; margin: 20px 0;}
+				#regularizarCasillas .casillasActuales .info {float: left; width: 225px; color: #424242; font-size: 12px; padding: 25px 15px;}
+				#regularizarCasillas .casillasActuales table {float: left; width: 420px; margin: 3px 0 0; color: #424242; border-bottom: 1px solid #E1E1E1;}
+				#regularizarCasillas .casillasActuales table th {padding: 7px 25px; font-size: 12px;}
+				#regularizarCasillas .casillasActuales table td {padding: 0 25px;}
+					#regularizarCasillas .casillasActuales table .casillas {width: 270px; text-align: left;}
+					#regularizarCasillas .casillasActuales table .capacidad {width: 50px; text-align: center;}
+					#regularizarCasillas .casillasActuales table .creadaOK {width: 370px; color: #599722; background: #effab8 url(../images/ico-tick.png) no-repeat 25px 7px; padding: 0 0 0 50px; text-align: left;}
+					#regularizarCasillas .casillasActuales table .creadaNO {width: 370px; color: #ce2d03; background: #fff9b5 url(../images/ico-cross.png) no-repeat 27px 9px; padding: 0 0 0 50px; text-align: left;}
+				#regularizarCasillas .casillasActuales .actions {clear: both; width: 420px; float: right; padding: 10px 0 0;}
+			#regularizarCasillas .note {color: #424242;}
+			#regularizarCasillas .operacionOK {color: #454d24; background: #eefab7; margin: 0 0 20px;}
+				#regularizarCasillas .operacionOK p {background: url(../images/ico-tick-big.png) no-repeat 0 17px; padding: 20px 0 20px 35px; display: block; margin: 0 auto; width: 470px;}
+				
+			#regularizarCasillas .size12 {font-size: 12px;}
+				
+			#regularizarCasillas form {text-align: center; margin: 40px auto 0; width: 400px;}
+				#regularizarCasillas form div {width: 100%; margin: 10px auto; overflow: hidden; text-align: left; font-size: 12px;}
+ 					#regularizarCasillas form label {float: left; width: 110px; height: 25px; display: block; text-align: right; line-height: 12px; margin: 0 12px 0 0; font-size: 12px;}
+					#regularizarCasillas form input {float: left; width: 270px; margin: 2px 0 0;}
+			.altaCasillas p {}
+				.altaCasillas p a {color: #1082c9; font-weight: bold; text-decoration: none;}
+				.altaCasillas p a:hover {text-decoration: underline;}
+
+
+/*----------------------------------------------------------------------*/
+/*	Contrato
+/*----------------------------------------------------------------------*/
+
+	#contrato {}
+		#contrato p {margin: 15px 15px;}
+
+
+/*----------------------------------------------------------------------*/
+/*	Producto y Servicios
+/*----------------------------------------------------------------------*/
+
+	#prodYserv {padding: 0 0 10px;}
+		#prodYserv form {margin: 15px;}
+			#prodYserv form div {margin: 20px 0;}
+			#prodYserv form label {display: block; font-size: 12px; margin: 0 0 7px;}
+			#prodYserv form .small {width: 70px;}
+			#prodYserv form .large {width: 150px;}
+			#prodYserv form .extralarge {width: 200px;}
+
+		#prodYserv .actions {border-top: 1px solid #e5e5e5; margin: 0 15px;}
+		#prodYserv .note {margin: 10px 15px 25px;}
+		#prodYserv .gracias {color: #454d24; background: #eefab7; font-weight: bold; font-size: 12px; padding: 15px; margin: 0 15px 15px !important; text-align: center;}
+			#prodYserv .gracias img {margin-right: 10px;}
+
+		#prodYserv .kit-seguridad {padding: 25px 15px; overflow: hidden; font-size: 12px;}
+			#prodYserv .kit-seguridad p {margin: 0 0 5px;}
+			#prodYserv .kit-seguridad .fr {float: right;}
+			#prodYserv .kit-seguridad .requisitos {font-size: 11px; margin-top: 20px;}
+			#prodYserv .kit-seguridad .serial-number {background: url(../images/bg-serial-number.png) no-repeat 0 0; width: 430px; height: 26px; padding: 9px 0 0; margin: 25px auto 0; text-align: center; font-weight: bold;}
+			
+		#prodYserv .activar-movil {overflow: hidden; padding: 25px 0;}
+			#prodYserv .activar-movil p {margin: 0 15px 15px; font-size: 12px;}
+			#prodYserv .activar-movil form {background: url(../images/bg-numero-sim.png) no-repeat 0 0; padding: 1px 15px; float: left;}
+			#prodYserv .activar-movil label {padding: 0; margin: 0 0 10px;}
+			#prodYserv .activar-movil .fr {float: right;}
+		
+		#prodYserv .recarga-amovil {font-size: 12px;}
+			#prodYserv .recarga-amovil p {margin: 10px 15px 15px;}
+				#prodYserv .recarga-amovil p span {background: #f5f5f5; border: 1px solid #e5e5e5; border-width: 1px 0; line-height: 28px; padding: 3px;}
+			#prodYserv .border-shadow {margin: 20px 0;}
+			
+		#prodYserv .recarga-cyber {padding: 20px 0;}
+			#prodYserv .recarga-cyber p {margin: 0 15px; font-size: 12px;}
+			#prodYserv .recarga-cyber div {clear: both; overflow: hidden;}
+				#prodYserv .recarga-cyber label, #prodYserv .recarga-cyber input {float: left;}
+				#prodYserv .recarga-cyber select {margin: 0 0 0 10px;}
+				#prodYserv .recarga-cyber input {margin-right: 10px;}
+				#prodYserv .form-arnet-cyber div {margin: 10px 0;}
+				#prodYserv .form-arnet-cyber label {width:120px; text-align: right; margin-right: 5px; padding: 2px 0 0;}
+			
+
+/*----------------------------------------------------------------------*/
+/*	Facturas y Pagos
+/*----------------------------------------------------------------------*/
+	
+	.aviso-pago {padding: 25px 15px;}
+		.aviso-pago p {margin: 5px 0;}
+		.aviso-pago p.note {clear: both; margin: 20px 0 0 !important;}
+		.aviso-pago ul {margin: 20px 0;}
+			.aviso-pago ul li {background: url(../images/bullet2.gif) no-repeat 0 6px; padding: 0 0 0 10px;}
+				.aviso-pago ul li strong {color: #0c86c5; font-size: 12px;}
+		.aviso-pago .border-shadow {margin: 25px 0;}
+		.aviso-pago table {margin: 25px 0 5px;}
+			.aviso-pago table td {padding: 5px !important; line-height: 14px !important; border-bottom: 1px solid #e1e1e1;}
+			.aviso-pago table th {padding: 5px !important;}
+				.aviso-pago table .col1 {width: 30px;}
+				.aviso-pago table .col2 {width: 90px;}
+				.aviso-pago table .col3 {width: 110px;}
+				.aviso-pago table .col4 {width: 60px;}
+				.aviso-pago table .col5 {width: 60px;}
+				.aviso-pago table .col6 {width: 65px;}
+				.aviso-pago table .col7 {width: 65px;}
+				.aviso-pago table .col8 {width: 65px;}
+				.aviso-pago table .col9 {width: 65px;}
+		.aviso-pago .OK {color: #454d24; background: #eefab7; font-weight: bold; font-size: 12px; padding: 15px; margin: 0 15px 0 !important; text-align: center;}
+		.aviso-pago .NO {color: #c93533; background: #fff9b5; font-weight: bold; font-size: 12px; padding: 15px; margin: 0 15px 0 !important; text-align: center;}
+			.aviso-pago .OK img, .aviso-pago .NO img {margin: 0 5px 0 0;}
+			.aviso-pago .NO img {float: left; margin: 3px 0 0;}
+		.aviso-pago .detalle {border-bottom: 1px solid #e1e1e1; padding: 0 0 30px;}
+			.aviso-pago .detalle li {background: none; padding: 5px 0; font-size: 12px; text-align: right; overflow: hidden;}
+				.aviso-pago .detalle li strong {margin: 0 0 0 10px; color: #787878; width: 50%; text-align: left; display: block; float: right;}
+		.aviso-pago .fl {text-align: right;}
+			.aviso-pago .fl a {color: #1088d4; text-decoration: none;}
+			.aviso-pago .fl a:hover {text-decoration: underline;}
+		.aviso-pago .info {overflow: hidden;}
+			.aviso-pago .info .thumb {float: left; margin: 0 15px 0 0;}
+			.aviso-pago .info p {float: left; width: 405px;}
+				.aviso-pago .info p.likeTitle {font-size: 14px !important; line-height: 20px;}
+				.aviso-pago .info p.likeTitle2 {width: 100%; font-size: 13px !important;}
+			.aviso-pago p.semi {color: #bababa; font-size: 11px !important;}
+			.aviso-pago .info .ademas {float: left; width: 390px; margin: 0 0 20px;}
+				.aviso-pago .info .ademas li {margin: 5px 0; font-size: 12px;}
+		.aviso-pago .tyc {margin: 10px 0 25px;}
+			.aviso-pago .tyc a {color: #1189d5; text-decoration: none;}
+			.aviso-pago .tyc a:hover {text-decoration: underline;}
+		.aviso-pago select {margin: 5px 0;}
+		.aviso-pago .extraInfo {background: #f8f8f8; font-weight: bold; border: 1px dotted #e1e1e1; border-width: 1px 0; padding: 25px 0; text-align: center; margin: 10px -15px;}
+			.aviso-pago .extraInfo a {color: #1086ce; text-decoration: none;}
+		.aviso-pago .topBorder {border-top: 1px solid #e1e1e1; margin: 20px 0 0;}
+		.aviso-pago .formAdjuntar {font-size:12px; margin: 20px 0 0;}
+			.aviso-pago .formAdjuntar div {overflow: hidden;}
+				.aviso-pago .formAdjuntar div label {float: left; width: 150px; display: block; margin: 0 10px 0 0; text-align: right; padding: 5px 0 0 0;}
+				.aviso-pago .formAdjuntar div select {width: 280px;}
+				.aviso-pago .formAdjuntar .boton {margin: 5px 0 0;}
+					.aviso-pago .formAdjuntar .boton input {margin: 0 0 0 160px;}
+				.aviso-pago .formAdjuntar div ul {margin: 10px 0 0 160px;}
+					.aviso-pago .formAdjuntar div ul li {background: none; padding: 0; color: #a2a2a2;}
+						.aviso-pago .formAdjuntar div ul li input {margin:5px 5px 5px 0}
+						
+						
+/*----------------------------------------------------------------------*/
+/*	Estilos para tablas de resultados
+/*----------------------------------------------------------------------*/
+						
+	.tablaResultado {
+		border:1px solid #E6E6E6;
+		background-color:#FFFFFF;
+		border-spacing: 0;
+	}
+	
+	.contenedor-columna {
+		display: table-cell;
+	}
+	
+	
+	/*----------------------------------------------------------------------
+	Esto no funciona para IE8 y versiones anteriores
+	
+	.tablaResultado tr:nth-child(odd) {
+		background: #FFFFFF;
+	}
+
+	.tablaResultado tr:nth-child(even) {
+		background: #F2F2F7; 
+	}
+	----------------------------------------------------------------------*/
+	
+	.tablaResultado th {
+		background: #F7F7F7; 
+		color: #797979; 
+		font: normal 11px Tahoma; 
+		margin: 1px 3px;
+		vertical-align: middle;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	
+	.tablaResultado td {
+		text-align: center; 
+		border-bottom: 1px solid #e1e1e1;
+	 	vertical-align: middle;
+		padding: 0px 3px 0px 3px;
+		font: normal 11px Tahoma;
+		color: #787878;
+		white-space:nowrap;
+	}		
+	
+	/*----------------------------------------------------------------------
+	Bloques
+	----------------------------------------------------------------------*/
+	.loader {
+		 display: none;
+		 font-size: 13px;
+		 font-weight: bold;
+		 height:100%;
+		 position: absolute;
+		 text-align: center;
+		 opacity:0.5;filter: alpha(opacity=50) ;
+		 text-decoration: none;
+		 width: 100%;
+		 background-color: #3a3427;
+		 color:#FFFFFF;
+		 text-shadow: #fff 0px 0px 20px; 
+		 z-index: 999;
+ 	}
+ 	.loader label{
+		display: none;
+		position:absolute;
+		top:470px;
+		left:45%;
+	}				
+	.loaderMsj{
+		position:absolute;
+		top:300px;
+		left:48%;
+	}
+	#spin {
+		float: left;
+		width: 100%;
+		height:$("#container").height() + 'px';
+		
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+	}
+	.error{
+		color: red;
+		font-size:  9px;
+		font-weight: normal;
+	}
+	.rowError{
+		position: relative; 
+		top: -10px;
+	}
+	.rojo {
+        color: red;
+    }
+    .errorGrillaEditable{
+		color: red;
+		font-size:  9px;
+	}
+	.informacion{
+		color: green;
+		font-size:  10px;
+		font-weight: bold;
+	}
+	.rowInformacion{
+		position: relative; 
+		top: -10px;
+	}
+	
+	/*----------------------------------------------------------------------*/
+	/*	Estilos para tablas de historial y comprobantes
+	/*----------------------------------------------------------------------*/
+	
+	.tablaResultadoHistorialComprobante th {
+		background: #F7F7F7; 
+		color: #797979; 
+		font: normal 11px Tahoma; 
+		margin: 1px 3px;
+		vertical-align: middle;
+		padding-left: 5px;
+		padding-right: 5px;
+		line-height: 23px; 
+	}
+	
+	.tablaResultadoHistorialComprobante td {
+		text-align: center; 
+	 	border-top: 1px solid #e1e1e1; 
+	 	vertical-align: middle;
+		padding: 0px 3px 0px 3px;
+		font: normal 11px Tahoma;
+		color: #787878;
+		white-space:nowrap;
+		line-height: 23px; 
+	}
+	
+	.iluminado {
+		background-color: #f9f9f9;
+	}
+	.icon-hidden {
+		visibility: hidden;
+	}
+	
+	
+	#clientes_wrapper > div.DTFC_ScrollWrapper > div.dataTables_scroll > div.dataTables_scrollHead.ui-state-default
+	{
+	background: none;
+	}
+	
+
+
+
+	

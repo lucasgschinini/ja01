@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<import resource="spring-repository.xml" />
+	<import resource="spring-service.xml" />
+	<import resource="spring-facade.xml" />
+	<import resource="spring-validacion.xml" />
+	<import resource="spring-mail.xml" />
+	
+	<!-- Scan for @Component @Controller -->
+    <context:annotation-config />
+	<context:component-scan base-package="ar.com.telecom.shiva.persistencia.dao" />
+	
+	<!-- JNDI -->
+	<jee:jndi-lookup expected-type="javax.sql.DataSource" 
+				id="dataSource" 
+				jndi-name="java:jboss/datasources/ShivaDS"/>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    	<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- Create transaction with annotations -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"> 
+	    <property name="entityManagerFactory" ref="entityManagerFactory" />	    
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+		
+	<!-- Bean SoporteDao General -->
+	<bean id="soporteDao" class="ar.com.telecom.shiva.persistencia.dao.Dao" lazy-init="true">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+	<!-- Spring with Hibernate and JPA. No need to put in persistence.xml -->	
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" /> 
+	    <property name="persistenceUnitName" value="base-oracle" />
+	    <property name="dataSource" ref="dataSource" />
+	    <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/> 
+	</bean>	
+	
+	<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="database" value="ORACLE"/>
+        <property name="showSql" value="false"/>
+        <property name="generateDdl" value="false"/> <!-- Me permite saber si esta bien generados los modelos -->
+        <property name="databasePlatform" value="org.hibernate.dialect.OracleDialect"/>
+    </bean>
+	
+</beans>

@@ -1,0 +1,144 @@
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ LDAP Test: Entorno de prueba: desa3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Usuario: SHV562201 (contraseña: Telecom01!)
+Nombre y apellido: Leandro Garayoa
+Mail: LGarayoa@proveedor.telecom.com.ar
+Roles: [SUPERVISOR_TA_OCJ, SUPERVISOR_TA_OGC, MANTENIMIENTO]
+
+Usuario: SHV562163 (contraseña: Telecom01!)
+Nombre y apellido: Fernando Formento
+Mail: FMFormento@proveedor.telecom.com.ar
+Roles: [ANALISTALEGAJOSCHEQUESRECHAZADOS_TA_OCJ, ANALISTALEGAJOSCHEQUESRECHAZADOS_TA_OGC, ANALISTA_TA_OGC, ANALISTA_TA_OCJ]
+
+Usuario: SHV529234 (contraseña: Telecom01!)
+Nombre y apellido: Hernan Yervoni
+Mail: hdyerboni@proveedor.telecom.com.ar
+Roles: [REFERENTECOBRANZA, ADMINVALOR]
+
+Usuario: SHV564030 (contraseña: Telecom02!)
+Nombre y apellido: Pablo Ibarrola
+Mail: PIbarrola@proveedor.telecom.com.ar
+Roles: [ANALISTA_TA_OGE, ANALISTA_TA_OGC, ANALISTACOBRANZA_TA_OTP, ANALISTA_TA_OCO, ANALISTA_TA_OYP, ANALISTAOPERACIONMASIVA_TA_OTP, ANALISTAOPERACIONMASIVA_TA_OYP, ANALISTAOPERACIONMASIVA_TA_OCO, ANALISTA_TA_OTP, ANALISTAOPERACIONMASIVA_TA_OGE, ANALISTAOPERACIONMASIVA_TA_OGC, MANTENIMIENTO, ANALISTA_TA_OCJ, ANALISTACOBRANZA_TA_OGE, ANALISTACOBRANZA_TA_OCJ, ANALISTACOBRANZA_TA_OGC, ANALISTACOBRANZA_TA_OYP, ANALISTACOBRANZA_TA_OCO]
+
+Usuario: SHV564027 (contraseña: Telecom03!)
+Nombre y apellido: Nadia Lorenzo
+Mail: NLorenzo@proveedor.telecom.com.ar
+Roles: [SUPERVISOR_TA_OCO, SUPERVISOR_TA_OYP, SUPERVISOR_TA_OTP, SUPERVISOROPERACIONESESPECIALES_TA_OYP, MANTENIMIENTO, SUPERVISOR_TA_OGE]
+
+Usuario: SHV566205 (contraseña: Telecom01!)
+Nombre y apellido: Tomas Mingo Suarez
+Mail: TMingoSuarez@proveedor.telecom.com.ar
+Roles: [SUPERVISORADMINVALOR, ANALISTALEGAJOSCHEQUESRECHAZADOS_TA_OCO, ADMINTALONARIO, ANALISTALEGAJOSCHEQUESRECHAZADOS_TA_OTP, ANALISTALEGAJOSCHEQUESRECHAZADOS_TA_OGE]
+
+Usuario: SHV562832 (contraseña: Telecom01!)
+Nombre y apellido: Daniela Bendersky
+Mail: daniela.s.bendersky@accenture.com
+Roles: [SUPERVISORTALONARIO_TA_OGC, SUPERVISORTALONARIO_TA_OTP, SUPERVISORTALONARIO_TA_OGE, SUPERVISORTALONARIO_TA_OYP, SUPERVISORTALONARIO_TA_OCO, SUPERVISORTALONARIO_TA_OCJ]
+
+Usuario: SHV182809 (contraseña: Telecom01!)
+Nombre y apellido: Damiana Pastorini
+Mail: dpastori@ta.telecom.com.ar
+Error de credenciales: Usuario o contraseña incorrectos!
+
+Usuario: SHV500137 (contraseña: Telecom01!)
+Nombre y apellido: Pablo Alderete
+Mail: PAlderete@ta.telecom.com.ar
+Error de credenciales: Usuario o contraseña incorrectos!
+
+Usuario: SHV518416 (contraseña: Telecom01!)
+Nombre y apellido: Lucho Yang
+Mail: chih.jyh.yang@accenture.com
+Roles: [CAJEROPAGADOR_TA_OCJ, CAJEROPAGADOR_TA_OGC, CAJEROPAGADOR_TA_OTP, CAJEROPAGADOR_TA_OGE, CAJEROPAGADOR_TA_OYP, CAJEROPAGADOR_TA_OCO]
+
+Usuario: SHV567416 (contraseña: Telecom01!)
+Nombre y apellido: Javier Mariano Alvarez
+Mail: JMAlvarez@proveedor.telecom.com.ar
+Error de credenciales: Usuario o contraseña incorrectos!
+
+Usuario: SHV568815 (contraseña: Telecom01!)
+Nombre y apellido: Pedro Luis Bourgaud
+Mail: PLBourgaud@proveedor.telecom.com.ar
+Roles: [ANALISTACOBRANZA_TA_OCJ, ANALISTACOBRANZA_TA_OYP, ANALISTAOPERACIONMASIVA_TA_OYP, ANALISTACOBRANZA_TA_OGC, ANALISTAOPERACIONMASIVA_TA_OCO, ANALISTACOBRANZA_TA_OCO, ANALISTAOPERACIONMASIVA_TA_OGC]
+
+Usuario: SHV197612 (contraseña: Telecom01!)
+Nombre y apellido: Carolina Natalia Perez
+Mail: CarolPerez@ta.telecom.com.ar
+Error de credenciales: Usuario o contraseña incorrectos!
+
+Usuario: SHV567418 (contraseña: Telecom01!)
+Nombre y apellido: Charlot Astri Araujo Calixtro
+Mail: CAAraujoCalixtro@proveedor.telecom.com.ar
+Roles: [SUPERVISORCOBRANZA_TA_OGC, SUPERVISORCOBRANZA_TA_OTP, SUPERVISORCOBRANZA_TA_OGE, SUPERVISOROPERACIONMASIVA_TA_OCO, SUPERVISOROPERACIONMASIVA_TA_OGC, SUPERVISOROPERACIONMASIVA_TA_OGE, SUPERVISORCOBRANZA_TA_OCO, SUPERVISOROPERACIONMASIVA_TA_OYP, SUPERVISORCOBRANZA_TA_OYP, SUPERVISORCOBRANZA_TA_OCJ]
+
+Usuario: SHV567711 (contraseña: Telecom01!)
+Nombre y apellido: Flavia Romina Larrubia
+Mail: FRLarrubia@proveedor.telecom.com.ar
+Roles: [SUPERVISOROPERACIONMASIVA_TA_OYP, SUPERVISORCOBRANZA_TA_OYP]
+
+Usuario: SHV566054 (contraseña: Telecom01!)
+Nombre y apellido: Gerardo Damian Tagliani
+Mail: GDTagliani@proveedor.telecom.com.ar
+Roles: [CONSULTA_TA]
+
+Usuario: SHV573005 (contraseña: Telecom2015!)
+Nombre y apellido: Fabio German Giaquinta Ruiz
+Mail: FGGiaquintaRuiz@proveedor.telecom.com.ar
+Error de credenciales: Usuario o contraseña incorrectos!
+
+Usuario: SHV525214 (contraseña: Telecom01!)
+Nombre y apellido: Juan Villagra
+Mail: juanvillagra@proveedor.telecom.com.ar
+Error de credenciales: Usuario o contraseña incorrectos!
+
+Usuario: SHV576779 (contraseña: Telecom2015!)
+Nombre y apellido: Lucas Schinini
+Mail: LSchinini@proveedor.telecom.com.ar
+Roles: [ANALISTALEGAJOSCHEQUESRECHAZADOS_TA_OY, ANALISTALEGAJOSCHEQUESRECHAZADOS_TA_OCJ, ANALISTALEGAJOSCHEQUESRECHAZADOS_TA_OGC, SUPERVISOR_TA_OYP, SUPERVISOR_TA_OGC, MANTENIMIENTO]
+
+Usuario: SHV572487 (contraseña: Telecom01!)
+Nombre y apellido: Guido Settecerze
+Mail: GSettecerze@proveedor.telecom.com.ar
+Roles: [SUPERVISORADMINVALOR, ANALISTALEGAJOSCHEQUESRECHAZADOS_TA_OCO, ANALISTALEGAJOSCHEQUESRECHAZADOS_TA_OTP, ANALISTALEGAJOSCHEQUESRECHAZADOS_TA_OGE]
+
+Usuario: SHV577859 (contraseña: Telecom2015!)
+Nombre y apellido: Eric Mariano Rearte
+Mail: EMRearte@proveedor.telecom.com.ar
+Error de credenciales: Usuario o contraseña incorrectos!
+
+Usuario: SHV586743 (contraseña: Telecom01!)
+Nombre y apellido: Juan Manuel Castelli
+Mail: JMCastelli@proveedor.telecom.com.ar
+Roles: [ANALISTA_TA_OCO, ANALISTA_TA_OYP, ANALISTA_TA_OGE, ANALISTACOBRANZA_TA_OGE, ANALISTACOBRANZA_TA_OCJ, ANALISTACOBRANZA_TA_OYP, ANALISTACOBRANZA_TA_OGC, ANALISTAOPERACIONMASIVA_TA_OYP, ANALISTA_TA_OGC, ANALISTAOPERACIONMASIVA_TA_OCO, ANALISTA_TA_OTP, ANALISTACOBRANZA_TA_OCO, ANALISTAOPERACIONMASIVA_TA_OGE, ANALISTAOPERACIONMASIVA_TA_OGC, ANALISTACOBRANZA_TA_OTP, MANTENIMIENTO, ANALISTA_TA_OCJ]
+
+Usuario: SHV585863 (contraseña: Telecom01!)
+Nombre y apellido: Juan Manuel Lyebi
+Mail: JMLyebi@proveedor.telecom.com.ar
+Roles: [SUPERVISOROPERACIONESESPECIALES_TA_OCJ, SUPERVISOROPERACIONESESPECIALES_TA_OGC, MANTENIMIENTO]
+
+Usuario: SHV578936 (contraseña: Telecom01!)
+Nombre y apellido: Maximiliano Uehara
+Mail: MUehara@proveedor.telecom.com.ar
+Roles: [ANALISTA_TA_OCO, ANALISTA_TA_OYP, ANALISTA_TA_OGE, ANALISTACOBRANZA_TA_OGE, ANALISTACOBRANZA_TA_OCJ, ANALISTACOBRANZA_TA_OYP, ANALISTACOBRANZA_TA_OGC, ANALISTAOPERACIONMASIVA_TA_OYP, ANALISTA_TA_OGC, ANALISTAOPERACIONMASIVA_TA_OCO, ANALISTA_TA_OTP, ANALISTACOBRANZA_TA_OCO, ANALISTAOPERACIONMASIVA_TA_OGE, ANALISTAOPERACIONMASIVA_TA_OGC, ANALISTACOBRANZA_TA_OTP, MANTENIMIENTO, ANALISTA_TA_OCJ]
+
+Usuario: SHV579607 (contraseña: Telecom01!)
+Nombre y apellido: Brian Keller
+Mail: BKeller@proveedor.telecom.com.ar
+Roles: [ANALISTAOPERACIONMASIVA_TA_OCO, ANALISTACOBRANZA_TA_OCO, ANALISTAOPERACIONMASIVA_TA_OGC, ANALISTACOBRANZA_TA_OYP, ANALISTACOBRANZA_TA_OGC, ANALISTAOPERACIONMASIVA_TA_OYP, MANTENIMIENTO]
+
+Usuario: SHV591368 (contraseña: Telecom01!)
+Nombre y apellido: Nicolas Quispe
+Mail: FNQuispe@proveedor.telecom.com.ar
+Roles: [REFERENTEOPERACIONESEXTERNAS]
+
+Usuario: SHV591788 (contraseña: Telecom01!)
+Nombre y apellido: Agustina Streule
+Mail: AStreule@proveedor.telecom.com.ar
+Roles: [REFERENTECAJA]
+
+Usuario: SHV505222 (contraseña: Telecom01!)
+Nombre y apellido: Bibiana Alicia Florido
+Mail: baflorido@proveedor.telecom.com.ar
+Error de credenciales: Usuario o contraseña incorrectos!

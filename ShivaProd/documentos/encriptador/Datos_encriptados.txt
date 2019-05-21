@@ -1,0 +1,23 @@
+Encriptaciones
+==============
+
+java -jar encriptador.jar encriptar <clave>
+
+ldap.password.generico.shiva=
+todos: F$a_5tG2z!t5 --> Sf6SnszaJMXQkMeuWnvwqA==
+
+mq.mic.auth.pass=
+desa: T7xrv.ij --> rYU3M8CTiQoeM+INZq+YYg==
+inte: zZ8$+6Nj --> OfLyYl9cUnXmlatPKkW/6Q==
+pau: H8s#ax$1j --> tcBdGOqGNlBlTxePXtJDwg==
+
+batch.password=
+local: 		 SHIVA --> r26rPtX7ld5U8yxjbk5qqA==
+desa fase 1 (A001022): u_2H15zK --> r26rPtX7ld5U8yxjbk5qqA==
+desa fase 2 (A002003): kK5_r_o$ --> MY/XLGjHdylJbpitbNTi2g==
+desa sprint 4 (A000657): IHJP_3516 --> X54EmmgTNL6W5tNGU2fdeQ==
+inte: 		 phE$n8u3 --> NoXjSNnhJMDCQJLAfGvt3A==
+inte 2 (A002004): nN2$L2$$ --> 2aUBQdlVy4uY9N9pKenf/w==
+-------------------------------------------------------
+pau: 		 t6#J36Fn --> UusQcdKR4mo6BmBQFkeD/w==
+

@@ -1,0 +1,28 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+		
+	<!-- 
+	Se define un CustomDateEditor para convertir una propiedad Date de Spring Bean a java.util.Date.
+	Primero, él CustomDateEditor se crea, esto convierte un String a java.util.Date.
+	El formato lo definimos en una propiedad "listaFormatoFechas", para validar el String a parsear.
+	-->	
+	<bean id="dateEditor"
+		class="org.springframework.beans.propertyeditors.CustomDateEditor">
+		<constructor-arg>
+			<bean class="ar.com.telecom.shiva.batch.springbatch.listener.CustomDateFormats" >
+				<property name="listaFormatoFechas">
+					<list value-type="java.lang.String">
+						<value>dd-MMM-yyyy</value>
+					</list>
+				</property>
+			</bean>
+			
+		</constructor-arg>
+		<constructor-arg value="true"/>
+	</bean>
+</beans>

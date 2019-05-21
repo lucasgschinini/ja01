@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+ http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+ http://www.springframework.org/schema/tx
+ http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+ http://www.springframework.org/schema/aop
+ http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+ 
+	<!-- REPORT UTILS -->
+	
+	<!-- Valores -->
+	<bean id="valoresReportsUtils" class="ar.com.telecom.shiva.negocio.reportes.modulos.ValoresReportsUtils">
+		<property name="jrxmlFilePath" value="classpath:reports/valores-shiva-report.xml" />
+		<property name="name" value="Valores" />
+		<property name="columnDescriptions">
+			<list>
+				<value>Empresa</value>
+				<value>Segmento</value>
+				<value>Código de Cliente Legado</value>
+				<value>Razón Social Cliente Agrupador</value>
+				<value>Fecha Valor</value>
+				<value>Tipo de Valor</value>
+				<value>Importe</value>
+				<value>Saldo Disponible</value>
+				<value>Estado Valor</value>
+				<value>Analista</value>
+				<value>Copropietario</value>
+				<value>Usuario Autorizacion</value>
+				<value>Ejecutivo del Team Comercial</value>
+				<value>Asistente del Team Comercial</value>
+				<value>Analista del Team Comercial</value>
+				<value>Supervisor del Team Comercial</value>
+				<value>Gerente Regional del Team Comercial</value>
+				<value>Identificador Interno del Valor</value>
+				<value>Origen</value>
+				<value>Banco Depósito</value>
+				<value>Nro. Acuerdo</value>
+				<value>Nro. de Boleta</value>
+				<value>Nro. de Referencia del Valor</value>
+				<value>Descripción Banco Origen</value>
+				<value>Tipo de Retención</value>
+				<value>Provincia</value>
+				<value>CUIT</value>
+				<value>Código de Organismo</value>	
+				<value>Nro. Recibo</value>
+				<value>Nro. Constancia de recepcion</value>
+				<value>Operación Asociada</value>
+				<value>Factura Relacionada</value>
+				<value>Documentación Original Recibida</value>
+				<value>Motivo</value>	
+				<value>Nro. de Cheque a Reemplazar</value>	
+				<value>Nro. Documento Contable</value>	
+				<value>Motivo Suspensión</value>	
+				<value>Archivo de Valores a Conciliar</value>	
+				<value>Fecha Alta</value>	
+				<value>Fecha Ingreso Recibo</value>	
+				<value>Fecha de Retención</value>	
+				<value>Fecha de Vencimiento</value>	
+				<value>Fecha Transferencia</value>	
+				<value>Fecha de Depósito</value>	
+				<value>Fecha Disponible</value>	
+				<value>Fecha Ultimo Estado</value>	
+				<value>BD Impresa</value>	
+				<value>BD Enviada Mail</value>	
+				<value>Observaciones</value>
+				<value>Identificador del Cobro</value>
+			</list>
+		</property>
+		<property name="columnNames">
+			<list>	
+				<value>empresa</value>
+				<value>segmento</value>
+				<value>codCliente</value>
+				<value>razonSocialClienteAgrupador</value>
+				<value>fechaValorFormateado</value>
+				<value>tipoValor</value>
+				<value>importe</value>
+				<value>saldoDisponible</value>
+				<value>estadoValor</value>
+				<value>nombreAnalista</value>
+				<value>copropietario</value>
+				<value>usuarioAutorizacion</value>
+				<value>usuarioEjecutivo</value>
+				<value>usuarioAsistente</value>
+				<value>usuarioAnalistaTeamComercial</value>
+				<value>usuarioSupervisorTeamComercial</value>
+				<value>usuarioGerenteRegionalTeamComercial</value>
+				<value>idValor</value>
+				<value>origen</value>
+				<value>bancoDeposito</value>
+				<value>idAcuerdo</value>
+				<value>nroBoleta</value>
+				<value>referenciaValor</value>
+				<value>bancoOrigen</value>
+				<value>tipoRetencion</value>
+				<value>provincia</value>
+				<value>nroCuitRetencion</value>
+				<value>codigoOrganismo</value>
+				<value>reciboPreImpreso</value>
+				<value>constancia</value>
+				<value>operacionAsociada</value>
+				<value>facturaRelacionada</value>
+				<value>documentacionOriginalRecibida</value>
+				<value>motivo</value>
+				<value>valorPadre</value>
+				<value>numeroDocumentoContable</value>
+				<value>motivoSuspension</value>
+				<value>archivoValoresAconciliar</value>
+				<value>fechaAltaValor</value>
+				<value>fechaIngresoRecibo</value>
+				<value>fechaEmision</value>
+				<value>fechaVencimiento</value>
+				<value>fechaTransferencia</value>
+				<value>fechaDeposito</value>
+				<value>fechaDisponible</value>
+				<value>fechaUltimoEstado</value>
+				<value>boletaImpresaEstado</value>
+				<value>boletaEnviadaMailEstado</value>
+				<value>observaciones</value>
+				<value>cobroFormateado</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!-- Cobros -->
+	<bean id="CobrosReportsUtils" class="ar.com.telecom.shiva.negocio.reportes.modulos.CobrosReportsUtils">
+		<property name="jrxmlFilePath" value="classpath:reports/cobros-shiva-report.xml" />
+		<property name="name" value="Cobros" />
+		<property name="columnDescriptions">
+			<list>
+				<value>Id Operación Cobro</value>
+				<value>Motivo Cobro</value>
+				<value>Cliente</value>
+				<value>Estado</value>
+				<value>Sub Estado</value>
+				<value>Fecha Ultimo Estado</value>
+				<value>Analista</value>
+				<value>Copropietario</value>
+				<value>Analista Team Comercial</value>
+				<value>ID Reversión Padre</value>
+			    <value>Cobro Revertido</value>
+			    <value>Importe Total</value>
+			    <value>Fecha Alta</value>
+			    <value>Fecha Derivación</value>
+			    <value>Fecha Aprobación Referente Cobranzas</value>
+			    <value>Referente Cobranzas</value>
+			    <value>Fecha Aprobación Operaciones Especiales</value>
+			    <value>Supervisor Operaciones Especiales</value>
+			    <value>Fecha Autorización Referente Caja</value>
+			    <value>Referente Caja</value>
+			    <value>Fecha Autorización Referente Operaciones Externas</value>
+			    <value>Referente Operaciones Externas</value>
+			    <value>Fecha Imputación</value>
+			    <value>Id Operación Masiva</value>
+			    <value>Nombre Archivo</value>
+			</list>
+		</property>
+		<property name="columnNames">
+			<list>	
+				<value>idOperacion</value>
+				<value>descripcionMotivoCobro</value>
+				<value>clientesCobro</value>
+				<value>descripcionEstado</value>
+				<value>descripcionMarca</value>
+				<value>fechaUltimoEstadoFormatoJson</value>
+				<value>nombreAnalista</value>
+				<value>nombreCopropietario</value>
+				<value>nombreAnalistaTeamComercial</value>
+				<value>idReversionPadre</value>
+			    <value>idOperacionReversion</value>
+			    <value>importeTotalDeudaFormateado</value>
+			    <value>fechaAltaFormatoJson</value>
+			    <value>fechaDerivacionFormatoJson</value>
+			    <value>fechaAprobacionReferenteCobranzaFormatoJson</value>
+			    <value>nombreApellidoUsuarioAprobacionReferenteCobranza</value>
+			    <value>fechaAprobacionOperacionesEspecialesFormatoJson</value>
+			    <value>nombreApellidoUsuarioAprobacionSupervisorOperacionesEspeciales</value>
+			    <value>fechaReferenteCajaFormatoJson</value>
+			    <value>nombreApellidoReferenteCaja</value>
+			    <value>fechaReferenteOperacionExternaFormatoJson</value>
+			    <value>nombreApellidoReferenteOperacionExterna</value>
+			    <value>fechaImputacionFormatoJson</value>
+			    <value>idOperacionMasiva</value>
+			    <value>nombreArchivo</value>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

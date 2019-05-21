@@ -1,0 +1,25 @@
+/*----------------------------------------------------------------------*/
+/*	Exception Styles para las vista de errores
+/*----------------------------------------------------------------------*/
+table.title{
+	border-radius: 4px;
+	width: 100%;
+}
+td.title, div.title{
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #1081C7;
+	border: 1px solid #ccc;
+}
+.error{
+	color: red;
+	font-weight: bold;
+}
+.divError {
+	border: 1px solid #ccc;
+	OVERFLOW: auto;
+	width: 800px;
+	height: 240px;
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cm="http://www.telecom.com.ar/XMLSchema/bios/common" xmlns:rqm="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage">
+	<xs:import namespace="http://www.telecom.com.ar/XMLSchema/bios/common" schemaLocation="Diccionario.xsd"/>
+	<xs:element name="novedadAltaClienteReq">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="cm:clienteCRM"/>
+			</xs:all>
+			<xs:attribute name="crmClienteID" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>ID del Cliente en CRM-Siebel</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

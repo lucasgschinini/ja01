@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/responseMessage" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cm="http://www.telecom.com.ar/XMLSchema/bios/common" xmlns:rsm="http://www.telecom.com.ar/XMLSchema/bios/cliente/responseMessage">
+	<xs:import namespace="http://www.telecom.com.ar/XMLSchema/bios/common" schemaLocation="Diccionario.xsd"/>
+	<xs:element name="consultarMorosidadClienteResp">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="esMoroso" type="xs:boolean"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

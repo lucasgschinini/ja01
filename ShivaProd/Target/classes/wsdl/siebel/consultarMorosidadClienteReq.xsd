@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cm="http://www.telecom.com.ar/XMLSchema/bios/common" xmlns:rqm="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage">
+	<xs:import namespace="http://www.telecom.com.ar/XMLSchema/bios/common" schemaLocation="Diccionario.xsd"/>
+	<xs:element name="consultarMorosidadClienteReq">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="nivelConsulta">
+					<xs:annotation>
+						<xs:documentation>Linea / Acuerdo</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Linea"/>
+							<xs:enumeration value="Acuerdo"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="tipoDeuda">
+					<xs:annotation>
+						<xs:documentation>Corriente / ...</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Corriente"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element ref="cm:identificador">
+					<xs:annotation>
+						<xs:documentation>Identificador Linea o Acuerdo segun elemento de consulta ( ver nivelConsulta )
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

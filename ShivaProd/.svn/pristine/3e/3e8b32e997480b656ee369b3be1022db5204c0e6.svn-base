@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cm="http://www.telecom.com.ar/XMLSchema/bios/common" xmlns:rqm="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage">
+	<xs:import namespace="http://www.telecom.com.ar/XMLSchema/bios/common" schemaLocation="Diccionario.xsd"/>
+	<xs:element name="publicarNovedadClienteDiariaReq">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="cm:clienteCRM"/>
+			</xs:all>
+			<xs:attribute name="crmClienteID" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>ID del Cliente en CRM-Siebel</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="secuenciaNovedad" type="xs:long" use="required">
+				<xs:annotation>
+					<xs:documentation>Este número secuencial lo debe generar CRM-Siebel y asegurar su unicidad.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="tipoNovedad" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Para indicar el tipo de novedad que se enviara a la DIARIA. (ALTA / MODIFICACION)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="tipoSolicitud" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Para indicar el tipo de solicitud que se enviara a la DIARIA. (AC / MC)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="nroSolicitud" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation> SBLALT para alta y SBLMOD para modificacion</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fechaNovedad" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="estado" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>ENPROCESO, CREADO: Estado con el que se creará la novedad</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

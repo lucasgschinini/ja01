@@ -1,0 +1,279 @@
+Click on Start Button-->Run
+
+• Type cmd. The command prompt opens (you may need to open it as administrator).
+• Go to your Java/jreX/bin directory
+• Type the following
+
+keytool -list -keystore D:\Herramientas\jdk1.7.0\jre\lib\security\cacerts
+
+pass: changeit
+
+It gives the list of the current certificates contained within the keystore. It looks something like this:
+
+		Tipo de Almacén de Claves: JKS
+		Proveedor de Almacén de Claves: SUN
+
+		Su almacén de claves contiene 86 entradas
+
+		digicertassuredidrootca, 16/04/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 05:63:B8:63:0D:62:D7:5A:BB:C8:AB:1E:4B:DF:B5:A8:99:B2:4D:43
+		trustcenterclass2caii, 29/04/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): AE:50:83:ED:7C:F4:5C:BC:8F:61:C6:21:FE:68:5D:79:42:21:15:6E
+		thawtepremiumserverca, 11/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): E0:AB:05:94:20:72:54:93:05:60:62:02:36:70:F7:CD:2E:FC:66:66
+		swisssignplatinumg2ca, 31/10/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 56:E0:FA:C0:3B:8F:18:23:55:18:E5:D3:11:CA:E8:C2:43:31:AB:66
+		swisssignsilverg2ca, 31/10/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 9B:AA:E5:9F:56:EE:21:CB:43:5A:BE:25:93:DF:A7:F0:40:D1:1D:CB
+		thawteserverca, 11/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 9F:AD:91:A6:CE:6A:C6:C5:00:47:C4:4E:C9:D4:A5:0D:92:D8:49:79
+		equifaxsecureebusinessca1, 18/07/2003, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): DA:40:18:8B:91:89:A3:ED:EE:AE:DA:97:FE:2F:9D:F5:B7:D1:8A:41
+		utnuserfirstclientauthemailca, 02/05/2006, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): B1:72:B1:A5:6D:95:F9:1F:E5:02:87:E1:4D:37:EA:6A:44:63:76:8A
+		thawtepersonalfreemailca, 11/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): E6:18:83:AE:84:CA:C1:C1:CD:52:AD:E8:E9:25:2B:45:A6:4F:B7:E2
+		entrustevca, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): B3:1E:B1:B7:40:E3:6C:84:02:DA:DC:37:D4:4D:F5:D4:67:49:52:F9
+		utnuserfirsthardwareca, 02/05/2006, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 04:83:ED:33:99:AC:36:08:05:87:22:ED:BC:5E:46:00:E3:BE:F9:D7
+		certumca, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 62:52:DC:40:F7:11:43:A2:2F:DE:9E:F7:34:8E:06:42:51:B1:81:18
+		addtrustclass1ca, 02/05/2006, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): CC:AB:0E:A0:4C:23:01:D6:69:7B:DD:37:9F:CD:12:EB:24:E3:94:9D
+		entrustrootcag2, 22/06/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 8C:F4:27:FD:79:0C:3A:D1:66:06:8D:E8:1E:57:EF:BB:93:22:72:D4
+		equifaxsecureca, 18/07/2003, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): D2:32:09:AD:23:D3:14:23:21:74:E4:0D:7F:9D:62:13:97:86:63:3A
+		quovadisrootca3, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 1F:49:14:F7:D8:74:95:1D:DD:AE:02:C0:BE:FD:3A:2D:82:75:51:85
+		quovadisrootca2, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): CA:3A:FB:CF:12:40:36:4B:44:B2:16:20:88:80:48:39:19:93:7C:F7
+		mykey, 09/08/2016, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): E5:2F:50:3B:54:34:EC:E4:65:0A:5B:A6:D3:38:4E:1F:C2:2E:7E:37
+		digicerthighassuranceevrootca, 16/04/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 5F:B7:EE:06:33:E2:59:DB:AD:0C:4C:9A:E6:D3:8F:1A:61:C7:DC:25
+		secomvalicertclass1ca, 02/06/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): E5:DF:74:3C:B6:01:C4:9B:98:43:DC:AB:8C:E8:6A:81:10:9F:E4:8E
+		equifaxsecureglobalebusinessca1, 18/07/2003, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 7E:78:4A:10:1C:82:65:CC:2D:E1:F1:6D:47:B4:40:CA:D9:0A:19:45
+		geotrustuniversalca, 10/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): E6:21:F3:35:43:79:05:9A:4B:68:30:9D:8A:2F:74:22:15:87:EC:79
+		verisignclass3ca, 11/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): A1:DB:63:93:91:6F:17:E4:18:55:09:40:04:15:C7:02:40:B0:AE:6B
+		thawteprimaryrootcag3, 10/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): F1:8B:53:8D:1B:E9:03:B6:A6:F0:56:43:5B:17:15:89:CA:F3:6B:F2
+		thawteprimaryrootcag2, 10/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): AA:DB:BC:22:23:8F:C4:01:A1:27:BB:38:DD:F4:1D:DB:08:9E:F0:12
+		shiva5, 08/08/2016, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 51:F1:76:D8:53:1B:62:0F:29:F8:9D:30:E2:63:35:36:C5:80:81:0F
+		shiva4, 08/08/2016, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 2B:A4:20:55:F6:04:E2:98:1F:B7:59:55:FF:A2:0F:17:EE:F9:09:69
+		shiva3, 08/08/2016, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 13:D6:C1:69:87:D3:BF:6F:EE:53:B6:53:74:45:F7:91:15:79:EC:5D
+		shiva2, 08/08/2016, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): D9:1A:DF:72:7F:50:E3:E0:F2:80:2C:05:00:FF:4F:2E:88:DC:80:6E
+		deutschetelekomrootca2, 14/11/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 85:A4:08:C0:9C:19:3E:5D:51:58:7D:CD:D6:13:30:FD:8C:DE:37:BF
+		shiva1, 08/08/2016, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 99:AE:13:A9:70:B6:87:C2:18:B9:25:61:88:37:28:7F:A0:42:7B:A0
+		utnuserfirstobjectca, 02/05/2006, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): E1:2D:FB:4B:41:D7:D9:C3:2B:30:51:4B:AC:1D:81:D8:38:5E:2D:46
+		geotrustprimaryca, 10/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 32:3C:11:8E:1B:F7:B8:B6:52:54:E2:E2:10:0D:D6:02:90:37:F0:96
+		baltimorecodesigningca, 10/05/2002, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 30:46:D8:C8:88:FF:69:30:C3:4A:FC:CD:49:27:08:7C:60:56:7B:0D
+		verisignclass1ca, 11/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): CE:6A:64:A3:09:E4:2F:BB:D9:85:1C:45:3E:64:09:EA:E8:7D:60:F1
+		baltimorecybertrustca, 10/05/2002, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): D4:DE:20:D0:5E:66:FC:53:FE:1A:50:88:2C:78:DB:28:52:CA:E4:74
+		starfieldclass2ca, 20/01/2005, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): AD:7E:1C:28:B0:64:EF:8F:60:03:40:20:14:C3:D0:E3:37:0E:B5:8A
+		camerfirmachamberscommerceca, 31/10/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 6E:3A:55:A4:19:0C:19:5C:93:84:3C:C0:DB:72:2E:31:30:61:F0:B1
+		ttelesecglobalrootclass3ca, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 55:A6:72:3E:CB:F2:EC:CD:C3:23:74:70:19:9D:2A:BE:11:E3:81:D1
+		verisignclass3g5ca, 10/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 4E:B6:D5:78:49:9B:1C:CF:5F:58:1E:AD:56:BE:3D:9B:67:44:A5:E5
+		ttelesecglobalrootclass2ca, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 59:0D:2D:7D:88:4F:40:2E:61:7E:A5:62:32:17:65:CF:17:D8:94:E9
+		trustcenteruniversalcai, 29/04/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 6B:2F:34:AD:89:58:BE:62:FD:B0:6B:5C:CE:BB:9D:D9:4F:4E:39:F3
+		verisignclass3g4ca, 10/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 22:D5:D8:DF:8F:02:31:D1:8D:F7:9D:B7:CF:8A:2D:64:C9:3F:6C:3A
+		verisignclass3g3ca, 25/03/2004, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 13:2D:0D:45:53:4B:69:97:CD:B2:D5:C3:39:E2:55:76:60:9B:5C:C6
+		dmos1, 08/08/2016, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 13:D6:C1:69:87:D3:BF:6F:EE:53:B6:53:74:45:F7:91:15:79:EC:5D
+		certplusclass3pprimaryca, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 21:6B:2A:29:E6:2A:00:CE:82:01:46:D8:24:41:41:B9:25:11:B2:79
+		certumtrustednetworkca, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 07:E0:32:E0:20:B7:2C:3F:19:2F:06:28:A2:59:3A:19:A7:0F:06:9E
+		verisignclass3g2ca, 25/03/2004, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 85:37:1C:A6:E5:50:14:3D:CE:28:03:47:1B:DE:3A:09:E8:F8:77:0F
+		globalsignr3ca, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): D6:9B:56:11:48:F0:1C:77:C5:45:78:C1:09:26:DF:5B:85:69:76:AD
+		utndatacorpsgcca, 02/05/2006, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 58:11:9F:0E:12:82:87:EA:50:FD:D9:87:45:6F:4F:78:DC:FA:D6:D4
+		secomscrootca2, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 5F:3B:8C:F2:F8:10:B3:7D:78:B4:CE:EC:19:19:C3:73:34:B9:C7:74
+		gtecybertrustglobalca, 10/05/2002, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 97:81:79:50:D8:1C:96:70:CC:34:D8:09:CF:79:44:31:36:7E:F4:74
+		secomscrootca1, 02/06/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 36:B1:2B:49:F9:81:9E:D7:4C:9E:BC:38:0F:C6:56:8F:5D:AC:B2:F7
+		trustcenterclass4caii, 29/04/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): A6:9A:91:FD:05:7F:13:6A:42:63:0B:B1:76:0D:2D:51:12:0C:16:50
+		verisignuniversalrootca, 10/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 36:79:CA:35:66:87:72:30:4D:30:A5:FB:87:3B:0F:A7:7B:B7:0D:54
+		globalsignr2ca, 02/08/2007, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 75:E0:AB:B6:13:85:12:27:1C:04:F8:5F:DD:DE:38:E4:B7:24:2E:FE
+		certplusclass2primaryca, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 74:20:74:41:72:9C:DD:92:EC:79:31:D8:23:10:8D:C2:81:92:E2:BB
+		digicertglobalrootca, 16/04/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): A8:98:5D:3A:65:E5:E5:C4:B2:D7:D6:6D:40:C6:DD:2F:B1:9C:54:36
+		globalsignca, 19/03/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): B1:BC:96:8B:D4:F4:9D:62:2A:A8:9A:81:F2:15:01:52:A4:1D:82:9C
+		thawteprimaryrootca, 10/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 91:C6:D6:EE:3E:8A:C8:63:84:E5:48:C2:99:29:5C:75:6C:81:7B:81
+		geotrustglobalca, 18/07/2003, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): DE:28:F4:A4:FF:E5:B9:2F:A3:C5:03:D1:A3:49:A7:F9:96:2A:82:12
+		soneraclass2ca, 28/03/2006, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 37:F7:6D:E6:07:7C:90:C5:B1:3E:93:1A:B7:41:10:B4:F2:E4:9A:27
+		verisigntsaca, 31/10/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): BE:36:A4:56:2F:B2:EE:05:DB:B3:D3:23:23:AD:F4:45:08:4E:D6:56
+		soneraclass1ca, 28/03/2006, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 07:47:22:01:99:CE:74:B9:7C:B0:3D:79:B2:64:A2:C8:55:E9:33:FF
+		quovadisrootca, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): DE:3F:40:BD:50:93:D3:9B:6C:60:F6:DA:BC:07:62:01:00:89:76:C9
+		valicertclass2ca, 20/01/2005, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 31:7A:2A:D0:7F:2B:33:5E:F5:A1:C3:4E:4B:57:E8:B7:D8:F1:FC:A6
+		comodoaaaca, 02/05/2006, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): D1:EB:23:A4:6D:17:D6:8F:D9:25:64:C2:F1:F1:60:17:64:D8:E3:49
+		addtrustqualifiedca, 02/05/2006, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 4D:23:78:EC:91:95:39:B5:00:7F:75:8F:03:3B:21:1E:C5:4D:8B:CF
+		keynectisrootca, 23/04/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 9C:61:5C:4D:4D:85:10:3A:53:26:C2:4D:BA:EA:E4:A2:D2:D5:CC:97
+		aolrootca2, 19/03/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 85:B5:FF:67:9B:0C:79:96:1F:C8:6E:44:22:00:46:13:DB:17:92:84
+		addtrustexternalca, 02/05/2006, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 02:FA:F3:E2:91:43:54:68:60:78:57:69:4D:F5:E4:5B:68:85:18:68
+		verisignclass2g3ca, 25/03/2004, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 61:EF:43:D7:7F:CA:D4:61:51:BC:98:E0:C3:59:12:AF:9F:EB:63:11
+		aolrootca1, 19/03/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 39:21:C1:15:C1:5D:0E:CA:5C:CB:5B:C4:F0:7D:21:D8:05:0B:56:6A
+		verisignclass2g2ca, 25/03/2004, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): B3:EA:C4:47:76:C9:C8:1C:EA:F2:9D:95:B6:CC:A0:08:1B:67:EC:9D
+		geotrustprimarycag3, 10/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 03:9E:ED:B8:0B:E7:A0:3C:69:53:89:3B:20:D2:D9:32:3A:4C:2A:FD
+		geotrustprimarycag2, 10/12/2009, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 8D:17:84:D5:37:F3:03:7D:EC:70:FE:57:8B:51:9A:99:E6:10:D7:B0
+		swisssigngoldg2ca, 31/10/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): D8:C5:38:8A:B7:30:1B:1B:6E:D4:7A:E6:45:25:3A:6F:9F:1A:27:61
+		entrust2048ca, 22/06/2010, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 50:30:06:09:1D:97:D4:F5:AE:39:F7:CB:E7:92:7D:7D:65:2D:34:31
+		gtecybertrust5ca, 10/05/2002, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 47:C5:4C:BC:DA:5D:76:CE:62:88:38:11:AC:11:66:5D:55:F4:2C:00
+		camerfirmachambersignca, 31/10/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 4A:BD:EE:EC:95:0D:35:9C:89:AE:C7:52:A1:2C:5B:29:F6:D6:AA:0C
+		camerfirmachambersca, 31/10/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 78:6A:74:AC:76:AB:14:7F:9C:6A:30:50:BA:9E:A8:7E:FE:9A:CE:3C
+		godaddyclass2ca, 20/01/2005, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 27:96:BA:E6:3F:18:01:E2:77:26:1B:A0:D7:77:70:02:8F:20:EE:E4
+		entrustsslca, 09/01/2003, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 99:A6:9B:E6:1A:FE:88:6B:4D:2B:82:00:7C:B8:54:FC:31:7E:15:39
+		verisignclass1g3ca, 25/03/2004, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 20:42:85:DC:F7:EB:76:41:95:57:8E:13:6B:D4:B7:D1:E9:8E:46:A5
+		secomevrootca1, 02/06/2008, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): FE:B8:C4:32:DC:F9:76:9A:CE:AE:3D:D8:90:8F:FD:28:86:65:64:7D
+		verisignclass1g2ca, 25/03/2004, trustedCertEntry, 
+		Huella Digital de Certificado (SHA1): 27:3E:E1:24:57:FD:C4:F9:0C:55:E8:2B:56:16:7F:62:F5:32:E5:47
+
+• Now I had to include the previously installed certificate into the cacerts.
+• For this the following is the procedure:
+
+If you are using Java 7:
+
+keytool -importcert -trustcacerts -alias dhpx0020.sap.desa -file "D:\workspace\Shiva_Trunk\documentos\certificados\sap\dhpx0020.sap.desa.cer" -keystore "D:\Herramientas\jdk1.7.0\jre\lib\security\cacerts" -storepass changeit
+
+		D:\Herramientas\jdk1.7.0\bin>keytool -importcert -trustcacerts -alias dhpx0020.sap.desa -file "D:\workspace\Shiva_Trunk\documentos\certificados\sap\dhpx0020.sap.desa.cer" -keystore "D:\Herramientas\jdk1.7.0\jre\lib\security\cacerts" -storepass changeit
+		Propietario: CN=dhpx0020.telecom.com.ar, OU=I0020242121, OU=SAP Web AS, O=SAP Tr
+		ust Community, C=DE
+		Emisor: CN=IssuingCAGrupoTelecom, DC=telecom, DC=arg, DC=telecom, DC=com, DC=ar
+		N·mero de serie: 1c0000015f1d9381a3fa3cfdc500000000015f
+		Vßlido desde: Mon Dec 05 11:01:20 GFT 2016 hasta: Wed Dec 05 11:01:20 GFT 2018
+		Huellas digitales del Certificado:
+				 MD5: 0E:D5:F7:BE:B7:E8:6A:50:EB:5C:1B:9F:63:20:CF:FC
+				 SHA1: 36:21:7D:E2:22:FD:9D:FC:06:AB:3A:A5:86:C4:9B:FB:B6:6D:D0:A9
+				 SHA256: D3:B9:99:4B:03:C5:55:13:3D:A9:7F:DF:2E:76:2E:37:38:C4:4C:6C:52:
+		76:93:65:CE:11:22:6D:2C:6F:48:54
+				 Nombre del Algoritmo de Firma: SHA256withRSA
+				 Versi¾n: 3
+
+		Extensiones:
+
+		#1: ObjectId: 1.3.6.1.4.1.311.21.10 Criticality=false
+		0000: 30 18 30 0A 06 08 2B 06   01 05 05 07 03 01 30 0A  0.0...+.......0.
+		0010: 06 08 2B 06 01 05 05 07   03 02                    ..+.......
+
+
+		#2: ObjectId: 2.5.29.14 Criticality=false
+		SubjectKeyIdentifier [
+		KeyIdentifier [
+		0000: 3B B3 15 73 FD B2 CD E4   E8 AF 0C BE 83 1E 4E 48  ;..s..........NH
+		0010: 71 A1 50 95                                        q.P.
+		]
+		]
+
+		#3: ObjectId: 1.3.6.1.4.1.311.21.7 Criticality=false
+		0000: 30 2F 06 27 2B 06 01 04   01 82 37 15 08 82 C9 A8  0/.'+.....7.....
+		0010: 00 83 94 C0 2A 82 E9 81   39 86 B9 C1 1A 86 C0 D3  ....*...9.......
+		0020: 07 81 68 82 E5 86 6A 85   DE 8B 6B 02 01 64 02 01  ..h...j...k..d..
+		0030: 09                                                 .
+
+
+		#4: ObjectId: 2.5.29.35 Criticality=false
+		AuthorityKeyIdentifier [
+		KeyIdentifier [
+		0000: 96 7F 4F 8E F2 2E BC 43   21 F5 2F 48 F3 26 55 81  ..O....C!./H.&U.
+		0010: A5 31 50 CF                                        .1P.
+		]
+		]
+
+		#5: ObjectId: 2.5.29.31 Criticality=false
+		CRLDistributionPoints [
+		  [DistributionPoint:
+			 [URIName: http://pki.telecom.com.ar/CRL/IssuingCAGrupoTelecom.CRL, URIName:
+		 http://pki2.telecom.com.ar/CRL/IssuingCAGrupoTelecom.CRL]
+		]]
+
+		#6: ObjectId: 2.5.29.37 Criticality=false
+		ExtendedKeyUsages [
+		  serverAuth
+		  clientAuth
+		]
+
+		#7: ObjectId: 2.5.29.15 Criticality=false
+		KeyUsage [
+		  DigitalSignature
+		  Key_Encipherment
+		]
+
+		#8: ObjectId: 1.3.6.1.5.5.7.1.1 Criticality=false
+		AuthorityInfoAccess [
+		  [
+		   accessMethod: caIssuers
+		   accessLocation: URIName: http://pki.telecom.com.ar/AIA/IssuingCAGrupoTelecom.
+		crt
+		,
+		   accessMethod: caIssuers
+		   accessLocation: URIName: http://pki2.telecom.com.ar/AIA/IssuingCAGrupoTelecom
+		.crt
+		]
+		]
+
+		+Confiar en este certificado? [no]:  si
+		Se ha agregado el certificado al almacÚn de claves
+
+		D:\Herramientas\jdk1.7.0\bin>
+
+• It will then add the certificate information into the cacert file.

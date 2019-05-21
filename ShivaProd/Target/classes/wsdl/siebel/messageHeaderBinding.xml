@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jxb:bindings version="1.0" 
+  xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+  jxb:extensionBindingPrefixes="xjc">
+
+	<!--
+		Con esto fuerzo a que el elemento 'header' del request se traduzca a una clase llamada 'HeaderRequest' en un paquete específico 
+	-->
+    <jxb:bindings schemaLocation="requestMessageHeader.xsd" node="/xs:schema">
+        <jxb:bindings node="//xs:element[@name='header']">
+            <jxb:class name="HeaderRequest"/>
+        </jxb:bindings>
+        <jxb:schemaBindings>
+            <jxb:package name="ar.com.telecom.shiva.presentacion.wsdl.siebel.header.request"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>
+
+	<!--
+		Con esto fuerzo a que el elemento 'header' del response se traduzca a una clase llamada 'HeaderResponse' en un paquete específico 
+	-->
+    <jxb:bindings schemaLocation="responseMessageHeader.xsd" node="/xs:schema">
+        <jxb:bindings node="//xs:element[@name='header']">
+            <jxb:class name="HeaderResponse"/>
+        </jxb:bindings>
+        <jxb:schemaBindings>
+            <jxb:package name="ar.com.telecom.shiva.presentacion.wsdl.siebel.header.response"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>
+
+	<!--
+		Con esto fuerzo a que el elemento 'clienteCRM' del commons se traduzca a una clase llamada 'ClienteCRM' en un paquete específico 
+	-->
+    <jxb:bindings schemaLocation="Diccionario.xsd" node="/xs:schema">
+        <jxb:bindings node="//xs:element[@name='clienteCRM']">
+            <jxb:class name="ClienteCRM"/>
+        </jxb:bindings>
+        <jxb:schemaBindings>
+            <jxb:package name="ar.com.telecom.shiva.presentacion.wsdl.siebel.diccionario.commons"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>
+
+	<!--
+		Con esto fuerzo a que el elemento 'clienteCRM' del diccionario de clientes se traduzca a una clase llamada 'ClienteCRM' en un paquete específico 
+	-->
+    <jxb:bindings schemaLocation="DiccionarioCliente.xsd" node="/xs:schema">
+        <jxb:bindings node="//xs:element[@name='clienteCRM']">
+            <jxb:class name="ClienteCRM"/>
+        </jxb:bindings>
+        <jxb:schemaBindings>
+            <jxb:package name="ar.com.telecom.shiva.presentacion.wsdl.siebel.diccionario.cliente"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>
+
+</jxb:bindings>

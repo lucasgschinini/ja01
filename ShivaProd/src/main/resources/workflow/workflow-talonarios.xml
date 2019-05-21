@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	
+  	<bean id="TALONARIOS" class="ar.com.telecom.shiva.negocio.workflow.definicion.Workflow">
+  		<property name="tipoWorkflow">
+  			<util:constant 
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.TipoWorkflow.TALONARIO" />
+ 		</property>
+ 		
+  		<property name="transiciones">
+  			<list>
+  				<ref bean="inicioTAL" />
+  				<ref bean="reasignarSupervisor" />
+  				<ref bean="rechazarErrorRango" />
+  				<ref bean="asignarGestor" />
+  				<ref bean="dispararAnulacionAutomatica" />  				
+  				<ref bean="asignarAdministrador" />  				
+  				<ref bean="reasignarAdministrador" />  				
+  				<ref bean="rechazarRendicion" />  				
+  				<ref bean="aceptarRendicion" />  				
+  				<ref bean="dispararAnulacionRendicion" />
+  			</list>
+  		</property>	
+  	</bean>
+  	
+  	<!-- Estados (8) + inicial -->
+  	<util:constant id="tal_asignado_supervisor"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.TAL_ASIGNADO_SUPERVISOR" />
+  	<util:constant id="tal_derivado_administrador"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.TAL_DERIVADO_ADMINISTRADOR" />
+  	<util:constant id="tal_asignado_gestor"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.TAL_ASIGNADO_GESTOR" />
+  	<util:constant id="tal_anulado"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.TAL_ANULADO" />
+  	<util:constant id="tal_asignado_administrador"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.TAL_ASIGNADO_ADMINISTRADOR" />
+  	<util:constant id="tal_rendicion_rechazada"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.TAL_RENDICION_RECHAZADA" />
+  	<util:constant id="tal_rendicion_completada"
+		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.TAL_RENDICION_COMPLETADA" />
+
+  	<!-- Transiciones (10) -->
+  	<bean id="inicioTAL" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Inicio"/>
+  		<property name="evento" value="crearWorkflow"/>
+  		<property name="origen">
+  			<util:constant 
+  				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.INICIO" />
+  		</property>
+  		<property name="destino" ref="tal_asignado_supervisor"/>	
+  	</bean>
+  	<bean id="reasignarSupervisor" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Reasignar a supervisor"/>
+  		<property name="evento" value="reasignarSupervisor"/>
+  		<property name="origen" ref="tal_derivado_administrador"/>
+  		<property name="destino" ref="tal_asignado_supervisor"/>	
+  	</bean>
+  	<bean id="rechazarErrorRango" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rechazar por error en rango"/>
+  		<property name="evento" value="rechazarErrorRango"/>
+  		<property name="origen" ref="tal_asignado_supervisor"/>
+  		<property name="destino" ref="tal_derivado_administrador"/>	
+  	</bean>
+  	<bean id="asignarGestor" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Asignado a Gestor"/>
+  		<property name="evento" value="asignarGestor"/>
+  		<property name="origen" ref="tal_asignado_supervisor"/>
+  		<property name="destino" ref="tal_asignado_gestor"/>	
+  	</bean>
+  	<bean id="dispararAnulacionAutomatica" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Disparar anulacion automatica"/>
+  		<property name="evento" value="dispararAnulacionAutomatica"/>
+  		<property name="origen" ref="tal_asignado_gestor"/>
+  		<property name="destino" ref="tal_anulado"/>	
+  	</bean>
+  	<bean id="asignarAdministrador" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Asignar a Administrador de Talonarios"/>
+  		<property name="evento" value="asignarAdministrador"/>
+  		<property name="origen" ref="tal_asignado_gestor"/>
+  		<property name="destino" ref="tal_asignado_administrador"/>	
+  	</bean>
+  	<bean id="rechazarRendicion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rechazar rendicion"/>
+  		<property name="evento" value="rechazarRendicion"/>
+  		<property name="origen" ref="tal_asignado_administrador"/>
+  		<property name="destino" ref="tal_rendicion_rechazada"/>	
+  	</bean>
+  	<bean id="reasignarAdministrador" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Reasignar a Administrador de Talonarios"/>
+  		<property name="evento" value="reasignarAdministrador"/>
+  		<property name="origen" ref="tal_rendicion_rechazada"/>
+  		<property name="destino" ref="tal_asignado_administrador"/>	
+  	</bean>
+  	<bean id="aceptarRendicion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Aceptar Rendicion"/>
+  		<property name="evento" value="aceptarRendicion"/>
+  		<property name="origen" ref="tal_asignado_administrador"/>
+  		<property name="destino" ref="tal_rendicion_completada"/>	
+  	</bean>
+  	<bean id="dispararAnulacionRendicion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Disparar anulacion Rendicion Rechazada"/>
+  		<property name="evento" value="dispararAnulacionRendicion"/>
+  		<property name="origen" ref="tal_rendicion_rechazada"/>
+  		<property name="destino" ref="tal_anulado"/>	
+  	</bean>
+    	
+</beans>

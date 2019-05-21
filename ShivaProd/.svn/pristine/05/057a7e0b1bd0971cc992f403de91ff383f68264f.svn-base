@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+ 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+ 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 	
+ 	<!-- Configuración para la capa de fachada -->
+	
+	<!-- Workflow -->
+	<!-- <import resource="classpath*:/workflow/motorWorkflow.xml" />
+	
+	<bean id="workflowDao" class="ar.com.telecom.shiva.persistencia.dao.impl.WorkflowDaoImpl" parent="soporteDao" />
+  	<bean name="workflowService" class="ar.com.telecom.shiva.negocio.workflow.WorkflowServiceImpl">
+		<property name="dao" ref="workflowDao" />
+		<property name="motorWorkflow" ref="motorWorkflow" />
+	</bean> -->
+	
+	<!-- Fin - Workflow -->
+	
+	<!-- CombosServicio -->
+	<bean id="legajoChequeRechazadoMapeador" class="ar.com.telecom.shiva.negocio.mapeos.LegajoChequeRechazadoMapeador"/>
+	
+	<bean id="combosFacade" class="ar.com.telecom.shiva.presentacion.facade.impl.CombosFacadeImpl"/>
+	
+	<bean id="legajoChequeRechazadoFacade" class="ar.com.telecom.shiva.presentacion.facade.impl.LegajoChequeRechazadoFacadeImpl">
+		<property name="defaultMapeador" ref="legajoChequeRechazadoMapeador"/>
+	</bean>
+	
+	<bean id="chequeRechazadoMapeador" class="ar.com.telecom.shiva.negocio.mapeos.ChequeRechazadoMapeador"/>
+	<bean id="busquedaLegajosChequeRechazadoMapeador" class="ar.com.telecom.shiva.negocio.mapeos.BusquedaLegajosChequeRechazadoMapeador"/>
+	<!-- FIN CombosServicio -->
+	
+	<bean id="clienteFacade" class="ar.com.telecom.shiva.presentacion.facade.impl.ClienteFacadeImpl"/>
+	
+</beans>

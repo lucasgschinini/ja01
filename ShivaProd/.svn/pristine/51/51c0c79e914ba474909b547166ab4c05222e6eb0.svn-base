@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ax29="http://cheques.consulta.dto.ws.ice.teco.com.ar/xsd" xmlns:ax211="http://beans.ice.teco.com.ar/xsd" xmlns:ns="http://service.ws.ice.teco.com.ar" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://service.ws.ice.teco.com.ar">
+    <wsdl:documentation>
+			Webservice para consultar Cheques.
+		</wsdl:documentation>
+    <wsdl:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://beans.ice.teco.com.ar/xsd">
+            <xs:complexType name="Cheque">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="bancoEmisorCheque" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="clientes" nillable="true" type="ax211:Cliente"/>
+                    <xs:element minOccurs="0" name="cobroRevertido" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="codigoBancoDeCobro" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="codigoDeOperacion" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="codigoDeTarea" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="codigoEmpresaReceptora" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="codigoEntidadGestora" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="codigoPostalSucursal" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="comision" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="cpClienteCodigoBarras" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="descripcionBanco" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fechaDeAcreditacion" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fechaDeCobro" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fechaDeVctoOriginal" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fechaPeticionReversion" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="formaDePagoDelCliente" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="idCheque" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="identificadorDePago" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="importeAbsoluto" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="importeBono" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="importeCheque" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="importeCobradoOReversar" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="importeComprobante" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="importeEfectivo" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="importeOriginal" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="importeOtrasMonedas" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="marcaDeAjuste" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="marcaDePago" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="moneda" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="nombreBancoDeCobro" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="nombreEntidadGestora" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="numeroCheque" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="numeroChequeCompleto" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="numeroConvenio" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="numeroCuota" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="numeroDeAgencia" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="numeroDeComprobante" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="numeroDeSucursalCompleto" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="numeroDeTarjeta" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="numeroLegal" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="numeroReferenciaMic" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="provinciaDelCodBarras" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="recibo" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="referenciaDelComprobante" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="sucursalBanco" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tipoBono" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tipoClienteCodigoBarras" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tipoComprobante" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tipoDeCambio" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="tipoDeFacturacion" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tipoDeLectura" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tipoDeOperacion" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tipoDocumentoRelacionado" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tipoDocumentoRelacionadoTotfa" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tipoOtrasMonedas" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Cliente">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="idClienteLegado" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="razonSocial" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax210="http://cheques.consulta.dto.ws.ice.teco.com.ar/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://service.ws.ice.teco.com.ar">
+            <xs:import namespace="http://cheques.consulta.dto.ws.ice.teco.com.ar/xsd"/>
+            <xs:element name="consultaCheques">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="consultaChequesEntrada" nillable="true" type="ax210:ConsultaChequesEntrada"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="consultaChequesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax210:ConsultaChequesSalida"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns:ax212="http://beans.ice.teco.com.ar/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://cheques.consulta.dto.ws.ice.teco.com.ar/xsd">
+            <xs:import namespace="http://beans.ice.teco.com.ar/xsd"/>
+            <xs:complexType name="ConsultaChequesEntrada">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="bancos" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="cantidadARetornar" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="clientes" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="codigoBancoCobro" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="codigoEmpresaReceptora" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fechaCobroDesde" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fechaCobroHasta" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="importeDesde" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="importeHasta" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="numeroDeCheque" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tipoDeInvocacion" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ultimoRegistroProcesado" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="usuario" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ConsultaChequesSalida">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="cantidadDeRegistrosTotales" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="0" name="cantidadRegistrosDevueltos" nillable="true" type="xs:int"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="cheques" nillable="true" type="ax211:Cheque"/>
+                    <xs:element minOccurs="0" name="codigoRetorno" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="descripcionRetorno" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="quedanRegistros" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="resultadoInvocacion" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="consultaChequesRequest">
+        <wsdl:part name="parameters" element="ns:consultaCheques"/>
+    </wsdl:message>
+    <wsdl:message name="consultaChequesResponse">
+        <wsdl:part name="parameters" element="ns:consultaChequesResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="ConsultaChequesPortType">
+        <wsdl:operation name="consultaCheques">
+            <wsdl:input message="ns:consultaChequesRequest" wsaw:Action="urn:consultaCheques"/>
+            <wsdl:output message="ns:consultaChequesResponse" wsaw:Action="urn:consultaChequesResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ConsultaChequesSoap11Binding" type="ns:ConsultaChequesPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="consultaCheques">
+            <soap:operation soapAction="urn:consultaCheques" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ConsultaChequesHttpBinding" type="ns:ConsultaChequesPortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="consultaCheques">
+            <http:operation location="consultaCheques"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ConsultaCheques">
+        <wsdl:port name="ConsultaChequesHttpSoap11Endpoint" binding="ns:ConsultaChequesSoap11Binding">
+            <soap:address location="http://dlnx0120:8080/ICE-CHEQUES-PI/services/ConsultaCheques.ConsultaChequesHttpSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="ConsultaChequesHttpsSoap11Endpoint" binding="ns:ConsultaChequesSoap11Binding">
+            <soap:address location="https://dlnx0120:8443/ICE-CHEQUES-PI/services/ConsultaCheques.ConsultaChequesHttpsSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="ConsultaChequesHttpsEndpoint" binding="ns:ConsultaChequesHttpBinding">
+            <http:address location="https://dlnx0120:8443/ICE-CHEQUES-PI/services/ConsultaCheques.ConsultaChequesHttpsEndpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="ConsultaChequesHttpEndpoint" binding="ns:ConsultaChequesHttpBinding">
+            <http:address location="http://dlnx0120:8080/ICE-CHEQUES-PI/services/ConsultaCheques.ConsultaChequesHttpEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

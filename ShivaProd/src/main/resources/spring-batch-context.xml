@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+ 
+	<!--Activates @Required, @Autowired, @PostConstruct, @PreDestroy and @Resource -->
+    <context:annotation-config />
+    <!--Scans the classpath for annotated components @Component, @Repository, @Service, and @Controller -->
+	<context:component-scan base-package="ar.com.telecom.shiva" >
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter type="aspectj" expression="ar.com.telecom.shiva.base.soa.reintentos.ReintentosMensajeria"/>
+		<context:exclude-filter type="aspectj" expression="ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchImputacionManualServicioImpl"/>
+		<context:exclude-filter type="aspectj" expression="ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchImputacionServicioImpl"/>
+		<context:exclude-filter type="aspectj" expression="ar.com.telecom.shiva.negocio.servicios.impl.DescobroBatchImputacionServicioImpl"/>
+		<context:exclude-filter type="aspectj" expression="ar.com.telecom.shiva.negocio.servicios.impl.ProcesamientoHilosCobrosServicioImpl"/>
+		<context:exclude-filter type="aspectj" expression="ar.com.telecom.shiva.negocio.servicios.impl.ControlHilosCobrosServicioImpl"/>
+	</context:component-scan>
+	
+	<!-- Messages -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	    <property name="basenames" value="mensajes"/>
+	</bean>
+
+ 	<import resource="./context/spring-repository.xml"/>
+	<import resource="./context/spring-jdbc-not-jndi-connection.xml" /> 
+  	<import resource="./context/spring-mail.xml" />
+  	<import resource="./context/spring-security-x-jar.xml" />
+  	<import resource="./context/spring-crypto.xml" />
+  	
+ 
+ 	<batch:job-repository id="jobRepository" data-source="dataSource" transaction-manager="transactionManager" 
+		isolation-level-for-create="READ_COMMITTED" table-prefix="SHV_"/>
+ 
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+ 
+	<bean id="jobLauncher"
+		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+	
+	<!-- Workflows -->
+	<import resource="classpath*:/workflow/motorWorkflow.xml" />
+	<bean id="workflowDao" class="ar.com.telecom.shiva.persistencia.dao.impl.WorkflowDaoImpl" parent="soporteDao" />
+  	<bean name="workflowService" class="ar.com.telecom.shiva.negocio.workflow.WorkflowServiceImpl">
+		<property name="dao" ref="workflowDao" />
+		<property name="motorWorkflow" ref="motorWorkflow" />
+	</bean>
+	<bean name="workflowRegistrosAVC" class="ar.com.telecom.shiva.negocio.workflow.servicios.impl.WorkflowRegistrosAVCImpl" />
+
+	<!-- Definición de objetos de la capa de datos (me lo traigo desde 'spring-service.xml') -->
+	<!-- Banco Cliente -->
+	<bean id="bancoClienteDao" class="ar.com.telecom.shiva.persistencia.dao.impl.BancoClienteDaoImpl" parent="soporteDao"/>
+	
+	<!-- Generico Dao -->
+	<bean id="genericoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.GenericoDaoImpl" parent="soporteDao"/>
+
+	<!-- Parametro -->
+	<bean id="parametroServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ParametroServicioImpl"/>
+	<bean id="parametroDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ParametroDaoImpl" parent="soporteDao" />
+	
+	<!-- Acuerdo -->
+	<bean id="acuerdoServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.AcuerdoServicioImpl"/>
+	<bean id="acuerdoDao" class="ar.com.telecom.shiva.persistencia.dao.impl.AcuerdoDaoImpl" parent="soporteDao" />
+	
+	<!-- Tipo Valor -->
+	<bean id="tipoValorDao" class="ar.com.telecom.shiva.persistencia.dao.impl.TipoValorDaoImpl" parent="soporteDao"/>
+	
+	<!-- ArchivoAVCSoporteServicio -->
+	<bean id="archivoAVCSoporteServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.ArchivoAVCSoporteServicioImpl"/>
+	<bean id="archivoAVCDao" class="ar.com.telecom.shiva.persistencia.dao.impl.ArchivoAVCDaoImpl" parent="soporteDao" />
+	
+	<!-- Registro AVC Soporte -->
+	<bean id="registroAvcSoporteServicio" class="ar.com.telecom.shiva.negocio.servicios.impl.RegistroAvcSoporteServicioImpl"/>
+	<bean id="registroAvcSoporteDao" class="ar.com.telecom.shiva.persistencia.dao.impl.RegistroAvcSoporteDaoImpl" parent="soporteDao" />
+
+</beans>

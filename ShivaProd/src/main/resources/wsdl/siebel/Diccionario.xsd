@@ -1,0 +1,2358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/common" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cm="http://www.telecom.com.ar/XMLSchema/bios/common">
+	<!-- **********************************************************-->
+	<!-- *********** Datos genericos  *************************-->
+	<!-- **********************************************************-->
+	<xs:element name="nombre">
+		<xs:annotation>
+			<xs:documentation>Nombre</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="apellido" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Apellido</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="scoring" type="xs:string"/>	
+	<xs:element name="perfilCRM" type="xs:string"/>
+	<xs:element name="pin" type="xs:string"/>
+							
+	<xs:element name="tratamiento" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tratamiento al Nombre</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="telefono" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Telefono</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="condicionIVA" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Condicion de IVA</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="cuit" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Numero de CUIT</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ufUsuario" type="xs:string"/>
+	<xs:element name="usuario">
+		<xs:annotation>
+			<xs:documentation>Identificador de Usuario</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="tipo">
+						<xs:annotation>
+							<xs:documentation>Tipo de usuario</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="servicio">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cm:codigo">
+					<xs:annotation>
+						<xs:documentation>codigo de servicio</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="cm:identificador">
+					<xs:annotation>
+						<xs:documentation>Identificador univoco de servicio</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="modelo" type="xs:string"/>
+	<xs:element name="tipo" type="xs:string"/>
+	<xs:element name="identificador" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Identificador Generico</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="propiedades">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="propiedad" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="nombre" type="xs:string"/>
+							<xs:element name="valor" type="xs:string"/>
+							<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="producto">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cm:propiedades" minOccurs="0"/>
+				<xs:element name="servicios" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="servicio" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="cm:propiedades"/>
+										<xs:element ref="cm:serviciosAdicionales" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="detalleServicio">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cm:identificador">
+					<xs:annotation>
+						<xs:documentation>Identificador univoco de servicio</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="propiedades" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="propiedad" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nombre" type="xs:string"/>
+										<xs:element name="valor" type="xs:string"/>
+										<xs:element name="descripcion"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="prioridad" type="xs:string"/>
+	<xs:element name="cantidad" type="xs:integer"/>
+	<xs:element name="codigo" type="xs:string"/>
+	<xs:element name="sintoma" type="xs:string"/>
+	<xs:element name="motivoLlamado" type="xs:string"/>
+	<xs:element name="reclamoMarcaRetencion" type="xs:string"/>
+	<xs:element name="reclamoTipoRetencion" type="xs:string"/>
+	<xs:element name="reclamoMarcaVip" type="xs:string"/>
+	<xs:element name="reclamoMarcaRecomendado" type="xs:string"/>
+	<xs:element name="reclamoFechaIngresoRed" type="xs:string"/>
+	<xs:element name="reclamoOrigenGirafe" type="xs:string"/>
+	<xs:element name="reclamoTipoOrigenGirafe" type="xs:string"/>
+	<xs:element name="estado" type="xs:string"/>
+	<xs:element name="fecha">
+		<xs:annotation>
+			<xs:documentation>Fecha formato (yyyy-mm-dd)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31)"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="hora">
+		<xs:annotation>
+			<xs:documentation>Hora (hh24:mi:ss)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="(0\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="fechaHoraDesde">
+		<xs:annotation>
+			<xs:documentation>fecha con formato (yyyy-mm-dd hh24:mi:ss)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="descripcion" type="xs:string"/>
+	<xs:element name="fechaHora">
+		<xs:annotation>
+			<xs:documentation>fecha con formato (yyyy-mm-dd hh24:mi:ss)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="fechaHoraHasta">
+		<xs:annotation>
+			<xs:documentation>fecha con formato (yyyy-mm-dd hh24:mi:ss)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="accion" type="xs:string"/>
+	<xs:element name="observaciones" type="xs:string"/>
+	<xs:element name="profesion" type="xs:string"/>
+	<xs:element name="marcaVIP" type="xs:string"/>
+	<xs:element name="resultado" type="xs:string"/>
+	<xs:element name="identificadorEntidadProveedor" type="xs:string"/>
+	<xs:element name="importe" type="xs:string"/>
+	<!-- **********************************************************-->
+	<!-- Datos comunes                                     *********** -->
+	<!-- **********************************************************-->
+	<xs:element name="origen">
+		<xs:annotation>
+			<xs:documentation>Proceso de negocio que origina la tarea</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="ASEG"/>
+				<xs:enumeration value="PROV"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="grupo">
+		<xs:annotation>
+			<xs:documentation>Grupo operativo que recibe la tarea</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="PI"/>
+				<xs:enumeration value="SSEE"/>
+				<xs:enumeration value="PE"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="tarea" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tarea</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="categoriaCliente" type="xs:string"/>
+	<!-- **********************************************************-->
+	<!-- Datos para prueba de linea  (globales) *********** -->
+	<!-- **********************************************************-->
+	<xs:element name="usuarioPrueba" type="xs:string"/>
+	<xs:element name="tipoPrueba">
+		<xs:annotation>
+			<xs:documentation>Tipo de prueba</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="TST-FULL"/>
+				<xs:enumeration value="TST-SOAK"/>
+				<xs:enumeration value="TST-MEAS-G"/>
+				<xs:enumeration value="TST-MEAS-M"/>
+				<xs:enumeration value="TST-PORT"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="historicoPrueba">
+		<xs:annotation>
+			<xs:documentation>Historico que se desea consultar</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="HST-LINE"/>
+				<xs:enumeration value="HST-PORT"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<!-- **********************************************************-->
+	<!-- Datos para prueba de linea  (Medicion Linea) *** -->
+	<!-- **********************************************************-->
+	<xs:element name="verCode">
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="diagnosticoUltimaPruebaActor" type="xs:string"/>
+	<xs:element name="fechaHoraUltimaPruebaDSL">
+		<xs:annotation>
+			<xs:documentation>fecha con formato (yyyy-mm-dd hh24:mi:ss)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="summaryCodes" type="xs:string"/>
+	<xs:element name="sumaryCode1" type="xs:string"/>
+	<xs:element name="sumaryCode2" type="xs:string"/>
+	<xs:element name="sumaryCode3" type="xs:string"/>
+	<xs:element name="sumaryCode4" type="xs:string"/>
+	<xs:element name="sumaryCode5" type="xs:string"/>
+	<xs:element name="sumaryCode6" type="xs:string"/>
+	<xs:element name="ln1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Loop length</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ln2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Open distance from CO or RT</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ln3" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Open distance from station</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="nse" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Noise (in tst-full metalic noise) </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ntsac1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Inverse on the real portion of tree Terminal AC adminttance TIP to ground in Kohms</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ntsac2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Inverse on the imaginary portion of tree Terminal AC adminttance TIP to ground in Kohms</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ntsac3" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Inverse on the real portion of tree Terminal AC adminttance Ring to ground in Kohms</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ntsac4" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Inverse on the imaginary portion of tree Terminal AC adminttance Ring to ground in Kohms</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ntsac5" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Inverse on the real portion of tree Terminal AC adminttance TIP to Ring in Kohms</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ntsac6" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Inverse on the imaginary portion of tree Terminal AC adminttance TIP to Ring in Kohms</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="nzgnse" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Ground noise (Aux 16)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="nzrab" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Voltage A to B calculated (raw)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="nzrae" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Resistance A to earth</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="nzrav" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Resistance A to battery</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="nzrba" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Resistance B to A</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="nzrbe" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Voltage B to earth (raw)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="nzrbv" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Resistance B to battery</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="nzvab" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Voltage A to B calculated (raw)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="nzvae" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Voltage A to earth (raw)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="nzvbe" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Voltage B to earth (raw)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ac1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tip to Ring AC resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ac2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tip to ground AC resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ac3" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Ring to ground AC resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ac4" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tip to Ring Capacitance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ac5" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tip to ground Capacitance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ac6" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Ring to ground Capacitance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="af1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tip to ground AC voltage</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="af2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Ring to ground AC voltage</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="bl1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Longitudinal balance in decibels</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="bl2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Capacitive balance in percent</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ct1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Dial tone test code (full only)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ct2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Dial tone test code (full only)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dc1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tree Terminal Tip to Ring DC resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dc2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tree Terminal Tip to ground DC resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dc3" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tree Terminal Ring to ground DC resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dc4" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tree Terminal Tip to ground DC voltage</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dc5" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tree Terminal Ring to ground DC voltage</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dr1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Two Terminal Tip to Ring DC resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dr2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Two Terminal Tip to ground DC resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dr3" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Two Terminal Ring to ground DC resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dr4" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Two Terminal Tip to ground DC voltage</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dr5" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Two Terminal Ring to ground DC voltage</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="lc1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Line circuit tip ground voltage </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="lc2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Line circuit ring ground voltage</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="rg1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tip to ring ringers (count or Y)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="rg2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tip to ground ringers (count or Y)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="rg3" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Ring to ground ringers (count or Y)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>1st T-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk10" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>4th R-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk11" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>5th R-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk12" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>6th R-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk13" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Applied soak voltaje</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>2nd T-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk3" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>3rd T-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk4" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>4th T-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk5" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>5th T-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk6" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>6th T-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk7" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>1st R-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk8" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>2nd R-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sk9" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>3rd R-G soak resistance</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="th1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tip to ring Thermistor (Y)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="th2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tip to ground Thermistor (Y)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="th3" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Ring to ground Thermistor (Y)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="errorCode" type="xs:string"/>
+	<xs:element name="denycode" type="xs:string"/>
+	<xs:element name="equipmentSupplier" type="xs:string"/>
+	<xs:element name="supplierErrorCode" type="xs:string"/>
+	<xs:element name="supplierErrorDescription" type="xs:string"/>
+	<xs:element name="supplierErrorExplanation" type="xs:string"/>
+	<!-- ************************************************************-->
+	<!-- Datos para prueba de linea  (Medicion de Port) *** -->
+	<!-- ************************************************************-->
+	<xs:element name="tecnologiaADSL" type="xs:string"/>
+	<xs:element name="perfilVelocidad" type="xs:string"/>
+	<xs:element name="cantidadIntentos" type="xs:string"/>
+	<xs:element name="capacidadMaximaParDown" type="xs:string"/>
+	<xs:element name="capacidadMaximaParUp" type="xs:string"/>
+	<xs:element name="equipo" type="xs:string"/>
+	<xs:element name="estadoAdministrativo" type="xs:string"/>
+	<xs:element name="estadoLinea" type="xs:string"/>
+	<xs:element name="estadoOperativo" type="xs:string"/>
+	<xs:element name="puerto" type="xs:string"/>
+	<xs:element name="relacionSenalRuidoDown" type="xs:string"/>
+	<xs:element name="relacionSenalRuidoUp" type="xs:string"/>
+	<xs:element name="transmisionCeldasDown" type="xs:string"/>
+	<xs:element name="transmisionCeldasUp" type="xs:string"/>
+	<xs:element name="ultimoCambioEstadoDelPort" type="xs:string"/>
+	<xs:element name="velocidadLineaConfiguradaDown" type="xs:string"/>
+	<xs:element name="velocidadLineaConfiguradaUp" type="xs:string"/>
+	<xs:element name="velocidadLineaRealDown" type="xs:string"/>
+	<xs:element name="velocidadLineaRealUp" type="xs:string"/>
+	<xs:element name="UnidadesTransmitidasDown" type="xs:string"/>
+	<xs:element name="UnidadesTransmitidasUp" type="xs:string"/>
+	<xs:element name="potenciaDeTransmisionDown" type="xs:string"/>
+	<xs:element name="potenciaDeTransmisionUp" type="xs:string"/>
+	<xs:element name="atenuacionDown" type="xs:string"/>
+	<xs:element name="atenuacionUP" type="xs:string"/>
+	<xs:element name="margenSenalRuidoObjetivoDown" type="xs:string"/>
+	<xs:element name="margenSenalRuidoObjetivoUp" type="xs:string"/>
+	<xs:element name="aturVendorId" type="xs:string"/>
+	<xs:element name="modoDeOperacion" type="xs:string"/>
+	<xs:element name="normaOperativa" type="xs:string"/>
+	<xs:element name="perfilDeFrecuencia" type="xs:string"/>
+	<xs:element name="violacionDeCodigoDown" type="xs:string"/>
+	<xs:element name="violacionDeCodigoUp" type="xs:string"/>
+	
+	<!---->
+	<!--**********************************************************-->
+	<!-- Datos Elementos de Red-->
+	<!--**********************************************************-->
+	<xs:element name="ebos" type="xs:string"/>
+	<xs:element name="numeroSolicitud" type="xs:string"/>
+	<xs:element name="topologia" type="xs:string"/>
+	<xs:element name="tecnologia" type="xs:string"/>
+	<xs:element name="codigoAnomalia" type="xs:string"/>
+	<xs:element name="coordenada" type="xs:string"/>
+	<xs:element name="repartidorGeneral" type="xs:string"/>
+	<xs:element name="centralConmutacion" type="xs:string"/>
+	<xs:element name="precalificacion" type="xs:string"/>
+	<xs:element name="arriba" type="xs:string"/>
+	<xs:element name="abajo" type="xs:string"/>
+	<xs:element name="extremo"/>
+	<xs:element name="central">
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="zona">
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="cable" type="xs:string"/>
+	<xs:element name="par" type="xs:string"/>
+	<xs:element name="comentario" type="xs:string"/>
+	<xs:element name="devoluciones">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="devolucion" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element ref="cm:comentario" minOccurs="0"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="categoria" type="xs:string"/>
+	<xs:element name="paresLibres" type="xs:string"/>
+	<xs:element name="vacante" type="xs:string"/>
+	<xs:element name="destino" type="xs:string"/>
+	<xs:element name="utilidad" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Uso/Utilidad del Par</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="codigoProvincia">
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="codigoLocalidad">
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="codigoCalle">
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="latitud" type="xs:decimal"/>
+	<xs:element name="longitud" type="xs:decimal"/>
+	<xs:element name="proyeccion" type="xs:string"/>
+	<xs:element name="nombreCalle" type="xs:string"/>
+	<xs:element name="nombreLocalidad" type="xs:string"/>
+	<xs:element name="altura" type="xs:string"/>
+	<xs:element name="manzana" type="xs:string"/>
+	<xs:element name="nombreEdificio" type="xs:string"/>
+	<xs:element name="escalera" type="xs:string"/>
+	<xs:element name="piso" type="xs:string"/>
+	<xs:element name="equipoNivel0" type="xs:string">
+		<xs:annotation>
+			<xs:documentation> girafe de nivel 0 (Repartidor general)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="equipoNivel1" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Equipo girafe de nivel 1 (Armario)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="equipoNivel2" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Equipo girafe de nivel 2 (Terminal)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="datosRed">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cm:vinculos"/>
+				<xs:element ref="cm:equipos"/>
+				<xs:element ref="cm:ebos"/>
+				<xs:element ref="cm:central"/>
+				<xs:element ref="cm:zona"/>
+				<xs:element ref="cm:centralNoAtendida"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="datosParque">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cm:codigoLocalidad"/>
+				<xs:element ref="cm:codigoProvincia"/>
+				<xs:element ref="cm:tecnologia"/>
+				<xs:element ref="cm:topologia" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="equipos">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="equipo" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="id" type="xs:string" use="required"/>
+						<xs:attribute name="nivel" type="xs:integer"/>
+						<xs:attribute name="tipo" type="xs:string" use="required"/>
+						<xs:attribute name="categoria" type="xs:string" use="optional"/>
+						<xs:attribute name="atendido" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="vinculos">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="vinculo" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="arriba">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="cm:equipoId"/>
+										<xs:element name="extremo">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="cm:central"/>
+													<xs:element ref="cm:zona"/>
+													<xs:element ref="cm:equipo"/>
+													<xs:element ref="cm:cable"/>
+													<xs:element ref="cm:par"/>
+												</xs:sequence>
+												<xs:attribute name="id" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="abajo">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="cm:equipoId"/>
+										<xs:element name="extremo">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="cm:central"/>
+													<xs:element ref="cm:zona"/>
+													<xs:element ref="cm:equipo"/>
+													<xs:element ref="cm:cable"/>
+													<xs:element ref="cm:par"/>
+												</xs:sequence>
+												<xs:attribute name="id" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="cm:estado" minOccurs="0"/>
+							<xs:element ref="cm:precalificacion" minOccurs="0"/>
+							<xs:element ref="cm:destino" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="tonoTerminal" type="xs:string"/>
+	<xs:element name="centralNoAtendida" type="xs:string"/>
+	<xs:element name="totalConexiones" type="xs:integer"/>
+	<xs:element name="totalConexUtilizadas" type="xs:integer"/>
+	<xs:element name="bastidor" type="xs:string"/>
+	<xs:element name="vertical" type="xs:string"/>
+	<xs:element name="utilizador" type="xs:string"/>
+	<xs:element name="totalVinculos" type="xs:integer"/>
+	<xs:element name="tipoVinculo" type="xs:string"/>
+	<xs:element name="entrantes" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>npsor</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="libres" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>npdis</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ocupados" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>npocc</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="indisponibles" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>npind</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="reservaSucesor" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>nprws</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="reservadosSolicitudes" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>nprde</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="reservadosVarios" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>nprdi</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="registradosDaniados" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>nproo</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="confirmadosDaniados" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation>npcoo</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="parDesde" type="xs:string"/>
+	<xs:element name="parHasta" type="xs:string"/>
+	<xs:element name="nroLinea" type="xs:string"/>
+	<xs:element name="idTerminalDispersion" type="xs:string"/>
+	<xs:element name="categoriaTerminalDispersion" type="xs:string"/>
+	<xs:element name="alturaElementoRed" type="xs:string"/>
+	<xs:element name="manzanaElementoRed" type="xs:string"/>
+	<xs:element name="nombreCalleElementoRed" type="xs:string"/>
+	<xs:element name="nombreEdificioElementoRed" type="xs:string"/>
+	<xs:element name="vacantesPrimarios" type="xs:string"/>
+	<xs:element name="vacantesSecundarios" type="xs:string"/>
+	<xs:element name="velocidadADSLZona" type="xs:string"/>
+	<xs:element name="velocidadADSLTerminal" type="xs:string"/>
+	<xs:element name="velocidadADSLMedido" type="xs:string"/>
+	<xs:element name="dslamActualElementoRed" type="xs:string"/>
+	<xs:element name="gponSuscriberId" type="xs:string"/>
+	<xs:element name="gponRed" type="xs:string"/>
+	<xs:element name="despliegueDeTecnologia" type="xs:string"/>
+	<!-- ************************************************************-->
+	<!-- Datos exclusivos para aseguramiento               *** -->
+	<!-- ************************************************************-->
+	<xs:element name="grupoAseguramiento" type="xs:string"/>
+	<xs:element name="codigoOrigen" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>codigoOrigenReclamo</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="acumuladoPendienteCliente" type="xs:string"/>
+	<!-- ************************************************************-->
+	<!-- Datos exclusivos para provision                        *** -->
+	<!-- ************************************************************-->
+	<xs:element name="categoriaLinea" type="xs:string"/>
+	<xs:element name="codigoDemora" type="xs:string"/>
+	<xs:element name="estadoSolicitud" type="xs:string"/>
+	<xs:element name="fechaCumplAptoTP" type="xs:string"/>
+	<xs:element name="fechaCumplCabinaTP" type="xs:string"/>
+	<xs:element name="fechaCumplCx" type="xs:string"/>
+	<xs:element name="fechaCumplISP" type="xs:string"/>
+	<xs:element name="fechaCumplLinea" type="xs:string"/>
+	<xs:element name="fechaCumplRg" type="xs:string"/>
+	<xs:element name="fechaReporteSus" type="xs:string"/>
+	<xs:element name="motivoRecupero" type="xs:string"/>
+	<xs:element name="nescab" type="xs:string"/>
+	<xs:element name="nessap" type="xs:string"/>
+	<xs:element name="tipoMI" type="xs:string"/>
+	<xs:element name="tipoSolicitud" type="xs:string"/>
+	<!-- ************************************************************-->
+	<!-- Datos exclusivos para OtInstalacion                     *** -->
+	<!-- ************************************************************-->
+	<xs:element name="productosComerciales">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="producto" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="spn" type="xs:string"/>
+						<xs:attribute name="idAsset" type="xs:string"/>
+						<xs:attribute name="descripcion" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+		
+	<xs:element name="promocionesComerciales">
+	  <xs:complexType>
+		<xs:sequence>
+			<xs:element name="promo" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="nombrePromo" type="xs:string" minOccurs="0"/>
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	  </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="ipFija" type="xs:string"/>
+
+	<!--Cita Provision-->
+	<xs:element name="solicitudProvision" type="xs:string"/>
+	<!--***************************-->
+	
+	<!--***************************-->
+	<!-- Datos mensajeria SMS-->
+	<!--***************************-->
+	<xs:element name="targetTON">
+		<xs:annotation>
+			<xs:documentation>Type of Number</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="7"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="targetNPI">
+		<xs:annotation>
+			<xs:documentation>Number Plan Indicator</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="15"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="targetAddress" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Destinatario del Mensaje</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="lineNumberID" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Numero de Linea del Abonado</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="text" type="xs:string"/>
+	<xs:element name="comment" type="xs:string"/>
+	<!-- ************************************************************-->
+	<!-- Datos para rollout						                          *** -->
+	<!-- ************************************************************-->
+	<xs:element name="disponible" type="xs:boolean"/>
+	<!-- ************************************************************-->
+	<!-- Datos para Cita						                          *** -->
+	<!-- ************************************************************-->
+	<xs:element name="usuarioRecomendado">
+		<xs:annotation>
+			<xs:documentation>Identificador de Usuario recomendado</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="tipoCita" type="xs:string"/>
+	<xs:element name="comentarioCita" type="xs:string"/>
+	<!-- ************************************************************-->
+	<!-- Datos para ruteo de JMS.                           *** -->
+	<!-- ************************************************************-->
+	<xs:element name="jmsQueueConfig">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="cm:serviceCode"/>
+				<xs:element ref="cm:providerCode"/>
+				<xs:element ref="cm:sendJndiName"/>
+				<xs:element ref="cm:connectionFactoryJndiName"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="providerCode" type="xs:string"/>
+	<xs:element name="sendJndiName" type="xs:string"/>
+	<xs:element name="connectionFactoryJndiName" type="xs:string"/>
+	<!-- ************************************************************-->
+	<!-- Datos para el mensaje de Log.                           *** -->
+	<!-- ************************************************************-->
+	<xs:element name="consumerCode" type="xs:string"/>
+	<xs:element name="serviceCode" type="xs:string"/>
+	<xs:element name="messageID" type="xs:string"/>
+	<xs:element name="conversationID" type="xs:string"/>
+	<xs:element name="serviceProviderCode" type="xs:string"/>
+	<xs:element name="userID" type="xs:string"/>
+	<xs:element name="level">
+		<xs:annotation>
+			<xs:documentation>Niveles de log posibles.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="Debug"/>
+				<xs:enumeration value="Info"/>
+				<xs:enumeration value="Warning"/>
+				<xs:enumeration value="Error"/>
+				<xs:enumeration value="Fatal"/>
+				<xs:enumeration value="Summary"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="description" type="xs:string"/>
+	<xs:element name="location" type="xs:string"/>
+	<xs:element name="transactionId" type="xs:string"/>
+	<xs:element name="inputMessage" type="xs:string"/>
+	<xs:element name="outputMessage" type="xs:string"/>
+	<xs:element name="result" type="xs:string"/>
+	<xs:element name="searchingKey" type="xs:string"/>
+	<xs:element name="parentMessageId" type="xs:string"/>
+	<xs:element name="parentServiceCode" type="xs:string"/>
+	<xs:element name="startTime" type="xs:dateTime"/>
+	<xs:element name="endTime" type="xs:dateTime"/>
+	<xs:element name="actionID">
+		<xs:annotation>
+			<xs:documentation>Acciones posibles.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="output"/>
+				<xs:enumeration value="input"/>
+				<xs:enumeration value="retry"/>
+				<xs:enumeration value="trace"/>
+				<!-- a defirnir el resto... -->
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<!-- ************************************************************-->
+	<!-- Datos para Orden de Trabajo                             *** -->
+	<!-- ************************************************************-->
+	<xs:element name="identificadorOT">
+		<xs:annotation>
+			<xs:documentation>Identificador de Orden de Trabajo</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="codigoCierre">
+		<xs:annotation>
+			<xs:documentation>codigo de cierre de la OT</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="cnc" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>Marca de reclamo CNC</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="fechaHoraAceptacion" type="xs:string"/>
+	<xs:element name="fechaHoraCancelacion" type="xs:string"/>
+	<xs:element name="fechaHoraCierre" type="xs:string"/>
+	<xs:element name="fechaHoraCreacion" type="xs:string"/>
+	<xs:element name="fechaHoraDespacho" type="xs:string"/>
+	<xs:element name="fechaHoraDevolucion" type="xs:string"/>
+	<xs:element name="fechaHoraEnRuta" type="xs:string"/>
+	<xs:element name="fechaHoraEnSitio" type="xs:string"/>
+	<xs:element name="fechaHoraMaxima" type="xs:string"/>
+	<xs:element name="fechaHoraSuspension" type="xs:string"/>
+	<xs:element name="localizacion" type="xs:string"/>
+	<xs:element name="motivoProblema" type="xs:string"/>
+	<xs:element name="comentarioInstalacion" type="xs:string"/>
+	<xs:element name="comentarioCD" type="xs:string"/>
+	<xs:element name="numeroRegistroFalla" type="xs:string"/>
+	<xs:element name="numeroEmpalme" type="xs:string"/>
+	<xs:element name="unidad" type="xs:string"/>
+	<xs:element name="marca" type="xs:string"/>
+	<xs:element name="numeroSerie" type="xs:string"/>
+	<xs:element name="codigoServicioIntegral" type="xs:string"/>
+	<xs:element name="usuarioMovilAsignado" type="xs:string"/>
+	<xs:element name="FechaCierreHistIntervencionesAnt">
+		<xs:annotation>
+			<xs:documentation>Fecha del Cierre del Ticket Anterior con formato (yyyy-mm-dd hh24:mi:ss)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ComentarioRegHistIntervencionesAnt" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Comentario del paso anterior a la generacion de la tarea</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="materiales">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="material" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="cm:codigo"/>
+							<xs:element ref="cm:cantidad" minOccurs="0"/>
+							<xs:element ref="cm:unidad" minOccurs="0"/>
+							<xs:element ref="cm:tipo" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Codigo de tipo de aparato</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="cm:marca" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Marca del aparato</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="cm:modelo" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Modelo de aparato</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="cm:numeroSerie" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>nro de serie del aparato</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="estado" use="required">
+							<xs:annotation>
+								<xs:documentation>Recuperado/Utilizado</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="tipoConstruccion" type="xs:string"/>
+	<xs:element name="conAdsl" type="xs:string"/>
+	<xs:element name="solicitudAsociadaPM" type="xs:string"/>
+	<xs:element name="tipoPM" type="xs:string"/>
+	<xs:element name="numeroReferenciaPM" type="xs:string"/>
+	<xs:element name="tipoSolicitudRelacionada" type="xs:string"/>
+	<xs:element name="primerFechaHoraIngresoRed">
+		<xs:annotation>
+			<xs:documentation>Fecha formato (yyyy-mm-dd)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31)"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<!--*********************************************************-->
+	<!-- Datos para Servicio                                       *** -->
+	<!--*********************************************************-->
+	<xs:element name="tipoLinea" type="xs:string"/>
+	<xs:element name="observacionesSBT" type="xs:string"/>
+	<xs:element name="trasladorCobro" type="xs:string"/>
+	<xs:element name="cabinaAptoNuevo" type="xs:string"/>
+	<xs:element name="tipoInstalacion" type="xs:string"/>
+	<xs:element name="predecesor" type="xs:string"/>
+	<xs:element name="cablePredecesor" type="xs:string"/>
+	<xs:element name="parPredecesor" type="xs:string"/>
+	<xs:element name="coordenadaPredecesor" type="xs:string"/>
+	<xs:element name="figuraEnGuia" type="xs:string"/>
+	<xs:element name="fechaAltaLinea" type="xs:string"/>
+	<xs:element name="simcard" type="xs:string"/>
+	<xs:element name="oficinaGestion" type="xs:string"/>
+	<xs:element name="cierre" type="xs:string"/>
+	<xs:element name="causa" type="xs:string"/>
+	<!--*********************************************************-->
+	<!-- Datos Tarea                                                   *** -->
+	<!--*********************************************************-->
+	<xs:element name="problema" type="xs:string"/>
+	<xs:element name="nivel2" type="xs:string"/>
+	<xs:element name="nivel3" type="xs:string"/>
+	<xs:element name="nivel4" type="xs:string"/>
+	<xs:element name="nivel5" type="xs:string"/>
+	<xs:element name="fechaInstalacionTemporaria" type="xs:string"/>
+	<xs:element name="formaPago" type="xs:string"/>
+	<xs:element name="fechaPagoDUC" type="xs:string"/>
+	<xs:element name="sistemaOrigen" type="xs:string"/>
+	<xs:element name="fechaVtoIndicador" type="xs:string"/>
+	<xs:element name="nroSolicitudPendienteSur" type="xs:string"/>
+	<xs:element name="tipoSolicitudPendienteSur" type="xs:string"/>
+	<xs:element name="tipoTicketRelacionado" type="xs:string"/>
+	<!--*********************************************************-->
+	<!--*********************************************************-->
+	<!--Estructuras-->
+	<!--*********************************************************-->
+	<xs:element name="domicilios">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="domicilio" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="codigoFinca" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoCiudad" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>codigoCiudad = (codigoProvincia + codigoLocalidad)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="descProvincia" type="xs:string" minOccurs="0"/>
+							<xs:element name="descLocalidad" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoMunicipio" type="xs:string" minOccurs="0"/>
+							<xs:element name="descMunicipio" type="xs:string" minOccurs="0"/>
+							<xs:element name="pais" type="xs:string" minOccurs="0"/>
+							<xs:element name="casillaCorreo" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoCalle" type="xs:string" minOccurs="0"/>
+							<xs:element name="nombreCalle" type="xs:string" minOccurs="0"/>
+							<xs:element name="altura" type="xs:string" minOccurs="0"/>
+							<xs:element name="nombreEdificio" type="xs:string" minOccurs="0"/>
+							<xs:element name="escalera" type="xs:string" minOccurs="0"/>
+							<xs:element name="piso" type="xs:string" minOccurs="0"/>
+							<xs:element name="puerta" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoPostal" type="xs:string" minOccurs="0"/>
+							<xs:element name="ampliacionDomicilio" type="xs:string" minOccurs="0"/>
+							<xs:element name="comentarioDomicilio" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="tipo" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>instalacion/cliente/facturacion/guia
+</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="domiciliosFinca">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="domicilioFinca" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="cm:agenciaGestionaria" minOccurs="0"/>
+							<xs:element name="tipoZona" type="xs:string" minOccurs="0"/>
+							<xs:element ref="cm:tipoDomicilio" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ejemplo: "rancho"</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="provincia" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="codigo" type="xs:string"/>
+									<xs:attribute name="descripcion" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="localidad" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="codigo" type="xs:string"/>
+									<xs:attribute name="descripcion" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="zona" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="codigo" type="xs:string"/>
+									<xs:attribute name="descripcion" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="propiedades" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="propiedad" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="codigo" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>Es el codigo fijo de finca, no cambia su significado. Ej.: "0055" para calle</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="nombre" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>Puede cambiarlo el usuario Girafe. Ej.: "calle"</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="valor" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>Es el valor que toma el campo.
+
+Para "calle" es el codigo de calle en el callejero. Ej.: "1234"
+Para "altura" el el valor de la altura. Ej.: "km 22,5"
+</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="descripcion" type="xs:string">
+													<xs:annotation>
+														<xs:documentation>Para las tablas referenciales, es la descripcion del codigo correspondiente.
+Para calle, si el valor="1234" es el codigo de la calle en callejero, descripcion="Av. Congreso".</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="tipo" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>instalacion/cliente/facturacion/guia</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="domiciliosFincaFijo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="domicilioFincaFijo">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="tipoZona" type="xs:string" minOccurs="0"/>
+							<xs:element name="tipoDomicilio" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoLocalidad" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoZona" type="xs:string" minOccurs="0"/>
+							<xs:element name="altura" type="xs:string" minOccurs="0"/>
+							<xs:element name="alturaInterna" type="xs:string" minOccurs="0"/>
+							<xs:element name="alturaRef" type="xs:string" minOccurs="0"/>
+							<xs:element name="alturaKM" type="xs:string" minOccurs="0"/>
+							<xs:element name="area" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoCalle" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoCalleRuta" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoCalleAtras" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoCalleInterna" type="xs:string" minOccurs="0"/>
+							<xs:element name="circunscripcion" type="xs:string" minOccurs="0"/>
+							<xs:element name="comentarioDomicilio" type="xs:string" minOccurs="0"/>
+							<xs:element name="departamento" type="xs:string" minOccurs="0"/>
+							<xs:element name="distancia" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoDistAltura" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoDistAlturaRef" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoEntreCalle1" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoEntreCalle2" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoEntreRio1" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoEntreRio2" type="xs:string" minOccurs="0"/>
+							<xs:element name="escalera" type="xs:string" minOccurs="0"/>
+							<xs:element name="latitud" type="xs:string" minOccurs="0"/>
+							<xs:element name="longitud" type="xs:string" minOccurs="0"/>
+							<xs:element name="lote" type="xs:string" minOccurs="0"/>
+							<xs:element name="manzana" type="xs:string" minOccurs="0"/>
+							<xs:element name="muelle" type="xs:string" minOccurs="0"/>
+							<xs:element name="municipioPartido" type="xs:string" minOccurs="0"/>
+							<xs:element name="nombreEdificio" type="xs:string" minOccurs="0"/>
+							<xs:element name="establecimiento" type="xs:string" minOccurs="0"/>
+							<xs:element name="nombreLocal" type="xs:string" minOccurs="0"/>
+							<xs:element name="numeroEdificio" type="xs:string" minOccurs="0"/>
+							<xs:element name="numeroLocal" type="xs:string" minOccurs="0"/>
+							<xs:element name="numeroGrupoEdificio" type="xs:string" minOccurs="0"/>
+							<xs:element name="numeroPiso" type="xs:string" minOccurs="0"/>
+							<xs:element name="numeroSector" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoOrientacion" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoPlanta" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoRefGPS" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoRegion" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoRio" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoRioAtras" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoSeccionDelta" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoTipoCalle" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoTipoEdificio" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoTipoGrupoEdificio" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoTipoLocal" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoTipoPiso" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoTipoSector" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoTipoSitio" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoUbicacion" type="xs:string" minOccurs="0"/>
+							<xs:element name="zonaBarrial" type="xs:string" minOccurs="0"/>
+							<xs:element name="kilometro" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoSeccion" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoPostal" type="xs:string" minOccurs="0"/>
+							<xs:element name="alturaKmRef" type="xs:string" minOccurs="0"/>
+							<xs:element name="nombreCalle" type="xs:string" minOccurs="0"/>
+							<xs:element name="barrioNuevo" type="xs:string" minOccurs="0"/>
+							<xs:element name="alturaViaPublica" type="xs:string" minOccurs="0"/>
+							<xs:element name="alturaInternaRef" type="xs:string" minOccurs="0"/>
+							<xs:element name="codigoProvincia" type="xs:string" minOccurs="0"/>
+						</xs:all>
+						<xs:attribute name="tipo" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="serviciosSuplementarios">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="servicioSuplementario" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="cm:codigo" minOccurs="0"/>
+							<xs:element ref="cm:descripcion" minOccurs="0"/>
+							<xs:element ref="cm:fechaHora" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="codigosConceptos">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="codigoConcepto" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="cm:codigo" minOccurs="0"/>
+							<xs:element ref="cm:descripcion" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="serviciosAdicionales">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="servicioAdicional" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="cm:codigo" minOccurs="0"/>
+							<xs:element ref="cm:descripcion" minOccurs="0"/>
+							<xs:element ref="cm:fechaHora" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="aparatos">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="aparato" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="cm:codigo" minOccurs="0"/>
+							<xs:element ref="cm:descripcion" minOccurs="0"/>
+							<xs:element ref="cm:fechaHora" minOccurs="0"/>
+							<xs:element ref="cm:cantidad" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="modem">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="marca" type="xs:string" minOccurs="0"/>
+				<xs:element name="modelo" type="xs:string" minOccurs="0"/>
+				<xs:element name="numeroSerie" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="categoriaAbono">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cm:codigo" minOccurs="0"/>
+				<xs:element ref="cm:descripcion" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="documento">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cm:tipo" minOccurs="0"/>
+				<xs:element name="numero" type="xs:string" minOccurs="0"/>
+				<xs:element name="codigoPais" type="xs:string" minOccurs="0"/>
+				<xs:element name="descripcionPaisDocumento" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Campo necesario en CustomerCentrics/Consulta de ClienteRespuesta por parte de Siebel</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="descripcionTipoDocumento" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Campo necesario en CustomerCentrics/Consulta de ClienteRespuesta por parte de Siebel</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="cumplimiento">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="fechaCX" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Fecha formato (yyyy-mm-dd)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31)"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="fechaRG" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Fecha formato (yyyy-mm-dd)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31)"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="fechaLinea" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Fecha formato (yyyy-mm-dd)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31)"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="fechaCabinaTP" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Fecha formato (yyyy-mm-dd)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31)"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="fechaISP" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Fecha formato (yyyy-mm-dd)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31)"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="fechaAparatoTP" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Fecha formato (yyyy-mm-dd)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31)"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="fechaBaja" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Fecha formato (yyyy-mm-dd)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="(19|20)\d\d-(0[1-9]|10|11|12)-(0[1-9]|1\d|2\d|30|31)"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="registroComercio">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="tomo" type="xs:string" minOccurs="0"/>
+				<xs:element name="libro" type="xs:string" minOccurs="0"/>
+				<xs:element name="folio" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="contacto">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cm:nombre" minOccurs="0"/>
+				<xs:element ref="cm:apellido" minOccurs="0"/>
+				<xs:element ref="cm:tratamiento" minOccurs="0"/>
+				<xs:element name="horario" type="xs:string" minOccurs="0"/>
+				<xs:element name="telefono" type="xs:string" minOccurs="0"/>
+				<xs:element name="mail" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="cliente">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cm:identificador">
+					<xs:annotation>
+						<xs:documentation>Identidicador/Numero del Cliente</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="cm:categoria">
+					<xs:annotation>
+						<xs:documentation>Categoria de Cliente</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="cm:nombre" minOccurs="0"/>
+				<xs:element ref="cm:apellido" minOccurs="0"/>
+				<xs:element ref="cm:tratamiento" minOccurs="0"/>
+				<xs:element ref="cm:comentario" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Comentario al Nombre del Cliente</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="cm:telefono" minOccurs="0"/>
+				<xs:element ref="cm:condicionIVA" minOccurs="0"/>
+				<xs:element ref="cm:cuit" minOccurs="0"/>
+				<xs:element ref="cm:documento" minOccurs="0"/>
+				<xs:element ref="cm:oficinaGestion" minOccurs="0"/>
+				<xs:element ref="cm:marcaVIP" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="instalacion">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cm:tipo"/>
+				<xs:element ref="cm:modelo"/>
+				<xs:element ref="cm:tecnologia"/>
+				<xs:element ref="cm:topologia" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="equipoDatos">
+		<xs:attribute name="nombre" type="xs:string" use="required"/>
+		<xs:attribute name="descripcion" type="xs:string" use="optional"/>
+		<xs:attribute name="marca" type="xs:string" use="optional"/>
+		<xs:attribute name="modelo" type="xs:string" use="optional"/>
+		<xs:attribute name="ip" type="xs:string" use="optional"/>
+		<xs:attribute name="rack" type="xs:string" use="optional"/>
+		<xs:attribute name="shelf" type="xs:string" use="optional"/>
+		<xs:attribute name="frame" type="xs:string" use="optional"/>
+		<xs:attribute name="portAcceso" type="xs:string" use="optional"/>
+		<xs:attribute name="poolIAD" type="xs:string" use="optional"/>
+		<xs:attribute name="cantidadPorts" type="xs:integer" use="optional"/>
+		<xs:attribute name="nroSerie" type="xs:string" use="optional"/>	
+	</xs:attributeGroup>
+	<xs:attributeGroup name="datosPlaca">
+		<xs:attribute name="nombre" type="xs:string" use="required"/>
+		<xs:attribute name="estandarTecnicoDatos" type="xs:string" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="nombre">
+		<xs:attribute name="nombre" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="cliente">
+		<xs:attribute name="identificador" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Numero Abonado</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="nombre" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Nombre y Apellido del Cliente</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="estadoServicioDatos">
+		<xs:attribute name="estadoAsignacion" type="xs:string"/>
+		<xs:attribute name="estadoTecnico" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="perfilServicioDatos">
+		<xs:attribute name="perfilTecnico" type="xs:string"/>
+		<xs:attribute name="perfilVelocidad" type="xs:string"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="estadosPerfiles">
+		<xs:attributeGroup ref="cm:estadoServicioDatos"/>
+		<xs:attributeGroup ref="cm:perfilServicioDatos"/>
+	</xs:attributeGroup>
+	<xs:element name="agenciaGestionaria" type="xs:string"/>
+	<xs:element name="tipoDomicilio" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>"rancho"</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="equipoId" type="xs:string"/>
+	<xs:element name="clienteCRM">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="cuenta">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="numeroCliente" type="xs:string"/>
+							<xs:element name="fechaAlta">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="fechaActualiz">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="codigoTipoCliente" type="xs:string"/>
+							<xs:element name="descripcionTipoCliente" type="xs:string"/>
+							<xs:element name="apellido" type="xs:string"/>
+							<xs:element name="nombre" type="xs:string"/>
+							<xs:element name="codigoGenero" type="xs:string"/>
+							<xs:element name="descripcionGenero" type="xs:string"/>
+							<xs:element ref="cm:documento"/>
+							<xs:element name="fechaNacimiento">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="codigoSaludo" type="xs:string"/>
+							<xs:element name="descripcionSaludo" type="xs:string"/>
+							<xs:element name="codigoProfesion" type="xs:string"/>
+							<xs:element name="descripcionProfesion" type="xs:string"/>
+							<xs:element name="numeroHolding" type="xs:string"/>
+							<xs:element name="nombreHolding" type="xs:string"/>
+							<xs:element name="codigoEmpresaAsociada" type="xs:string"/>
+							<xs:element name="descripcionEmpresaAsociada" type="xs:string"/>
+							<xs:element name="razonSocial" type="xs:string"/>
+							<xs:element name="codigoCategoriaIVA" type="xs:string"/>
+							<xs:element name="descripcionCategoriaIVA" type="xs:string"/>
+							<xs:element name="tasaExclIVA">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="(([0-9])([0-9])([0-9])|([0-9])([0-9])|([0-9])),([0-9])([0-9])"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="fechaDesdeTasaExclIVA">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="fechaHastaTasaExclIVA">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="numeroIIBB" type="xs:string"/>
+							<xs:element name="codigoCondicionIIBB" type="xs:string"/>
+							<xs:element name="descripcionCondicionIIBB" type="xs:string"/>
+							<xs:element name="jurisdiccionesIIBB">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="jurisdiccionIIBB" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="codigoJurisdiccionIIBB" type="xs:string" minOccurs="0"/>
+													<xs:element name="descripcionJurisdiccionIIBB" type="xs:string" minOccurs="0"/>
+													<xs:element name="codigioCondicionIIBB" type="xs:string" minOccurs="0"/>
+													<xs:element name="descripcionCondicionIIBB" type="xs:string" minOccurs="0"/>
+													<xs:element name="tasaExclIIBB" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:pattern value="(([0-9])([0-9])([0-9])|([0-9])([0-9])|([0-9])),([0-9])([0-9])"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="fechaDesdeTasaExclIIBB" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="fechaHastaTasaExclIIBB" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="agentePercepcionIIBB" type="xs:string" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="tasaExcl3337">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="(([0-9])([0-9])([0-9])|([0-9])([0-9])|([0-9])),([0-9])([0-9])"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="fechaDesdePorcExcl3337">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="fechaHastaPorcExcl3337">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="domicioInternacional" type="xs:string"/>
+							<xs:element name="actividades">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="actividad" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="codigoActividad" type="xs:string" minOccurs="0"/>
+													<xs:element name="descripcionActividad" type="xs:string" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="numeroTelefonoReferencia" type="xs:string"/>
+							<xs:element name="numeroFax" type="xs:string"/>
+							<xs:element name="numeroTelefonoCelular" type="xs:string"/>
+							<xs:element name="fechaActualizacionNroTelCelular" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="numeroTelefonoLaboral" type="xs:string"/>
+							<xs:element name="emailPrincipal" type="xs:string"/>
+							<xs:element name="fechaActualizacionEmailPrincipal" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="((19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3])([0-5]\d)([0-5]\d))?"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="emailAlternativo" type="xs:string"/>
+							<xs:element name="marcaNoEnviarPublicidad" type="xs:string" minOccurs="0"/>
+							<xs:element name="prioridadDesconexion" type="xs:string"/>
+							<xs:element name="descripcionPrioridadDesconexion" type="xs:string"/>
+							<xs:element name="codigoAutorizacion" type="xs:string"/>
+							<xs:element name="descripcionCodigoAutorizacion" type="xs:string"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="perfil">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="codigoAgenciaGestionaria" type="xs:string"/>
+							<xs:element name="descripcionAgenciaGestionaria" type="xs:string"/>
+							<xs:element name="codigoCategoriaCliente" type="xs:string"/>
+							<xs:element name="descripcionCategoriaCliente" type="xs:string"/>
+							<xs:element name="codigoCategClienteCompl" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Tener en cuenta que para OGC y OGE es obligatorio
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="descripcionCategClienteCompl" type="xs:string"/>
+							<xs:element name="codigoAgenciaCabecera" type="xs:string"/>
+							<xs:element name="descripcionCodigoAgenciaCabecera" type="xs:string"/>
+							<xs:element name="marcaVIP" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="cm:domiciliosFinca"/>
+				<xs:element ref="cm:domicilios"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="factura">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="cidn" type="xs:string"/>
+				<xs:element name="codigoCuenta" type="xs:string"/>
+				<xs:element name="codigoAcuerdo" type="xs:string"/>
+				<xs:element name="codigoFacturasReq" type="xs:string"/>
+				<xs:element name="tipoDocumento" type="xs:string"/>
+				<xs:element name="claseFactura" type="xs:string"/>
+				<xs:element name="numeroFactura" type="xs:string"/>
+				<xs:element name="fechaEmision" type="xs:date" minOccurs="0"/>
+				<xs:element name="fechaFacturacion" type="xs:date" minOccurs="0"/>
+				<xs:element name="codigoEstadoAcuerdo" type="xs:string"/>
+				<xs:element name="codigoEstadoFactura" type="xs:string"/>
+				<xs:element name="descEstadoFactura" type="xs:string"/>
+				<xs:element name="fechaPrimerVenc" type="xs:date" minOccurs="0"/>
+				<xs:element name="fechaVencOriginal" type="xs:date" minOccurs="0"/>
+				<xs:element name="fechaSegundoVenc" type="xs:date" minOccurs="0"/>
+				<xs:element name="fechaCobro" type="xs:date" minOccurs="0"/>
+				<xs:element name="importePrimerVenc" type="xs:decimal"/>
+				<xs:element name="importeSegundoVenc" type="xs:decimal"/>
+				<xs:element name="numeroRefFactura"/>
+				<xs:element name="numeroRefFacturaAsociada" type="xs:string"/>
+				<xs:element name="codigoMarcaReclamo" type="xs:string"/>
+				<xs:element name="descMarcaReclamo" type="xs:string"/>
+				<xs:element name="importeCobrado" type="xs:decimal"/>
+				<xs:element name="fechaAcreditacion" type="xs:date" minOccurs="0"/>
+				<xs:element name="fechaCambioEstadoFactura" type="xs:date" minOccurs="0"/>
+				<xs:element name="puntoDeCobro" type="xs:string"/>
+				<xs:element name="descFormaDePago" type="xs:string"/>
+				<xs:element name="existeHistTransferencia" type="xs:string"/>
+				<xs:element name="existeTransferenciaTerceros" type="xs:string"/>
+				<xs:element name="importeDeTerceros" type="xs:decimal"/>
+				<xs:element name="importePagosParciales" type="xs:decimal"/>
+				<xs:element name="codigoTipoContrib" type="xs:string"/>
+				<xs:element name="descTipoContrib" type="xs:string"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="facturaDeudaActual">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="codigoClienteLegado" type="xs:string"/>
+				<xs:element name="codigoCuenta" type="xs:string"/>
+				<xs:element name="codigoAcuerdo" type="xs:string"/>
+				<xs:element name="codigoFacturasReq" type="xs:string"/>
+				<xs:element name="tipoDocumento" type="xs:string"/>
+				<xs:element name="claseFactura" type="xs:string"/>
+				<xs:element name="numeroFactura" type="xs:string"/>
+				<xs:element name="fechaEmision" type="xs:date" minOccurs="0"/>
+				<xs:element name="fechaFacturacion" type="xs:date" minOccurs="0"/>
+				<xs:element name="codigoEstadoAcuerdo" type="xs:string"/>
+				<xs:element name="codigoEstadoFactura" type="xs:string"/>
+				<xs:element name="descEstadoFactura" type="xs:string"/>
+				<xs:element name="fechaPrimerVenc" type="xs:date" minOccurs="0"/>
+				<xs:element name="fechaVencOriginal" type="xs:date" minOccurs="0"/>
+				<xs:element name="fechaSegundoVenc" type="xs:date" minOccurs="0"/>
+				<xs:element name="importePrimerVenc" type="xs:decimal"/>
+				<xs:element name="importeSegundoVenc" type="xs:decimal"/>
+				<xs:element name="numeroRefFacturaAsociada" type="xs:string"/>
+				<xs:element name="codigoMarcaReclamo" type="xs:string"/>
+				<xs:element name="descMarcaReclamo" type="xs:string"/>
+				<xs:element name="fechaAcreditacionCobro" type="xs:date" minOccurs="0"/>
+				<xs:element name="fechaCambioEstadoFactura" type="xs:date" minOccurs="0"/>
+				<xs:element name="existeConceptosTercerosTransferidos" type="xs:string"/>
+				<xs:element name="estadoConceptosTercerosIncluidos" type="xs:string"/>
+				<xs:element name="importeDeTercerosTransferidos" type="xs:decimal"/>
+				<xs:element name="importePagosParciales" type="xs:decimal"/>
+				<xs:element name="codigoTipoContribuyente" type="xs:string"/>
+				<xs:element name="descTipoContribuyente" type="xs:string"/>
+				<xs:element name="codigoTipoRecibo" type="xs:string"/>
+				<xs:element name="motivoReversionCobro" type="xs:string"/>
+				<xs:element name="descMotivoReversionCobro" type="xs:string"/>
+				<xs:element name="marcaConcursosQuiebras" type="xs:string"/>
+				<xs:element name="importeNetoRecargo" type="xs:decimal"/>
+				<xs:element name="importeNoFinanciable" type="xs:decimal"/>
+				<xs:element name="importeNetoRecargoMontoFinanciable" type="xs:decimal"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="datosComercialesParque">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="identificador" type="xs:string" minOccurs="0"/>
+				<xs:element name="utilizadorRazonSocial" type="xs:string" minOccurs="0"/>
+				<xs:element name="tipoLinea" type="xs:string" minOccurs="0"/>
+				<xs:element name="prioridadReparacion" type="xs:string" minOccurs="0"/>
+				<xs:element name="cantidadHilos" type="xs:string" minOccurs="0"/>
+				<xs:element name="tipoInstalacion" type="xs:string" minOccurs="0"/>
+				<xs:element name="codigoModeloInstalacion" type="xs:string" minOccurs="0"/>
+				<xs:element name="numeroCabecera" type="xs:string" minOccurs="0"/>
+				<xs:element name="cliente" type="xs:string" minOccurs="0"/>
+				<xs:element name="categAbono" type="xs:string" minOccurs="0"/>
+				<xs:element name="abonoComplementario" type="xs:string" minOccurs="0"/>
+				<xs:element name="fechaCumplimiento" type="xs:string" minOccurs="0"/>
+				<xs:element name="IndicadorLineaTemporaria" type="xs:string" minOccurs="0"/>
+				<xs:element name="areaTarifaBasica" type="xs:string" minOccurs="0"/>
+				<xs:element name="motivoMorosidad" type="xs:string" minOccurs="0"/>
+				<xs:element name="operadorLargaDistancia" type="xs:string" minOccurs="0"/>
+				<xs:element name="fechaVigenciaCarrier" type="xs:string" minOccurs="0"/>
+				<xs:element name="horaVigenciaCarrier" type="xs:string" minOccurs="0"/>
+				<xs:element name="origen" type="xs:string" minOccurs="0"/>
+				<xs:element name="puntoInterconexion" type="xs:string" minOccurs="0"/>
+				<xs:element name="claseServicio" type="xs:string" minOccurs="0"/>
+				<xs:element name="numeroPartidaBsAs" type="xs:string" minOccurs="0"/>
+				<xs:element name="tipoProducto" type="xs:string" minOccurs="0"/>
+				<xs:element name="operadorLocal" type="xs:string" minOccurs="0"/>
+				<xs:element name="horaVigencia" type="xs:string" minOccurs="0"/>
+				<xs:element name="incomunicador" type="xs:string" minOccurs="0"/>
+				<xs:element name="productoLogicoDesde" type="xs:string" minOccurs="0"/>
+				<xs:element name="productoLogicoHasta" type="xs:string" minOccurs="0"/>
+				<xs:element name="categAbonoLargaDistancia" type="xs:string" minOccurs="0"/>
+				<xs:element name="rubro" type="xs:string" minOccurs="0"/>
+				<xs:element name="tituloEnGuia" type="xs:string" minOccurs="0"/>
+				<xs:element name="apellidoEnGuia" type="xs:string" minOccurs="0"/>
+				<xs:element name="nombreEnGuia" type="xs:string" minOccurs="0"/>
+				<xs:element name="nombreComercial" type="xs:string" minOccurs="0"/>
+				<xs:element name="fechaCarga" type="xs:string" minOccurs="0"/>
+				<xs:element name="lineaAsociada" type="xs:string" minOccurs="0"/>
+				<xs:element name="idAgente" type="xs:string" minOccurs="0"/>
+				<xs:element name="descAgente" type="xs:string" minOccurs="0"/>
+				<xs:element name="idNodo" type="xs:string" minOccurs="0"/>
+				<xs:element name="descNodo" type="xs:string" minOccurs="0"/>
+				<xs:element name="plienteUTP" type="xs:string" minOccurs="0"/>
+				<xs:element name="fechaPresuscripcionProducto" type="xs:string" minOccurs="0"/>
+				<xs:element name="fechaSuscripcionProducto" type="xs:string" minOccurs="0"/>
+				<xs:element name="fechaBajaProducto" type="xs:string" minOccurs="0"/>
+				<xs:element name="fechaInicioFactProducto" type="xs:string" minOccurs="0"/>
+				<xs:element name="productosCortesia" type="xs:string" minOccurs="0"/>
+				<xs:element name="productosGrandesClientes" type="xs:string" minOccurs="0"/>
+				<xs:element name="productoPrincipalID" type="xs:string" minOccurs="0"/>
+				<xs:element name="cupIDAsociado" type="xs:string" minOccurs="0"/>
+				<xs:element name="ipFija" type="xs:string" minOccurs="0"/>
+				<xs:element name="incomunicaciones" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="incomunicacion" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="motivo" type="xs:string"/>
+										<xs:element ref="cm:fecha" minOccurs="0"/>
+										<xs:element ref="cm:descripcion" minOccurs="0"/>
+										<xs:element ref="cm:comentario" minOccurs="0"/>
+									</xs:all>
+									<xs:attribute name="id" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="rehabilitaciones" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="rehabilitacion" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:all>
+										<xs:element ref="cm:fecha" minOccurs="0"/>
+									</xs:all>
+									<xs:attribute name="id" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="movimientos">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="movimiento" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="codigoCliente" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>CIDN</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="codigoCuenta" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Codigo de Cuenta en MIC</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="fechaAltaRemanente" type="xs:date" minOccurs="0"/>
+							<xs:element name="codigoTipo" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Tipo de Movimiento</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="descripcionTipo" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Descripcion del Tipo de Movimiento </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="importeConcepto" type="xs:decimal"/>
+							<xs:element name="importeRemanente" type="xs:decimal">
+								<xs:annotation>
+									<xs:documentation>Importe Remanente</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="referencia" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Referencia/Concepto del Movimiento</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="acuerdosPlanesDescuento">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="acuerdoPlanDescuento" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="acuerdo">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="acuerdoPlanDescuentoID" type="xs:string"/>
+										<xs:element name="fechaInicioVigenciaAcuerdo" type="xs:date"/>
+										<xs:element name="fechaFinVigenciaAcuerdo" type="xs:date"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="plan">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="planDescuentoID" type="xs:string"/>
+										<xs:element name="descripcionDescuento" type="xs:string"/>
+										<xs:element name="tipoPlan" type="xs:string"/>
+										<xs:element name="indicadorPlan" type="xs:string"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="detallesPlanDescuento">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="detallePlanDescuento" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="numeroElegido" type="xs:string"/>
+							<xs:element name="tipoServicioRedID" type="xs:string"/>
+							<xs:element name="fechaInicioVigenciaNumeroElegido" type="xs:date"/>
+							<xs:element name="fechaFinVigenciaNumeroElegido" type="xs:date"/>
+							<xs:element name="nombreContactoAsociado" type="xs:string"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="secciones">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="seccion" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element ref="cm:codigo"/>
+							<xs:element ref="cm:descripcion"/>
+							<xs:element name="monto" type="xs:decimal">
+								<xs:annotation>
+									<xs:documentation>Monto acumulado de la Seccion</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="totalHoras" type="xs:integer">
+								<xs:annotation>
+									<xs:documentation>Total de Horas de la Seccion</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="totalMinutos" type="xs:integer">
+								<xs:annotation>
+									<xs:documentation>Total de Minutos de la Seccion</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="totalSegundos" type="xs:integer">
+								<xs:annotation>
+									<xs:documentation>Total de Segundos de la Seccion</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!--*********************************************************-->
+	<!--Datos Geocodificacion-->
+	<!--*********************************************************-->
+	<xs:element name="dominio">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="GIRAFE"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="entidad">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="EQUIPOS"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<!--*********************************************************-->
+	<!--Datos para equipo Girafe-->
+	<!--*********************************************************-->
+	<xs:element name="host" type="xs:string"/>
+	<xs:element name="path" type="xs:string"/>
+	<!--*********************************************************-->
+	<!--Datos para Transaction Service -->
+	<!--*********************************************************-->
+	<xs:element name="operation">
+		<xs:annotation>
+			<xs:documentation>Transaction Service Operation</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="OPEN"/>
+				<xs:enumeration value="CLOSE"/>
+				<xs:enumeration value="ROLLBACK"/>
+				<xs:enumeration value="UPDATE"/>
+				<xs:enumeration value="GET"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="state">
+		<xs:annotation>
+			<xs:documentation>Transaction Service State</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="BEGIN"/>
+				<xs:enumeration value="END"/>
+				<xs:enumeration value="PROVIDER_REQ"/>
+				<xs:enumeration value="PROVIDER_RESP"/>
+				<xs:enumeration value="ERROR"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="transaction">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="cm:serviceCode"/>
+				<xs:element ref="cm:consumerCode"/>
+				<xs:element ref="cm:providerCode"/>
+				<xs:element ref="cm:messageID"/>
+				<xs:element ref="cm:conversationID"/>
+				<xs:element ref="cm:operation"/>
+				<xs:element name="dataMessage" type="xs:string" minOccurs="0"/>
+				<xs:element ref="cm:description" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ack">
+		<xs:annotation>
+			<xs:documentation>Transaction Service Acknowledge</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="exists" type="xs:boolean"/>
+	<!--*********************************************************-->
+	<!--Datos agregados para el Cierre de Ordenes de trabajo-->
+	<!--*********************************************************-->
+	<xs:element name="estadoCable" type="xs:string"/>
+	<xs:element name="nsiCabina" type="xs:string"/>
+	<xs:element name="nsiAparato" type="xs:string"/>
+	<xs:element name="comentarioInstCabina" type="xs:string"/>
+	<xs:element name="comentarioInstAparato" type="xs:string"/>
+	<!-- **********************************************************-->
+	<!-- Datos para el proyecto FE_AFIP -->
+	<!-- **********************************************************-->
+	<xs:element name="id_lote_fact" type="xs:long">
+		<xs:annotation>
+			<xs:documentation>Identificador Lote FACT</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="id_lote_afip" type="xs:long">
+		<xs:annotation>
+			<xs:documentation>Identificador Lote AFIP (Identificador del Requerimiento AFIP) </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="id_cbte" type="xs:long">
+		<xs:annotation>
+			<xs:documentation>Identificador del Comprobante</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="FEcuit" type="xs:long">
+		<xs:annotation>
+			<xs:documentation>Numero de CUIT</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="token" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Token devuelto por la AFIP en el WSAA</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="sign" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Sign devuelto por la AFIP en el WSAA</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="loteFact" type="cm:FELoteFACTType"/>
+	<xs:complexType name="FELoteFACTType">
+		<xs:sequence>
+			<xs:element ref="cm:id_lote_fact"/>
+			<xs:element name="nombre" type="xs:string"/>
+			<xs:element name="locacion" type="xs:string"/>
+			<xs:element name="cant_cbte" type="xs:unsignedInt"/>
+			<xs:element name="qty" type="xs:unsignedInt"/>
+			<xs:element ref="cm:FEcuit"/>
+			<xs:element name="facturador" type="xs:string" minOccurs="0"/>
+			<xs:element name="reproceso" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FEcredentialsType">
+		<xs:sequence>
+			<xs:element ref="cm:token"/>
+			<xs:element ref="cm:sign"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- **********************************************************-->
+	<!-- Fin - Datos para el proyecto FE_AFIP -->
+	<!-- **********************************************************-->
+</xs:schema>

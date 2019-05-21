@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<!-- Nota: you don't need <non-jta-data-source> when your datasource is 
+		configured in <properties>. <non-jta-data-source> is needed when datasource 
+		is configured in application server configuration and obtained via JNDI. 
+		Comparing RESOURCE_LOCAL and JTA persistence contexts With <persistence-unit 
+		transaction-type="RESOURCE_LOCAL"> you are responsible for EntityManager 
+		(PersistenceContext/Cache) creating and tracking... You must use the EntityManagerFactory 
+		to get an EntityManager The resulting EntityManager instance is a PersistenceContext/Cache 
+		An EntityManagerFactory can be injected via the @PersistenceUnit annotation 
+		only (not @PersistenceContext) You are not allowed to use @PersistenceContext 
+		to refer to a unit of type RESOURCE_LOCAL You must use the EntityTransaction 
+		API to begin/commit around every call to your EntityManger Calling entityManagerFactory.createEntityManager() 
+		twice results in two separate EntityManager instances and therefor two separate 
+		PersistenceContexts/Caches. It is almost never a good idea to have more than 
+		one instance of an EntityManager in use (don't create a second one unless 
+		you've destroyed the first) With <persistence-unit transaction-type="JTA"> 
+		the container will do EntityManager (PersistenceContext/Cache) creating and 
+		tracking... You cannot use the EntityManagerFactory to get an EntityManager 
+		You can only get an EntityManager supplied by the container An EntityManager 
+		can be injected via the @PersistenceContext annotation only (not @PersistenceUnit) 
+		You are not allowed to use @PersistenceUnit to refer to a unit of type JTA 
+		The EntityManager given by the container is a reference to the PersistenceContext/Cache 
+		associated with a JTA Transaction. If no JTA transaction is in progress, 
+		the EntityManager cannot be used because there is no PersistenceContext/Cache. 
+		Everyone with an EntityManager reference to the same unit in the same transaction 
+		will automatically have a reference to the same PersistenceContext/Cache 
+		The PersistenceContext/Cache is flushed and cleared at JTA commit time. -->
+
+	<persistence-unit name="base-oracle" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<non-jta-data-source>java:jboss/datasources/ShivaDS</non-jta-data-source>
+
+		<!-- Add classes to use JPA 2.0 -->
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvArcArchivo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfTareaValorReversion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValReversionValor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValReversionValorPK</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobDocumento</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoOrigenContable</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoOperacContable</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoGestContable</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCntContabilidadCabecera</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCntContabilidadDetalle</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigRegAvcArchivos</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigRegAvcTransferencia</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigRegAvcDepositoEfectivo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigRegAvcChequeDiferido</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigRegAvcCheque</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigConstancia</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigEquivalencia</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigBoletaSinValor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigBoletaDepositoCheque</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigBoletaDepositoChequeDiferido</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigBoletaDepositoEfectivo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigValorTransferencia</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigValorInterdeposito</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigValorEfectivo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigValorChequeDiferido</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMigValorCheque</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfWorkflow</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvWfWorkflowSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfWorkflowEstado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvWfWorkflowEstadoSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfWorkflowEstadoHist</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.test.TestTableModel</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoDesistimiento</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamBancoCliente</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamCuit</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamAcuerdo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamBanco</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamBancoCuenta</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamEmpresa</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamOrigen</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamSegmento</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamSegmentoEmpresa</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoGestion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoCliente</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoValor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamJurisdiccion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamProvincia</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoRetencionImpuesto</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamMotivo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamParametro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoMedioPago</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamMotivoSuspension</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvParamCotizacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobTransaccionMensajeriaDetalle</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvBolBoleta</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvBolBoletaSinValor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvBolBoletaConValor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvc</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobCobro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobCobroSimple</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobDescobro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobFactura</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobFacturaCalipso</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobFacturaMic</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobFacturaUsuario</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPago</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoShiva</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoNotaCreditoCalipso</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoNotaCreditoMic</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoCompensacionOtras</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoPlanDePago</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoTrasladoProximaFactura</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoMic</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoCalipso</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoUsuario</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoRemanente</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoCTA</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobTransaccion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobTransaccionSimple</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfTarea</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfTareaValor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfTareaTalonario</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfTareaRegistroAVC</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValValor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvSegPerfil</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvSegPerfilAplicativo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValBoletaDepositoCheque</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValBoletaDepositoChequePagoDiferido</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValBoletaDepositoEfectivo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValValorCheque</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValValorChequePagoDiferido</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValValorEfectivo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValValorInterdeposito</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValValorTransferencia</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValValorRetencion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvTalReciboPreImpreso</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvTalReciboPreImpresoSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvTalReciboPreImpresoCompensacionSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvTalCompensacionSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvBolBoletaSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvTalTalonario</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvTalTalonarioSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvTalCompensacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValConstanciaRecepcion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvcTransferencia</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvcChequeDiferido</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcArchivoAvc</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvcEfectivo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvcDeposito</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvcCheque</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMnuMenu</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMnuMenuPerfil</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamGestor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamGestorSegmentoEmpresa</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvRelRegistroAvcBoleta</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvRelRegistroAvcValor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvSegPerfilAplicativoAcciones</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamOrganismo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamConciliacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamReglaConciliacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoComprobante</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoComprobanteUso</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoLetraComprobante</class>
+<!-- 		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvcValor</class> -->
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvcBoleta</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvcBoletaPk</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvcInterdeposito</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvDocDocumentoAdjunto</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvDocDocumentoAdjuntoAux</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvDocDocumentoAdjuntoBck</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamValorMedioPago</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAdjunto</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAdjuntoPk</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvcValor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvAvcRegistroAvcValorPK</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMasOperacionMasiva</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMasOperacionMasivaAdjunto</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMasOperacionMasivaAdjuntoPk</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMasOperacionMasivaArchivo</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvMasOperacionMasivaSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMasRegistro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMasRegistroAplicarDeuda</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMasRegistroDesistimiento</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMasRegistroGanancias</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMasRegistroReintegro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMasRegistroCuotaConv</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvMasRegistroClienteSiebel</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamMotivoCobro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamMotivoDescobro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamMotivoLegajo</class>
+		
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvValValorSimple</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvParamTipoGestionSimple</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvLgjLegajoChequeRechazadoSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvLgjLegajoChequeRechazadoSimplificadoNotificacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValValorAdjunto</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValValorPorReversion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCajCaja</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCajCajaHistorial</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCajCajaCajero</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCajCajaCajeroPk</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValConstanciaRecepcionValor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvValConstanciaRecepcionValorSimplificado</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValValoresVista</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvTransaccionesProceso</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvParamTeamComercial</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdCobro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdTratamientoDiferencia</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdCliente</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdClientePk</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdCredito</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdCreditoPk</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdDebito</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdDebitoPk</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdOtrosDebito</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdOtrosDebitoPk</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdOtrosMedioPago</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdOtrosMedioPagoPk</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdMedioPagoCliente</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdCobroAdjunto</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdCobroAdjuntoPk</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobDescobroAdjunto</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobDescobroAdjuntoPk</class>
+ 		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdDocumentoCap</class> 
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfTareaCobro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfTareaDescobro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobEdCobroSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobEdClienteSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobEdClienteSimplificadoPk</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvLgjLegajoChequeRechazado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvLgjAdjunto</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvLgjAdjuntoPk</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvLgjChequeRechazado</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfWorkflowMarca</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfWorkflowMarcaHist</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamTipoMedioPagoUso</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvValValorSimplificado</class>
+
+        	<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoCompensacionIIBB</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoCompensacionCesionCredito</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoCompensacionLiquidoProducto</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoCompensacionProveedor</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoCompensacionIntercompany</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoDocumentoCap</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoDocumentoCapDetalle</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoDocumentoCapResultado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoSaldoACobrar</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoDebitoProximaFacturaMic</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoDebitoProximaFacturaCalipso</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobTratamientoDiferencia</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobMedioPagoCliente</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvValConstanciaRecepcionValorPk</class>
+ 		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvValConstanciaRecepcionValorSimplificadoPk</class>
+
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobDescobroOperacionRelacionada</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobDescobroDocumentoRelacionado</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobProcHilosCobros</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfTareaOperacionMasiva</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvMasRegistroSimplificada</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvMasOperacionMasivaSimplificadoWorkFlow</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvLgjChequeRechazadoDetalleCobroSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamReglaCobro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobTransaccionSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobFacturaSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobTratamientoDiferenciaSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobFacturaCalipsoSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobFacturaMicSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoShivaSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoNotaCreditoCalipsoSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoNotaCreditoMicSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoCompensacionOtrasSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoPlanDePagoSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoTrasladoProximaFacturaSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoMicSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoCalipsoSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoUsuarioSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoRemanenteSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoCTASinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoClienteSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoCompensacionIntercompanySinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoCompensacionLiquidoProductoSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoDebitoProximaFacturaCalipsoSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoDebitoProximaFacturaMicSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoDesistimientoSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.cobroSinOperacion.ShvCobMedioPagoCompensacionProveedorSinOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobCobroSimpleSinWorkflow</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobDescobroSimpleSinWorkflow</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobDocumentoSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvSopExcepcionMorosidad</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamCalendario</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfHistorialObservacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvWfHistorialObservacionHist</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvLgjChequeRechazadoDetalleCobro</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvLgjChequeRechazadoDetalleCliente</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvLgjEnvioReversionesIce</class>
+		
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvLgjChequeRechazadoDetalleDocumentoSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvLgjChequeRechazadoDetalleDocumento</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvLgjNotificacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvLgjNotificacionSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvLgjLegajoChequeRechazadoSimplificadoWorkFlow</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvLgjNotificacionCarta</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamCliente</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.param.ShvParamRespWfTarea</class>
+		<!-- FUSION -->
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobDescobroCodigoOperacionExterna</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobEdCodigoOperacionExterna</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobEdCobroSimplificadoCodigoExternoOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobDescobroSimplificadoCodigoExternoOperacion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobEdCobroSimplificadoConWorkflow</class>
+		
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvCobAplicacionManualBatchDetalle</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvBolBoletaSinValorSimple</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobEdCodigoOperacionExternaSimplificado</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.simple.ShvCobDescobroCodigoOperacionExternaSimplificado</class>
+		
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvSegAccion</class>
+		<class>ar.com.telecom.shiva.persistencia.modelo.ShvSegAccionEstado</class>
+		
+		<class>ar.com.telecom.shiva.batch.springbatch.model.AvcRegistroAvc</class>
+		<class>ar.com.telecom.shiva.batch.springbatch.model.AvcRegistroAvcInterdeposito</class>
+		<class>ar.com.telecom.shiva.batch.springbatch.model.AvcRegistroAvcTransferencia</class>
+		
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect" />
+			<!-- property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.EhCacheProvider"/ -->
+			<!-- For Hibernate 4.x.x use org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory -->
+			<!-- Use EHCache for second level cache -->
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" />
+			<property name="hibernate.cache.use_second_level_cache" value="true" />
+			<property name="hibernate.cache.use_query_cache" value="true" />
+			<property name="hibernate.generate_statistics" value="true" />
+			
+			<property name="hibernate.ejb.interceptor" value="ar.com.telecom.shiva.persistencia.util.HibernateInterceptor" /> 
+			
+			
+			
+			<!-- logging properties (begin) -->
+		    <property name="hibernate.show_sql" value="false" />
+		    <property name="hibernate.format_sql" value="false"/>
+		    <property name="hibernate.use_sql_comments" value="false" />
+		    <!-- logging properties (end) -->
+		</properties>
+		
+	</persistence-unit>
+
+</persistence>

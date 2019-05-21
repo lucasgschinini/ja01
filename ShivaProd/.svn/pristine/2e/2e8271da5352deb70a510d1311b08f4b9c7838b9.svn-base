@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/requestHeader" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.telecom.com.ar/XMLSchema/bios/requestHeader">
+	<xs:annotation>
+		<xs:documentation>
+		Request Message Header for Request Skeleton schema -  Copyright 2007 Telecom.com.ar. All rights reserved.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="header">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="consumer">
+					<xs:annotation>
+						<xs:documentation>Identificacion del Consumidor </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="userID" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>ID del Usuario de interfase </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="credentials" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Credenciales para autenticacion</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="code" use="required">
+							<xs:annotation>
+								<xs:documentation>Codigo de consumidor</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="10"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>Nombre Descriptivo del Consumidor</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="transport" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Identificacion del Transporte</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="appID" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ID de la aplicacion consumidora del servicio </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="replyToQueue" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Nombre de la Queue a la cual se debe enviar la respuesta </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="replyToQueueManager" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Nombre del Queue Manager al cual se debe enviar la respuesta</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="serviceID" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ID del servicio de mensajeria </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="communicationType" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Tipo de comunicacion (sincronica, asincronica)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="code" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>Codigo identificador de transporte (MQ, JMS. Etc)</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>Nombre descriptivo del transporte utilizado</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="message">
+					<xs:annotation>
+						<xs:documentation>Identificacion del Mensaje</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="timestamp" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Timestamp en que se genera en mensaje </xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string"/>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="date" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Fecha y hora en que se genera en mensaje </xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="(19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31) (0\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="expiration" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Expiracion del mensaje, milisegundos </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="messageId" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Id del mensaje</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="conversationId" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Id de conversacion</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="priority" type="xs:short">
+							<xs:annotation>
+								<xs:documentation>prioridad del mensaje </xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="service">
+					<xs:annotation>
+						<xs:documentation>Identificacion del Servicio </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="code" use="required">
+							<xs:annotation>
+								<xs:documentation>Codigo del servicio</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="50"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>Nombre Descriptivo del Servicio </xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="properties" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="name" type="xs:string"/>
+									<xs:attribute name="value" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

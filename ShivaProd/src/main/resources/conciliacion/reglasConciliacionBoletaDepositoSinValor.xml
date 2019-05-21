@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="BOLETA-DEPOSITO-SIN-VALOR" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.ReglaConciliacionDto">
+  		<property name="idRegla" value="4"/>
+  		
+  		<property name="listaConciliacion">
+  			<list>
+  				<ref bean="conciliacionTotal_BolSinValor" />
+  				<ref bean="caso1_BolSinValor" />
+  				<ref bean="caso2_BolSinValor" />
+  				<ref bean="caso3_BolSinValor" />
+  				<ref bean="caso4_BolSinValor" />
+  				<ref bean="caso5_BolSinValor" />
+  				<ref bean="caso6_BolSinValor" />
+  				<ref bean="caso7_BolSinValor" />
+  				<ref bean="caso8_BolSinValor" />
+  				<ref bean="caso9_BolSinValor" />
+  			</list>
+  		</property>
+  	</bean>
+	
+  	<bean id="conciliacionTotal_BolSinValor" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="31"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="tipoValor" />
+  				<ref bean="nroCliente" />
+  				<ref bean="importe" />
+  				<ref bean="nroBoleta" />
+  				<ref bean="acuerdo" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+	<bean id="caso1_BolSinValor" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="32"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroCliente" />
+  				<ref bean="importe" />
+  				<ref bean="acuerdo" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+	<bean id="caso2_BolSinValor" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="33"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroCliente" />
+  				<ref bean="nroBoleta" />
+  				<ref bean="acuerdo" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+	<bean id="caso3_BolSinValor" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="34"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="importe" />
+  				<ref bean="nroBoleta" />
+  				<ref bean="acuerdo" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+	<bean id="caso4_BolSinValor" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="35"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroBoleta" />
+  				<ref bean="acuerdo" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+  	<bean id="caso5_BolSinValor" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="36"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroCliente" />
+  				<ref bean="importe" />
+  				<ref bean="nroBoleta" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+  	<bean id="caso6_BolSinValor" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="37"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroCliente" />
+  				<ref bean="importe" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+  	<bean id="caso7_BolSinValor" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="38"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroCliente" />
+  				<ref bean="nroBoleta" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+  	<bean id="caso8_BolSinValor" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="39"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="importe" />
+  				<ref bean="nroBoleta" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+  	<bean id="caso9_BolSinValor" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="40"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroBoleta" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+</beans>

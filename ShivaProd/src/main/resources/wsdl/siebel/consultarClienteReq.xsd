@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cd="http://www.telecom.com.ar/XMLSchema/bios/clienteDicc" xmlns:rqm="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage">
+	<xs:import namespace="http://www.telecom.com.ar/XMLSchema/bios/clienteDicc" schemaLocation="DiccionarioCliente.xsd"/>
+	<xs:element name="consultarClienteReq">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="crm">
+					<xs:annotation>
+						<xs:documentation>Identificación del Cliente en el CRM-Siebel</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="crmClienteID" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>ID del Cliente en CRM-Siebel</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="legadoID" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>ID del Sistema Legado</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="legadoOfID" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Código de Of. Comercial (ebos) de Legado</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="legado">
+					<xs:annotation>
+						<xs:documentation>Identificación del Cliente en el Legado/Comercial</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="legadoClienteID" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>ID del Sistema Legado</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="crmHoldingID" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Identificación para busqueda por Holding</xs:documentation>
+					</xs:annotation>
+				</xs:element>			
+				<xs:element name="crmAgenciaNegocio" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Identificación para busqueda por Agencia de Negocio</xs:documentation>
+					</xs:annotation>
+				</xs:element>			
+				<xs:element name="crmClienteCUIT" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Identificación para busqueda por CUIT</xs:documentation>
+					</xs:annotation>
+				</xs:element>	
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!--
+	************************************************************************************
+  	Objetivo:	Enviar información de operaciones masivas para su impacto en MIC			
+	Proveedor:	MIC			
+	Consumidor:	Shiva			
+	Periodicidad:	1 vez por día, planificación en Control M a definir			
+	Resultante:	Documento de texto plano con la información necesaria para impactar.			
+	Circuito:	El archivo de salida generado por Shiva tendrá como destino MIC			
+			MIC procesará cada uno de los registros como una operación de cobro individual			
+			MIC retornará el archivo procesado a Shiva, el cuál contedrá el resultado de procesamiento.			
+							
+	Archivo de entrada:	Se generará un archivo para las operaciones masivas a impactar en el sistema MIC. 			
+							
+	Nomenclatura del archivo:	[Nombre Aplicación].OperacionesMasivas.MIC.Entrada.[fecha]			
+							
+				donde			
+				[Nombre Aplicación]:	SHIVA		
+				[fecha]:	fecha de ejecución con formato AAAAMMDD		
+  	*************************************************************************************
+  	-->
+  	
+  	
+	<bean id="micOperacionMasivaFormatoRegistro" class="ar.com.telecom.shiva.base.registros.util.definicion.FormatoRegistros">
+		<property name="descripcion" value="Interfaz Operaciones Masivas" />
+		
+		<property name="lontitudFijaCabeceraPie" value="19" /> <!-- Sin separadores -->
+		<property name="cantidadRegistrosCabeceraPie" value="3" />
+		
+		<property name="lontitudFijaCuerpoSerializable" value="398" /> <!-- Sin separadores -->
+		<property name="cantidadRegistrosCuerpoSerializable" value="45" />
+		
+		<property name="lontitudFijaCuerpoDeserializable" value="1128" /> <!-- Sin separadores -->
+		<property name="cantidadRegistrosCuerpoDeserializable" value="110" />
+		
+		<property name="serializable">
+  			<list>
+  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+  					<property name="orden" value="1"/>
+  					<property name="nombre" value="cabecera"/>
+  					<property name="longitud" value="1"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.AGRUPADOR" />
+  					</property>
+  					<property name="agrupador">
+	  					<list>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="1"/>
+			  					<property name="nombre" value="tipoRegistro"/>
+			  					<property name="longitud" value="1"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="2"/>
+			  					<property name="nombre" value="cantidadRegistros"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="3"/>
+			  					<property name="nombre" value="fechaProcesamiento"/>
+			  					<property name="longitud" value="8"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+		  				</list>
+		  			</property>
+	  			</bean>
+	  			<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+  					<property name="orden" value="2"/>
+  					<property name="nombre" value="cuerpo"/>
+  					<property name="longitud" value="1"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.AGRUPADOR" />
+  					</property>
+  					<property name="agrupador">
+	  					<list>
+				  			<!-- Parametros generales del registro de entrada	  			 -->
+				  			<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="1"/>
+			  					<property name="nombre" value="tipoRegistro"/>
+			  					<property name="longitud" value="1"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+				  			<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="2"/>
+			  					<property name="nombre" value="idOperacionMasiva"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+				  			<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="3"/>
+			  					<property name="nombre" value="tipoInvocacion"/>
+			  					<property name="longitud" value="2"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+				  			<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="4"/>
+			  					<property name="nombre" value="idOperacion"/>
+			  					<property name="longitud" value="7"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="5"/>
+			  					<property name="nombre" value="idTransaccion"/>
+			  					<property name="longitud" value="5"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="6"/>
+			  					<property name="nombre" value="usuarioCobrador"/>
+			  					<property name="longitud" value="8"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="7"/>
+			  					<property name="nombre" value="secuencialOrdenamiento"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<!-- Datos generales	  			 -->
+				  			<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="8"/>
+			  					<property name="nombre" value="importe"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="9"/>
+			  					<property name="nombre" value="moneda"/>
+			  					<property name="longitud" value="3"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+							<!--  Datos del debito -->
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="10"/>
+			  					<property name="nombre" value="tipoOperacion"/>
+			  					<property name="longitud" value="1"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="11"/>
+			  					<property name="nombre" value="clienteDuenoDebito"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="12"/>
+			  					<property name="nombre" value="tipoDocumento"/>
+			  					<property name="longitud" value="1"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="13"/>
+			  					<property name="nombre" value="numeroReferenciaFactura"/>
+			  					<property name="longitud" value="15"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="14"/>
+			  					<property name="nombre" value="destransferirTerceros"/>
+			  					<property name="longitud" value="1"/>
+			  					<property name="tipoDato">
+			  						<util:constant
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="15"/>
+			  					<property name="nombre" value="deudaMigrada"/>
+			  					<property name="longitud" value="1"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="16"/>
+			  					<property name="nombre" value="clienteDuenoAcuerdo"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="17"/>
+			  					<property name="nombre" value="acuerdoFacturacionDestino"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="18"/>
+			  					<property name="nombre" value="accionSobreIntereses"/>
+			  					<property name="longitud" value="2"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="19"/>
+			  					<property name="nombre" value="importeBonificacionIntereses"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="20"/>
+			  					<property name="nombre" value="porcentajeBonificacionIntereses"/>
+			  					<property name="longitud" value="2"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<!--  Datos del medio de pago (Credito) -->
+				  			<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="21"/>
+			  					<property name="nombre" value="clienteDuenoCredito"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+							<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="22"/>
+			  					<property name="nombre" value="tipoMedioPago"/>
+			  					<property name="longitud" value="2"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+							<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="23"/>
+			  					<property name="nombre" value="cuenta"/>
+			  					<property name="longitud" value="13"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+							<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="24"/>
+			  					<property name="nombre" value="tipoRemanente"/>
+			  					<property name="longitud" value="2"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="25"/>
+			  					<property name="nombre" value="numeroReferenciaNC"/>
+			  					<property name="longitud" value="15"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="26"/>
+			  					<property name="nombre" value="creditoMigrado"/>
+			  					<property name="longitud" value="1"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				
+							<!-- Datos propios de Ganancias -->
+				  			<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="27"/>
+			  					<property name="nombre" value="fechaValorGanancias"/>
+			  					<property name="longitud" value="8"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				
+			  				<!-- Datos propios de Desistimiento -->
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="28"/>
+			  					<property name="nombre" value="numeroActaDesistimiento"/>
+			  					<property name="longitud" value="25"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="29"/>
+			  					<property name="nombre" value="fechaFirmaActaDesistimiento"/>
+			  					<property name="longitud" value="8"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				
+			  				<!-- Datos propios de Reintegro -->
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="30"/>
+			  					<property name="nombre" value="tramiteReintegro"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+							<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="31"/>
+			  					<property name="nombre" value="fechaAltaTramiteReintegro"/>
+			  					<property name="longitud" value="8"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="32"/>
+			  					<property name="nombre" value="tipoReintegro"/>
+			  					<property name="longitud" value="3"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				
+			  				<!-- Datos propios del cargo a proxima factura -->
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="33"/>
+			  					<property name="nombre" value="fechaValorCargo"/>
+			  					<property name="longitud" value="8"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="34"/>
+			  					<property name="nombre" value="codigoCliente"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="35"/>
+			  					<property name="nombre" value="acuerdoFacturacionDestino1"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+							<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="36"/>
+			  					<property name="nombre" value="lineaDestino"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="37"/>
+			  					<property name="nombre" value="importeRegulado"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="38"/>
+			  					<property name="nombre" value="monedaImporteRegulado"/>
+			  					<property name="longitud" value="3"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="39"/>
+			  					<property name="nombre" value="importeNoRegulado"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="40"/>
+			  					<property name="nombre" value="monedaImporteNoRegulado"/>
+			  					<property name="longitud" value="3"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="41"/>
+			  					<property name="nombre" value="fechaHasta"/>
+			  					<property name="longitud" value="8"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="42"/>
+			  					<property name="nombre" value="calcularFechaHasta"/>
+			  					<property name="longitud" value="1"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="43"/>
+			  					<property name="nombre" value="tratamientoIntereses"/>
+			  					<property name="longitud" value="1"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="44"/>
+			  					<property name="nombre" value="origenCargo"/>
+			  					<property name="longitud" value="2"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="45"/>
+			  					<property name="nombre" value="leyendaFacturaCargo"/>
+			  					<property name="longitud" value="50"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="46"/>
+			  					<property name="nombre" value="leyendaFacturaInteres"/>
+			  					<property name="longitud" value="50"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+		  				</list>
+		  			</property>
+	  			</bean>
+				<!-- Pie -->
+	  			<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+  					<property name="orden" value="3"/>
+  					<property name="nombre" value="pie"/>
+  					<property name="longitud" value="1"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.AGRUPADOR" />
+  					</property>
+  					<property name="agrupador">
+	  					<list>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="1"/>
+			  					<property name="nombre" value="tipoRegistro"/>
+			  					<property name="longitud" value="1"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="2"/>
+			  					<property name="nombre" value="cantidadRegistros"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.registros.util.definicion.Campo">
+			  					<property name="orden" value="3"/>
+			  					<property name="nombre" value="fechaProcesamiento"/>
+			  					<property name="longitud" value="8"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.registros.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+		  				</list>
+		  			</property>
+	  			</bean>
+  			</list>
+  		</property>
+  		
+		<property name="deserializable">
+  			<list></list>
+  		</property>
+  	</bean>
+  	
+</beans>

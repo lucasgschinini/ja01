@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- AOP -->
+	<bean id="utilidadAspectoBean" class="ar.com.telecom.shiva.base.aspectos.UtilidadAspecto" />
+	<bean id="controllerAspectoBean" class="ar.com.telecom.shiva.base.aspectos.ControllerAspecto" />
+	<bean id="procesoTransaccionesAspectoBean" class="ar.com.telecom.shiva.base.aspectos.ProcesoTransaccionesAspecto" />
+	
+	<aop:config>
+     <aop:aspect ref="utilidadAspectoBean" id="utilidadAspecto">
+         <aop:pointcut id="pointcut1" expression="within(ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchImputacionServicioImpl)
+         	|| execution(* ar.com.telecom.shiva.negocio.servicios.impl.CobroBatchSimulacionServicioImpl.*(..))
+         	|| execution(public * ar.com.telecom.shiva.base.jms.servicios.impl.MicJmsServicioImpl.*(..))
+         	|| execution(* ar.com.telecom.shiva.persistencia.dao.impl.CobroDaoImpl.*(..))
+         	|| execution(* ar.com.telecom.shiva.persistencia.dao.impl.TransaccionCobroDaoImpl.*(..))
+         	|| execution(* ar.com.telecom.shiva.persistencia.dao.impl.MensajeriaTransaccionDaoImpl.*(..))" />
+         <aop:around pointcut-ref="pointcut1" method="time"/>
+         
+         <aop:pointcut id="pointcut2" expression="execution(* org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler.onAuthenticationSuccess(..))"/>
+         <aop:around pointcut-ref="pointcut2" method="login"/>
+      </aop:aspect>
+      
+      <aop:aspect ref="controllerAspectoBean" id="controllerAspecto">
+         <aop:pointcut id="pointcut3" expression="within(ar.com.telecom.shiva.presentacion.controlador.*) &amp;&amp; execution(public * *(..))
+         	&amp;&amp; !execution(public * *.initBinder(..))" />
+         <aop:around pointcut-ref="pointcut3" method="timeController"/>
+      </aop:aspect>
+	</aop:config>
+</beans>

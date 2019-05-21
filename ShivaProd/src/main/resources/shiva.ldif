@@ -1,0 +1,33 @@
+dn: o=Telecom
+objectClass: organization
+objectClass: top
+o: Telecom
+
+dn: ou=Usuarios,o=Telecom
+objectclass: top
+objectclass: organizationalUnit
+ou: Usuarios
+
+dn: ou=Servicios,o=Telecom
+objectclass: top
+objectclass: organizationalUnit
+ou: Servicios
+
+dn: uid=SHV568815,ou=Usuarios,o=Telecom
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Desarrollo
+sn: Desarrollo
+uid: SHV568815
+userPassword: Telecom01!
+
+dn: cn=SHIVA_DESA_ANALISTA_TA_OGC,ou=Servicios,o=Telecom
+objectclass: top
+objectclass: groupOfNames
+objectClass: TelecomPermission
+cn: SHIVA_DESA_ANALISTA_TA_OGC
+tValue: SHIVA_DESA_ANALISTA_TA_OGC
+member: uid=SHV568815,ou=Usuarios,o=Telecom
+equivalentToMe: uid=SHV568815,ou=Usuarios,o=Telecom

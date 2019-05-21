@@ -1,0 +1,19 @@
+#LDAP
+ldap.password.generico.shiva=Sf6SnszaJMXQkMeuWnvwqA==
+
+#MQ MIC
+mq.mic.auth.pass=OfLyYl9cUnXmlatPKkW/6Q==
+
+#BBDD para batch
+#Usuario A001033
+#batch.password=NoXjSNnhJMDCQJLAfGvt3A==
+#Usuario Z000869
+batch.password=X4TIMNroZK3IL9jMk2m+uA==
+
+
+#SAP consultas
+ws.sap.auth.r3.password=KxtN5V15Dckgb/9Exp1P0A==
+ws.sap.auth.s4.password=KxtN5V15Dckgb/9Exp1P0A==
+
+#ICE Consultas
+ws.ice.auth.password=

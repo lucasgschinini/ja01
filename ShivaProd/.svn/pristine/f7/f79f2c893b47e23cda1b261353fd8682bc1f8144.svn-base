@@ -1,0 +1,88 @@
+Lo que se agrega luego de ejecutar el JS de ordenamiento y busqueda
+
+
+~~~~~~~~~~~~~~~~~~~
+antes del TABLE
+~~~~~~~~~~~~~~~~~~~
+
+				<div id="DivRoot" align="left">
+				    <div style="overflow: hidden;" id="DivHeaderRow">
+					</div>
+
+    				<div style="overflow-x:scroll;" onscroll="OnScrollDiv(this)" id="DivMainContent">
+					
+						Aqui va la tabla!
+					
+					</div>
+				
+				    <div id="DivFooterRow" style="overflow:hidden">
+				    </div>
+				</div>
+
+				
+<div id="DivRoot" align="left"><div style="overflow: hidden;" id="DivHeaderRow"></div><div style="overflow-x:scroll;" onscroll="OnScrollDiv(this)" id="DivMainContent"></div><div id="DivFooterRow" style="overflow:hidden"></div></div>				
+				
+
+
+
+<DIV id=mytable_wrapper class=dataTables_wrapper role=grid>
+
+	<DIV id=mytable_length class=dataTables_length>
+		<LABEL>Mostrar 
+			<SELECT aria-controls=mytable size=1 name=mytable_length jQuery171024073027580071582="28">
+				<OPTION selected value=10>10
+				</OPTION><OPTION value=25>25
+				</OPTION><OPTION value=50>50
+				</OPTION><OPTION value=100>100</OPTION>
+			</SELECT> 
+		registros</LABEL>
+	</DIV>
+
+	<DIV id=mytable_filter class=dataTables_filter>
+		<LABEL>Buscar: 
+			<INPUT aria-controls=mytable type=text jQuery171024073027580071582="29">
+		</LABEL>
+	</DIV>
+
+~~~~~~~~~~~~~~~~~~~
+despues de la tabla
+~~~~~~~~~~~~~~~~~~~
+
+	<DIV id=mytable_info class=dataTables_info>
+		Mostrando registros del 1 al 5 de un total de 5 registros
+	</DIV>
+
+	<DIV id=mytable_paginate class="dataTables_paginate paging_two_button">
+		<A id=mytable_previous class=paginate_disabled_previous role=button tabIndex=0 aria-controls=mytable jQuery171024073027580071582="30">
+			Anterior
+		</A>
+		<A id=mytable_next class=paginate_disabled_next role=button tabIndex=0 aria-controls=mytable jQuery171024073027580071582="31">
+			Siguiente
+		</A>
+	</DIV>
+</DIV>
+</DIV>
+
+
+
+Para actualizar el datatable usando ajax
+/*
+var dataTable = $('#resultadoBusquedaReciboPreimpreso').dataTable();
+      			var oSettings = dataTable.fnSettings();
+      			dataTable.fnClearTable(this);
+      			for (var i=0; i<json.aaData.length; i++)
+      			{
+      			   dataTable.oApi._fnAddData(oSettings, json.aaData[i]);
+      			}
+      			oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+      			dataTable.fnDraw();
+      			
+      			
+      			o 
+      			var dataTable = $('#resultadoBusquedaReciboPreimpreso').dataTable();
+      			dataTable.fnClearTable(this);
+      		   	if (json.aaData.length) {
+      		   		dataTable.fnAddData(json.aaData);
+      		   	}
+      		  	dataTable.fnDraw();
+				*/

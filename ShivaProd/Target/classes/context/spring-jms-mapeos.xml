@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<bean id="props" class="ar.com.telecom.shiva.base.utils.UtilPropertiesHolder">
+  		<property name="locations">
+  			<list>
+  				<value>classpath:shiva_${entorno}_interno.properties</value>
+  				<value>file:${configuracion}</value>
+  			</list>
+  		</property>
+	</bean>
+	
+	<!-- Imports de formatos -->
+	<import resource="../mq/mic/mensajesMICImputacionCobro.xml" /> 
+	<import resource="../mq/fac/mensajesFACConsultaAcuerdo.xml" />
+	<import resource="../mq/fac/mensajesFACConsultaAcuerdoxCliente.xml" />
+	<import resource="../mq/fac/mensajesFACConsultaCliente.xml" />
+	<import resource="../mq/mic/mensajesMICConsultaDeuda.xml" />
+	<import resource="../mq/mic/mensajesMICConsultaCredito.xml" />
+	<import resource="../mq/mic/mensajesMICGeneracionCargo.xml" />
+	<import resource="../mq/mic/mensajesMICRespuestaRecepcion.xml" />
+	<import resource="../mq/mic/mensajesMICDescobro.xml" />
+		
+	<!-- Mapeos -->
+	<bean id="micRespuestaRecepcionMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.MicRespuestaRecepcionMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="micRespuestaRecepcionFormatoMensajeJMS"/>
+	</bean> 
+	
+	<bean id="micADCMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.MicApropiacionDesapropiacionConfirmacionMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="micADCFormatoMensajeJMS"/>
+	</bean>    
+
+	<bean id="micRespuestaADCMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.MicRespuestaADCMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="micRespuestaADCFormatoMensajeJMS"/>
+	</bean>
+	
+	<bean id="facConsultaAcuerdoMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.FacConsultaAcuerdoMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="facConsultaAcuerdoFormatoMensajeJMS"/>
+	</bean>
+	
+	<bean id="facConsultaAcuerdoxClienteMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.FacConsultaAcuerdoxClienteMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="facConsultaAcuerdoxClienteFormatoMensajeJMS"/>
+	</bean>
+	
+	<bean id="facConsultaClienteMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.FacConsultaClienteMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="facConsultaClienteFormatoMensajeJMS"/>
+	</bean>
+	
+	<bean id="micConsultaDeudaMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.MicConsultaDeudaMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="micDeudaFormatoMensajeJMS"/>
+	</bean>
+	
+	<bean id="micConsultaCreditoMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.MicConsultaCreditoMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="micCreditoFormatoMensajeJMS"/>
+	</bean>
+	
+	<bean id="micGeneracionCargoMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.MicGeneracionCargoMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="micGeneracionCargoFormatoMensajeJMS"/>
+	</bean>    
+
+	<bean id="micRespuestaGeneracionCargoMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.MicRespuestaGeneracionCargoMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="micRespuestaGeneracionCargoFormatoMensajeJMS"/>
+	</bean>
+	
+	<bean id="micDescobroMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.MicDescobroMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="micDescobroFormatoMensajeJMS"/>
+	</bean>
+	
+	<bean id="micRespuestaDescobroMapeoJMS" class="ar.com.telecom.shiva.base.jms.mapeos.MicRespuestaDescobroMapeador">
+		<property name="defaultFormatoMensajeJMS" ref="micRespuestaDescobroFormatoMensajeJMS"/>
+	</bean>
+
+</beans>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	
+	<bean id="props" class="ar.com.telecom.shiva.base.utils.UtilPropertiesHolder">
+  		<property name="locations">
+  			<list>
+  				<value>classpath:shiva_${entorno}_interno.properties</value>
+  				<value>file:${configuracion}</value>
+  			</list>
+  		</property>
+	</bean>
+	
+	<context:annotation-config />
+	<context:component-scan base-package="ar.com.telecom.shiva.base.ws.cliente.servicios" />
+	<context:component-scan base-package="ar.com.telecom.shiva.presentacion.wsdl.siebel" />
+										  
+	<!-- 
+	Instalar Apche CXF y configurar en Eclipse
+	1. Copiar el archivo WSDL a la carpeta /src/main/resources/wsdl
+	2. Agregar al pom.xml el archivo WSDL a generar 
+	3. Maven plugin genera automaticamente los artefactos del WSDL
+	4. Una vez que lo genere, mapear las siguientes propiedades
+	 
+	serviceInterface is our business interface the clients will use
+	wsdlDocumentUrl is the URL for the WSDL file. Spring needs this a startup time to create the JAX-WS Service
+	namespaceUri corresponds to the targetNamespace in the .wsdl file
+	serviceName corresponds to the service name in the .wsdl file
+	portName corresponds to the port name in the .wsdl file.
+ 		
+ 	Ejemplo:
+ 	<bean id="stockQuote" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="net.webservicex.StockQuoteSoap" />
+		<property name="wsdlDocumentUrl" value="wsdl/stockquote.wsdl" />
+		<property name="namespaceUri" value="http://www.webserviceX.NET/" />
+		<property name="serviceName" value="StockQuote" />
+		<property name="portName" value="StockQuoteSoap" />
+	</bean>
+	
+	customProperties 
+		It's defaulting to about a 120 second timeout
+		 
+	-->
+		
+	<!-- Interceptor de mensajes SOAP -->
+	<bean id="soapClienteInterceptor" class="ar.com.telecom.shiva.base.soa.interceptores.SoapClienteInterceptor"/>
+	<bean id="soapCalipsoInterceptor" class="ar.com.telecom.shiva.base.soa.interceptores.CalipsoWSInterceptor" />
+	<bean id="soapRespuestaImputacionCobroInterceptor" class="ar.com.telecom.shiva.base.soa.interceptores.RespuestaImputacionCobroWSInterceptor" />
+	<bean id="soapLoggingInInterceptor" class="ar.com.telecom.shiva.base.soa.interceptores.SoapLoggingInInterceptor" />
+	<bean id="soapLoggingOutInterceptor" class="ar.com.telecom.shiva.base.soa.interceptores.SoapLoggingOutInterceptor" />
+	
+	<!-- WS Proveedor: Siebel --> 
+	<!--<bean id="clienteSiebelServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.dummy.DummySiebelServicio" /> -->
+	<bean id="clienteSiebelServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.ClienteSiebelServicio">
+		<property name="clienteConsultarSiebelWS" ref="clienteConsultarSiebelWS"/>  
+	</bean>
+	<bean id="clienteConsultarSiebelWS" class="ar.com.telecom.shiva.base.ws.cliente.ClienteConsultarSiebelWS"/>
+	<bean id="clienteConsultarSoap" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="ar.com.telecom.shiva.presentacion.wsdl.siebel.ClienteConsultarSoap" />
+		<property name="wsdlDocumentUrl" value="classpath:wsdl/siebel/ClienteConsultarContract.wsdl" />
+		<property name="namespaceUri" value="http://www.openuri.org/" />
+		<property name="serviceName" value="ClienteConsultar" />
+		<property name="portName" value="ClienteConsultarSoap" />
+		<property name="handlerResolver" ref="soapClienteInterceptor"/>
+		<property name="endpointAddress" value="${ws.url.clienteConsultar}" />
+		<property name="customProperties" ref="jaxwsCustomPropertiesSiebel" />
+	</bean>
+	
+	<!-- WS Proveedor: Delta -->
+	<bean id="clienteDeltaServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.ClienteDeltaServicio">
+		<property name="teamComercialClienteWS" ref="teamComercialClienteWS"/>  
+	</bean>
+	<bean id="teamComercialClienteWS" class="ar.com.telecom.shiva.base.ws.cliente.TeamComercialClienteWS"/>
+	<bean id="teamComercialClienteSoap" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="ar.com.telecom.shiva.presentacion.wsdl.delta.TeamComercialCliente" />
+		<property name="wsdlDocumentUrl" value="classpath:wsdl/delta/WebServiceTeamComercialCliente.wsdl" />
+		<property name="namespaceUri" value="http://www.openuri.org/TeamComercialCliente/" />
+		<property name="serviceName" value="TeamComercialClienteSOAPQSService" />
+		<property name="portName" value="TeamComercialClienteSOAPQSPort" />
+		<property name="handlerResolver" ref="soapClienteInterceptor"/>
+		<property name="endpointAddress" value="${ws.url.teamComercialCliente}" />
+		<property name="customProperties" ref="jaxwsCustomProperties" />
+	</bean>
+	
+	<!-- WS Proveedor: Movika -->
+	<bean id="clienteMovikaServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.ClienteMovikaServicio">
+		<property name="cajeroPagadorWS" ref="cajeroPagadorWS"/>   
+	</bean>
+	<bean id="cajeroPagadorWS" class="ar.com.telecom.shiva.base.ws.cliente.CajeroPagadorWS"/>
+	<bean id="cajeroPagadorSoap" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="ar.com.telecom.shiva.presentacion.wsdl.movika.cajeropagador.WsCajeroPagadorSoap" />
+		<property name="wsdlDocumentUrl" value="classpath:wsdl/movika/WebServiceCajeroPagador.wsdl" />
+		<property name="namespaceUri" value="http://eva-ws/" />
+		<property name="serviceName" value="wsCajeroPagador" />
+		<property name="portName" value="wsCajeroPagadorSoap" />
+		<property name="handlerResolver" ref="soapClienteInterceptor"/>
+		<property name="endpointAddress" value="${ws.url.cajeroPagador}" />
+		<property name="customProperties" ref="jaxwsCustomProperties" />
+	</bean>	
+	
+	<!-- Dummy Proveedor: Calipso -->
+	<!-- 
+	<bean id="clienteCalipsoServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.dummy.DummyCalipsoServicio">
+		<property name="auxiliarClienteCalipsoServicio" ref="auxiliarClienteCalipsoServicio"/>
+		<property name="calipsoCobranzasWS" value="true"/>
+		<property name="calipsoConsultasWS" value="true"/>
+		<property name="calipsoConsultaAcuerdoWS" value="false"/>
+		<property name="calipsoCargosWS" value="false"/>
+	</bean>
+	<bean id="auxiliarClienteCalipsoServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.ClienteCalipsoServicio">
+		<property name="calipsoCobranzasWS" ref="calipsoCobranzasWS"/>
+		<property name="calipsoConsultasWS" ref="calipsoConsultasWS"/>
+		<property name="calipsoConsultaAcuerdoWS" ref="calipsoConsultaAcuerdoWS"/>
+		<property name="calipsoCargosWS" ref="calipsoCargosWS"/>
+	</bean>
+	-->
+	
+	<!-- WS Proveedor: Calipso -->
+ 	<bean id="clienteCalipsoServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.ClienteCalipsoServicio">
+ 		<property name="calipsoCobranzasWS" ref="calipsoCobranzasWS"/>
+ 		<property name="calipsoConsultasWS" ref="calipsoConsultasWS"/>
+ 		<property name="calipsoConsultaAcuerdoWS" ref="calipsoConsultaAcuerdoWS"/>
+ 		<property name="calipsoCargosWS" ref="calipsoCargosWS"/>
+ 	</bean>
+	<bean id="calipsoCobranzasWS" class="ar.com.telecom.shiva.base.ws.cliente.CalipsoCobranzasWS"/>
+	<bean id="webServiceCalipsoCobranzasPortType" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="ar.com.telecom.shiva.presentacion.wsdl.calipso.cobranzas.WebServiceCalipsoCobranzasPortType" />
+		<property name="wsdlDocumentUrl" value="classpath:wsdl/calipso/WebServiceCalipsoCobranzas.wsdl" />
+		<property name="namespaceUri" value="urn:WSDL" />
+		<property name="serviceName" value="WSDLService" />
+		<property name="portName" value="WebServiceCalipsoCobranzasPort" />
+		<property name="handlerResolver" ref="soapCalipsoInterceptor"/>
+		<property name="endpointAddress" value="${ws.url.calipsoCobranzas}" />
+		<property name="customProperties" ref="jaxwsCustomProperties" />
+	</bean>
+	<!-- Nuevo webservice sprint 4 -->
+	<bean id="calipsoConsultasWS" class="ar.com.telecom.shiva.base.ws.cliente.CalipsoConsultasWS">
+		<property name="calipsoConsultasClienteProxy" ref="calipsoConsultasClienteProxy"/>
+	</bean>
+	<bean id="calipsoConsultasProxyFactoryBean" class="ar.com.telecom.shiva.base.soa.proxy.CustomJaxWsProxyFactoryBean">
+  		<property name="serviceClass" value="ar.com.telecom.shiva.presentacion.wsdl.calipso.consultadeudaycredito.WebServiceConsultasOnlinePortType" />
+  		<property name="address" value="${ws.url.calipsoConsultas}" />
+  		<property name="inInterceptors">
+	        <list>
+	            <ref bean="soapLoggingInInterceptor" />
+	        </list>
+	    </property>
+	    <property name="outInterceptors">
+	        <list>
+	            <ref bean="soapLoggingOutInterceptor" />
+	        </list>
+	    </property>                            
+	</bean>
+	<bean id="calipsoConsultasClienteProxy" 
+		class="ar.com.telecom.shiva.presentacion.wsdl.calipso.consultadeudaycredito.WebServiceConsultasOnlinePortType" 
+		factory-bean="calipsoConsultasProxyFactoryBean" factory-method="create" />
+	
+	<!-- Nuevo webservice sprint 5 -->
+	<bean id="calipsoConsultaAcuerdoWS" class="ar.com.telecom.shiva.base.ws.cliente.CalipsoConsultaAcuerdoWS"/>
+	<bean id="webServiceCalipsoConsultaAcuerdoPortType" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="ar.com.telecom.shiva.presentacion.wsdl.calipso.consultaAcuerdo.WebServiceCalipsoConsultaAcuerdoPortType" />
+		<property name="wsdlDocumentUrl" value="classpath:wsdl/calipso/WebServiceCalipsoConsultaAcuerdo.wsdl" />
+		<property name="namespaceUri" value="urn:WSDL" />
+		<property name="serviceName" value="WSDLService" />
+		<property name="portName" value="WebServiceCalipsoConsultaAcuerdoPort" />
+		<property name="handlerResolver" ref="soapClienteInterceptor"/>
+		<property name="endpointAddress" value="${ws.url.calipsoConsultaAcuerdo}" />
+		<property name="customProperties" ref="jaxwsCustomProperties" />
+	</bean>
+	<!-- Nuevo webservice sprint 5 -->
+	<bean id="calipsoCargosWS" class="ar.com.telecom.shiva.base.ws.cliente.CalipsoCargosWS"/>
+	<bean id="webServiceCalipsoCargosPortType" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="ar.com.telecom.shiva.presentacion.wsdl.calipso.cargos.WebServiceCalipsoCargosPortType" />
+		<property name="wsdlDocumentUrl" value="classpath:wsdl/calipso/WebServiceCalipsoCargos.wsdl" />
+		<property name="namespaceUri" value="urn:WSDL" />
+		<property name="serviceName" value="WSDLService" />
+		<property name="portName" value="WebServiceCalipsoCargosPort" />
+		<property name="handlerResolver" ref="soapCalipsoInterceptor"/>
+		<property name="endpointAddress" value="${ws.url.calipsoCargos}" />
+		<property name="customProperties" ref="jaxwsCustomProperties" />
+	</bean>
+	
+	<!-- Dummy WS Proveedor: Deimos -->
+	<!-- <bean id="clienteDeimosServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.dummy.DummyDeimosServicio"/> -->
+	<!-- WS Proveedor: Deimos -->
+	<bean id="clienteDeimosServicio" class="ar.com.telecom.shiva.base.ws.cliente.servicios.impl.ClienteDeimosServicio">
+		<property name="deimosWS" ref="deimosWS"/>
+	</bean>
+	<bean id="deimosWS" class="ar.com.telecom.shiva.base.ws.cliente.DeimosWS"/>
+	<bean id="deimosWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="ar.com.telecom.shiva.presentacion.wsdl.deimos.ShivaWebService" />
+		<property name="wsdlDocumentUrl" value="classpath:wsdl/deimos/WebServiceDeimos.wsdl" />
+		<property name="namespaceUri" value="http://shiva.ws.intelap.com/" />
+		<property name="serviceName" value="ShivaWebService" />
+		<property name="portName" value="ShivaWebServicePort" />
+		<property name="handlerResolver" ref="soapClienteInterceptor"/>
+		<property name="endpointAddress" value="${ws.url.deimos}" />
+		<property name="customProperties" ref="jaxwsCustomProperties" />
+	</bean>
+	
+	<!-- Propiedades -->
+	<util:map id="jaxwsCustomProperties">
+		<!-- JAX WS -->
+		<entry key="com.sun.xml.ws.request.timeout">
+			<value type="java.lang.Integer">${ws.timeout}</value>
+		</entry>
+		<entry key="com.sun.xml.ws.connect.timeout">
+			<value type="java.lang.Integer">${ws.timeout}</value>
+		</entry>
+		<!-- Sun JAX WS -->
+		<entry key="com.sun.xml.internal.ws.connect.timeout">
+			<value type="java.lang.Integer">${ws.timeout}</value>
+		</entry>
+		<entry key="com.sun.xml.internal.ws.request.timeout">
+			<value type="java.lang.Integer">${ws.timeout}</value>
+		</entry>
+	</util:map>
+	<util:map id="jaxwsCustomPropertiesSiebel">
+		<!-- JAX WS -->
+		<entry key="com.sun.xml.ws.request.timeout">
+			<value type="java.lang.Integer">${ws.timeout.siebel}</value>
+		</entry>
+		<entry key="com.sun.xml.ws.connect.timeout">
+			<value type="java.lang.Integer">${ws.timeout.siebel}</value>
+		</entry>
+		<!-- Sun JAX WS -->
+		<entry key="com.sun.xml.internal.ws.connect.timeout">
+			<value type="java.lang.Integer">${ws.timeout.siebel}</value>
+		</entry>
+		<entry key="com.sun.xml.internal.ws.request.timeout">
+			<value type="java.lang.Integer">${ws.timeout.siebel}</value>
+		</entry>
+	</util:map>
+	
+</beans>

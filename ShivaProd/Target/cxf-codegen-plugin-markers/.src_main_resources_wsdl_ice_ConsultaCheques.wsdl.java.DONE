@@ -1,0 +1,1 @@
+[-b, file:/C:/Desarrollo/Workspace/ShivaProd/src/main/resources/wsdl/binding.xml, -noAddressBinding, -autoNameResolution, -p, ar.com.telecom.shiva.presentacion.wsdl.ice.consultaCheques, file:/C:/Desarrollo/Workspace/ShivaProd/src/main/resources/wsdl/ice/ConsultaCheques.wsdl]

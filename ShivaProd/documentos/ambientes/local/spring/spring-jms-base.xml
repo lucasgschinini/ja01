@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+    
+    <!-- 
+	Configuracion para utilizar WebSphere MQ
+ 	Apuntando al Active MQ
+ 	-->
+ 	<context:component-scan base-package="ar.com.telecom.shiva.base.jms" />
+    
+    <import resource="spring-jms-servicios.xml" />
+    <import resource="spring-jms-mapeos.xml" />
+    
+    <!-- Factory Conection -->
+    <bean id="micJmsConnectionFactoryActive" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://localhost:61616" />
+        <property name="useAsyncSend" value="true" />
+    </bean>
+    
+    <bean id="micCachedConnectionFactory"
+    	class="org.springframework.jms.connection.CachingConnectionFactory"
+		p:targetConnectionFactory-ref="micJmsConnectionFactoryActive"
+		p:sessionCacheSize="10" 
+		p:reconnectOnException="true"
+		p:cacheConsumers="false"/>
+
+    <bean id="micRecepcionJmsQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="${mq.mic.queue.recepcion}"/>
+	</bean>
+
+	<bean id="micEnvioJmsQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="${mq.mic.queue.envio}"/>
+	</bean>
+	
+    <bean id="micMQActive" class="ar.com.telecom.shiva.base.jms.util.mq.MQActiveBase">
+		<property name="connectionFactory" ref="micJmsConnectionFactoryActive"/>
+		<property name="queueEmisor" ref="micEnvioJmsQueue"/>
+		<property name="queueReceptor" ref="micRecepcionJmsQueue"/>
+	</bean>
+	
+    <bean id="micJmsEnvioTemplate" class="org.springframework.jms.core.JmsTemplate">
+    	<property name="connectionFactory" ref="micCachedConnectionFactory" />
+	    <property name="defaultDestination" ref="micEnvioJmsQueue" />
+	</bean>
+	
+	<bean id="micJmsRecepcionTemplate" class="org.springframework.jms.core.JmsTemplate">
+    	<property name="connectionFactory" ref="micCachedConnectionFactory" />
+	    <property name="defaultDestination" ref="micRecepcionJmsQueue" />
+	</bean>
+		
+	<bean id="micJmsPropiedades" class="ar.com.telecom.shiva.base.jms.util.JmsPropiedades">
+		<property name="aplicacion" value="${mq.mic.aplicacion}" />
+		<property name="servicio" value="${mq.mic.servicio}" />
+	</bean>
+	
+	<bean id="micControlMQ" class="ar.com.telecom.shiva.base.jms.impl.MicControlMqActiveImpl">
+    	<property name="micMqServidor" ref="micMQActive"/>
+    	<property name="micJmsEnvioTemplate" ref="micJmsEnvioTemplate"/>
+    	<property name="micJmsRecepcionTemplate" ref="micJmsRecepcionTemplate"/>
+    	<property name="micJmsPropiedades" ref="micJmsPropiedades"/>
+    </bean>
+
+</beans>

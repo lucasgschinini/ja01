@@ -1,0 +1,20 @@
+update SHV_WF_WORKFLOW_ESTADO set estado = 'MAS_IMPUTADA' where estado = 'MAS_PROCESADA';
+update SHV_WF_WORKFLOW_ESTADO_HIST set estado = 'MAS_IMPUTADA' where estado = 'MAS_PROCESADA';
+update SHV_PARAM_WORKFLOW_ESTADO set id_estado = 'MAS_IMPUTADA', DESCRIPCION='Operación Masiva Imputada',AUD_REQUERIMIENTO_ORIGEN='SHIVA' where id_estado = 'MAS_PROCESADA';
+
+update SHV_WF_WORKFLOW_ESTADO set estado = 'MAS_ANULADA' where estado = 'MAS_CANCELADA';
+update SHV_WF_WORKFLOW_ESTADO_HIST set estado = 'MAS_ANULADA' where estado = 'MAS_CANCELADA';
+update SHV_PARAM_WORKFLOW_ESTADO set id_estado = 'MAS_ANULADA', DESCRIPCION='Operación Masiva Anulada', AUD_REQUERIMIENTO_ORIGEN='SHIVA' where id_estado = 'MAS_CANCELADA';
+
+update SHV_WF_WORKFLOW_ESTADO set estado = 'MAS_PARCIALMENTE_IMPUTADA' where estado = 'MAS_PROCESADA_PARCIALMENTE';
+update SHV_WF_WORKFLOW_ESTADO_HIST set estado = 'MAS_PARCIALMENTE_IMPUTADA' where estado = 'MAS_PROCESADA_PARCIALMENTE';
+update SHV_PARAM_WORKFLOW_ESTADO set id_estado = 'MAS_PARCIALMENTE_IMPUTADA', DESCRIPCION='Operación Masiva Parcialmente Imputada', AUD_REQUERIMIENTO_ORIGEN='SHIVA' where id_estado = 'MAS_PROCESADA_PARCIALMENTE';
+
+update SHV_WF_WORKFLOW_ESTADO set estado = 'MAS_RECHAZADA' where estado = 'MAS_APROBACION_RECHAZADA';
+update SHV_WF_WORKFLOW_ESTADO_HIST set estado = 'MAS_RECHAZADA' where estado = 'MAS_APROBACION_RECHAZADA';
+update SHV_PARAM_WORKFLOW_ESTADO set id_estado = 'MAS_RECHAZADA', DESCRIPCION='Operación Masiva Rechazada', AUD_REQUERIMIENTO_ORIGEN='SHIVA' where id_estado = 'MAS_APROBACION_RECHAZADA';
+
+
+commit;
+
+Exit;

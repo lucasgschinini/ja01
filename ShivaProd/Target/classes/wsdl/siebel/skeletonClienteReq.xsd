@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rqm="http://www.telecom.com.ar/XMLSchema/bios/cliente/requestMessage" xmlns:rqh="http://www.telecom.com.ar/XMLSchema/bios/requestHeader">
+	<xs:import namespace="http://www.telecom.com.ar/XMLSchema/bios/requestHeader" schemaLocation="requestMessageHeader.xsd"/>
+	<xs:include schemaLocation="novedadAltaClienteReq.xsd"/>
+	<xs:include schemaLocation="novedadModificacionClienteReq.xsd"/>
+	<xs:include schemaLocation="resultadoActualizacionClienteReq.xsd"/>
+	<xs:include schemaLocation="consultarClienteReq.xsd"/>
+	<xs:include schemaLocation="asociarIDsClienteReq.xsd"/>
+	<xs:include schemaLocation="oficinasComercialesDeUnClienteReq.xsd"/>
+	<xs:include schemaLocation="consFactibilidadInactivarClieEnLegReq.xsd"/>
+	<xs:include schemaLocation="inactivarClienteEnLegadosReq.xsd"/>
+	<xs:include schemaLocation="resultadoInactivacionClienteReq.xsd"/>
+	<xs:include schemaLocation="notificarReplicaClienteEnLegadoReq.xsd"/>
+	<xs:include schemaLocation="crearCRMIdClienteReq.xsd"/>
+	<xs:include schemaLocation="publicarNovedadClienteDiariaReq.xsd"/>
+	<xs:include schemaLocation="consultarMorosidadClienteReq.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+            Skeleton schema - Copyright 2007 Telecom.com.ar. All rights reserved.
+        </xs:documentation>
+	</xs:annotation>
+	<xs:element name="requestMessage">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="rqh:header"/>
+				<xs:element name="body">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element ref="rqm:asociarIDsClienteReq">
+								<xs:annotation>
+									<xs:documentation>Servicio de asociación de IDs de Cliente entre Legados y CRM-Siebel y viceversa</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="rqm:asociarIDsClientesReq">
+								<xs:annotation>
+									<xs:documentation>Servicio de asociación de IDs de varios Cliente y sus Legados</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+
+							<xs:element ref="rqm:oficinasComercialesDeUnClienteReq">
+								<xs:annotation>
+									<xs:documentation>Servicio de Consulta de las Oficinas Comerciales de un Cliente ( Legado o CRM-Siebel )</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="rqm:consultarClienteReq">
+								<xs:annotation>
+									<xs:documentation>Servicio de Consulta Cliente en CRM-Siebel invocado por Legados, etc.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="rqm:notificarReplicaClienteEnLegadoReq">
+								<xs:annotation>
+									<xs:documentation>Legado Notifica haber Replicado el Cliente Siebel en su Sistema</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="rqm:novedadAltaClienteReq">
+								<xs:annotation>
+									<xs:documentation>Servicio Novedad de Alta Cliente invocado por CRM-Siebel</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="rqm:novedadModificacionClienteReq">
+								<xs:annotation>
+									<xs:documentation>Servicio Novedad de Modificacion Cliente invocado por CRM-Siebel</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="rqm:resultadoActualizacionClienteReq">
+								<xs:annotation>
+									<xs:documentation>Notificación de Sistema Legado de la Actualización de datos de un Cliente</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="rqm:consultarFactibilidadInactivarClienteEnLegadoReq"/>
+							<xs:element ref="rqm:inactivarClienteEnLegadosReq">
+								<xs:annotation>
+									<xs:documentation>Se inactiva un Cliente en los Legados indicados</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="rqm:resultadoInactivacionClienteReq">
+								<xs:annotation>
+									<xs:documentation>Notificación de Sistema Legado de la Inactivación de un Cliente</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="rqm:crearCRMIdClienteReq"/>
+							<xs:element ref="rqm:publicarNovedadClienteDiariaReq">
+								<xs:annotation>
+									<xs:documentation>Publicacion de novedades (Alta / Modificacion) de clientes CRM a la DIRIA</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="rqm:consultarMorosidadClienteReq"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

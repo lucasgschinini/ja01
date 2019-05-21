@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/consultarTeamComercialResponse" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cm="http://www.telecom.com.ar/XMLSchema/bios/common" xmlns:ns1="http://www.telecom.com.ar/XMLSchema/bios/cliente/consultarTeamComercialResponse">
+	<xs:element name="consultarTeamComercialClienteResp">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="miembros" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="miembro" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="codigoRol" type="xs:string"/>
+										<xs:element name="descripcionRol" type="xs:string"/>
+										<xs:element name="legajo" type="xs:string"/>
+										<xs:element name="nombreApellido" type="xs:string"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="legadoClienteID" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Es el ID del Cliente Legado</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    
+     <!-- Base de datos Desarrollo -->
+    <bean id="testDataSource_desa" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@dlnx0162:1961:DSHIDE01"/>
+        <property name="username" value="A001022"/>
+        <property name="password" value="u_2H15zK"/>
+    </bean>
+
+    <bean id="testDataSource_desa_UsuarioZ" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@dlnx0162:1961:DSHIDE01"/>
+        <property name="username" value="Z000867"/>
+        <property name="password" value="r9t$36Fn"/>
+    </bean>
+
+     <!-- Base de datos Desarrollo II -->
+    <bean id="testDataSource_desa2" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@dlnx0162:1961:DSHIDE01"/>
+        <property name="username" value="A002003"/>
+        <property name="password" value="kK5_r_o$"/>
+    </bean>
+
+    <!-- Base de datos Desarrollo III -->
+    <bean id="testDataSource_desa3" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@dlnx0162:1961:DSHIDE01"/>
+        <property name="username" value="A000656"/>
+        <property name="password" value="HTAW_4621"/>
+    </bean>
+      <bean id="testDataSource_desa3_UsuarioZ" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@10.75.255.84:1961:DSHIDE01"/>
+        <property name="username" value="Z000896"/>
+        <property name="password" value="JN$e3r4d"/>
+    </bean>
+  
+
+     <!-- Base de datos Desarrollo IV -->
+     <bean id="testDataSource_desa4" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@10.75.255.84:1961:DSHIDE01"/>
+        <property name="username" value="A000657"/>
+        <property name="password" value="IHJP_3516"/>
+    </bean>
+
+     <bean id="testDataSource_desa4_UsuarioZ" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@10.75.255.84:1961:DSHIDE01"/>
+        <property name="username" value="Z000897"/>
+        <property name="password" value="JPf$w2e3"/>
+    </bean>
+
+    <!-- Base de datos Integracion -->
+    <bean id="testDataSource_inte" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@dlnx0164:1961:DSHIIN01"/>
+        <property name="username" value="Z000869"/>
+        <property name="password" value="grt$83uF"/>
+    </bean>
+
+    <!-- Base de datos Pau -->
+    <bean id="testDataSource_pau" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@dlnx0166:1961:DSHIPA01"/>
+        <property name="username" value="Z000866"/>
+        <property name="password" value="t6#J36Fn"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!--
+	************************************************************************************
+  	* Interfaces con MIC: Servicio MQ de Generacion de Cargos
+  	* Objetivo: Permite al consumidor del servicio generar cargos a proxima factura
+  	* Proveedor: MIC
+  	* Consumidor: Shiva	
+  	* Asincronico	   
+  	*************************************************************************************
+  	-->
+  	
+	<bean id="micGeneracionCargoFormatoMensajeJMS" class="ar.com.telecom.shiva.base.jms.util.definicion.FormatoMensajeJMS">
+		<property name="descripcion" value="Servicio MQ de Generacion de Cargos" />
+		
+		<property name="lontitudFijaCabeceraSerializable" value="8" />
+		<property name="lontitudFijaMensajeSerializable" value="197" />
+		
+		<property name="lontitudFijaCabeceraDeserializableSync" value="0" />
+		<property name="lontitudFijaCabeceraDeserializableAsync" value="136" />
+		<property name="lontitudFijaMensajeDeserializable" value="214" />
+		<property name="lontitudFijaMensajeDeserializableError" value="0" />
+		
+		<property name="serializable">
+  			<list>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="1"/>
+  					<property name="nombre" value="tipoInvocacion"/>
+  					<property name="longitud" value="2"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="2"/>
+  					<property name="nombre" value="modoEjecucion"/>
+  					<property name="longitud" value="1"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="3"/>
+  					<property name="nombre" value="idOperacion"/>
+  					<property name="longitud" value="7"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="4"/>
+  					<property name="nombre" value="idSecuencia"/>
+  					<property name="longitud" value="5"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="5"/>
+  					<property name="nombre" value="usuarioCobrador"/>
+  					<property name="longitud" value="8"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+  					</property>
+  				</bean>
+  				<!-- Detalle -->
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="6"/>
+  					<property name="nombre" value="acuerdoFacturacion"/>
+  					<property name="longitud" value="10"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="7"/>
+  					<property name="nombre" value="importeNoRegulado"/>
+  					<property name="longitud" value="10"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="8"/>
+  					<property name="nombre" value="importeRegulado"/>
+  					<property name="longitud" value="10"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>			 
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="9"/>
+  					<property name="nombre" value="fechaDesde"/>
+  					<property name="longitud" value="8"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="10"/>
+  					<property name="nombre" value="fechaHasta"/>
+  					<property name="longitud" value="8"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="11"/>
+  					<property name="nombre" value="calcularFechaHasta"/>
+  					<property name="longitud" value="1"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="12"/>
+  					<property name="nombre" value="queHacerConLosIntereses"/>
+  					<property name="longitud" value="1"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="13"/>
+  					<property name="nombre" value="importeBonificacionInteresesNoRegulado"/>
+  					<property name="longitud" value="10"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+ 				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="14"/>
+  					<property name="nombre" value="importeBonificacionInteresesRegulado"/>
+  					<property name="longitud" value="10"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="15"/>
+  					<property name="nombre" value="tipoCliente"/>
+  					<property name="longitud" value="2"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="16"/>
+  					<property name="nombre" value="tipoIva"/>
+  					<property name="longitud" value="2"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="17"/>
+  					<property name="nombre" value="origenCargo"/>
+  					<property name="longitud" value="2"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="18"/>
+  					<property name="nombre" value="leyendaFacturaCargo"/>
+  					<property name="longitud" value="50"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="19"/>
+  					<property name="nombre" value="leyendaFacturaInteres"/>
+  					<property name="longitud" value="50"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+  					</property>
+  				</bean>
+  			</list>
+  		</property>
+  		
+  		<!-- Ver mensajesMICRespuestasOK.xml -->
+  		<property name="deserializable">
+  			<list />
+  		</property>
+  	</bean>
+  	
+  	<!--
+  	**************************************************************************
+  	* Interfaces con MIC: 
+  	* 	Servicio MQ de Respuesta de Cargos 
+  	* Objetivo: Permite al consumidor del servicio informar la respuesta 
+  	*		  a la peticion realizada previamente
+  	* Proveedor: Shiva
+  	* Consumidor: MIC
+  	* Asincronico		   
+  	**************************************************************************
+  	-->
+  	<bean id="micRespuestaGeneracionCargoFormatoMensajeJMS" class="ar.com.telecom.shiva.base.jms.util.definicion.FormatoMensajeJMS">
+		<property name="descripcion" value="Servicio MQ de Respuesta" />
+		<property name="lontitudFijaCabeceraSerializable" value="8" />
+		<property name="lontitudFijaMensajeSerializable" value="15" />
+		
+		<property name="lontitudFijaCabeceraDeserializableSync" value="0" />
+		<property name="lontitudFijaCabeceraDeserializableAsync" value="136" /> 
+		<property name="lontitudFijaMensajeDeserializable" value="375" /> <!-- 214 + 161 -->
+		<property name="lontitudFijaMensajeDeserializableError" value="0" />
+		
+		<property name="deserializable">
+  			<list>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="1"/>
+  					<property name="nombre" value="retorno"/>
+  					<property name="longitud" value="1"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.AGRUPADOR" />
+  					</property>
+  					<property name="agrupador">
+  						<list>
+			  				 <bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="1"/>
+			  					<property name="nombre" value="msgLength"/>
+			  					<property name="longitud" value="7"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="2"/>
+			  					<property name="nombre" value="codRetorno"/>
+			  					<property name="longitud" value="4"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="3"/>
+			  					<property name="nombre" value="sqlCode"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="4"/>
+			  					<property name="nombre" value="sqlErrml"/>
+			  					<property name="longitud" value="5"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="5"/>
+			  					<property name="nombre" value="sqlErrmc"/>
+			  					<property name="longitud" value="70"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="6"/>
+			  					<property name="nombre" value="ultRegProc"/>
+			  					<property name="longitud" value="100"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="7"/>
+			  					<property name="nombre" value="cantRegistros"/>
+			  					<property name="longitud" value="5"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+  						</list>
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="2"/>
+  					<property name="nombre" value="idOperacionTransaccionRetorno"/>
+  					<property name="longitud" value="13"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="3"/>
+  					<property name="nombre" value="idOperacionTransaccion"/>
+  					<property name="longitud" value="13"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="4"/>
+  					<property name="nombre" value="tipoInvocacion"/>
+  					<property name="longitud" value="2"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+  					</property>
+  				</bean>
+  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="5"/>
+  					<property name="nombre" value="resultadoLLamadaServicio"/>
+  					<property name="longitud" value="1"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.AGRUPADOR" />
+  					</property>
+  					<property name="agrupador">
+	  					<list>
+				  			<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="1"/>  					
+			  					<property name="nombre" value="resultadoInvocacion"/>
+			  					<property name="longitud" value="2"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="2"/>
+			  					<property name="nombre" value="codigoError"/>
+			  					<property name="longitud" value="4"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="3"/>
+			  					<property name="nombre" value="descripcionError"/>
+			  					<property name="longitud" value="100"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.ALFANUMERICO" />
+			  					</property>
+			  				</bean>
+			  			</list>
+		  			</property>
+	  			</bean>
+	  			<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+  					<property name="orden" value="6"/>
+  					<property name="nombre" value="detalleInteresesGenerados"/>
+  					<property name="longitud" value="1"/>
+  					<property name="tipoDato">
+  						<util:constant 
+  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.AGRUPADOR" />
+  					</property>
+  					<property name="agrupador">
+	  					<list>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="1"/>
+			  					<property name="nombre" value="interesesGeneradosNoRegulados"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="2"/>
+			  					<property name="nombre" value="interesesGeneradosRegulados"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="3"/>
+			  					<property name="nombre" value="interesesBonificadosNoRegulados"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>
+			  				<bean class="ar.com.telecom.shiva.base.jms.util.definicion.Campo">
+			  					<property name="orden" value="4"/>
+			  					<property name="nombre" value="interesesBonificadosRegulados"/>
+			  					<property name="longitud" value="10"/>
+			  					<property name="tipoDato">
+			  						<util:constant 
+			  							static-field="ar.com.telecom.shiva.base.jms.util.definicion.TipoDatoEnum.NUMERICO" />
+			  					</property>
+			  				</bean>			  				
+		  				</list>
+		  			</property>
+	  			</bean>
+  			</list>
+  		</property>
+  		
+  		<!-- Ver mensajesMICRespuestasOK.xml -->
+  		<property name="serializable">
+  			<list />
+  		</property>
+  	</bean>
+  	
+</beans>

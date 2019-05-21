@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s0:definitions name="TeamComercialCliente" targetNamespace="http://www.openuri.org/TeamComercialCliente/" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://www.openuri.org/TeamComercialCliente/" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <s0:types>
+    <xsd:schema targetNamespace="http://www.openuri.org/TeamComercialCliente/" xmlns:err="http://www.telecom.com.ar/XMLSchema/bios/errorMessage" xmlns:req="http://www.telecom.com.ar/XMLSchema/bios/cliente/consultarTeamComercialRequest" xmlns:res="http://www.telecom.com.ar/XMLSchema/bios/cliente/consultarTeamComercialResponse" xmlns:rqh="http://www.telecom.com.ar/XMLSchema/bios/requestHeader" xmlns:rsh="http://www.telecom.com.ar/XMLSchema/bios/responseHeader" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.openuri.org/TeamComercialCliente/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/consultarTeamComercialRequest" schemaLocation="consultarTeamComercialClienteReq.xsd"/>
+      <xsd:import namespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/consultarTeamComercialResponse" schemaLocation="consultarTeamComercialClienteResp.xsd"/>
+      <xsd:import namespace="http://www.telecom.com.ar/XMLSchema/bios/requestHeader" schemaLocation="requestMessageHeader.xsd"/>
+      <xsd:import namespace="http://www.telecom.com.ar/XMLSchema/bios/responseHeader" schemaLocation="responseMessageHeader.xsd"/>
+      <xsd:import namespace="http://www.telecom.com.ar/XMLSchema/bios/errorMessage" schemaLocation="error.xsd"/>
+      <xsd:element name="consultaTeamComercialRequest">
+        <xsd:complexType>
+          <xsd:all>
+            <xsd:element ref="rqh:header"/>
+            <xsd:element ref="req:consultarTeamComercialClienteReq"/>
+          </xsd:all>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultaTeamComercialResponse">
+        <xsd:complexType>
+          <xsd:all>
+            <xsd:element ref="rsh:header"/>
+            <xsd:element name="body">
+              <xsd:complexType>
+                <xsd:choice>
+                  <xsd:element ref="res:consultarTeamComercialClienteResp"/>
+                  <xsd:element ref="err:error"/>
+                </xsd:choice>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:all>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultaTeamComercialResponseError">
+        <xsd:complexType>
+          <xsd:all>
+            <xsd:element ref="rsh:header"/>
+            <xsd:element ref="err:error"/>
+          </xsd:all>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema xmlns:err="http://www.telecom.com.ar/XMLSchema/bios/errorMessage" xmlns:req="http://www.telecom.com.ar/XMLSchema/bios/cliente/consultarTeamComercialRequest" xmlns:res="http://www.telecom.com.ar/XMLSchema/bios/cliente/consultarTeamComercialResponse" xmlns:rqh="http://www.telecom.com.ar/XMLSchema/bios/requestHeader" xmlns:rsh="http://www.telecom.com.ar/XMLSchema/bios/responseHeader" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.openuri.org/TeamComercialCliente/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/consultarTeamComercialResponse" schemaLocation="consultarTeamComercialClienteResp.xsd">
+			</xsd:import>
+    </xsd:schema>
+  </s0:types>
+  <s0:message name="consultaTeamComercialRequest">
+    <s0:part element="s1:consultaTeamComercialRequest" name="parameters"/>
+  </s0:message>
+  <s0:message name="consultaTeamComercialResponse">
+    <s0:part element="s1:consultaTeamComercialResponse" name="parameters"/>
+  </s0:message>
+  <s0:message name="consultaTeamComercial_faultMsg"/>
+  <s0:portType name="TeamComercialCliente">
+    <s0:operation name="consultaTeamComercial">
+      <s0:input message="s1:consultaTeamComercialRequest"/>
+      <s0:output message="s1:consultaTeamComercialResponse"/>
+    </s0:operation>
+  </s0:portType>
+  <s0:binding name="TeamComercialClienteSOAP" type="s1:TeamComercialCliente">
+    <s2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <s0:operation name="consultaTeamComercial">
+      <s2:operation soapAction="http://www.openuri.org/TeamComercialCliente/NewOperation"/>
+      <s0:input>
+        <s2:body use="literal"/>
+      </s0:input>
+      <s0:output>
+        <s2:body use="literal"/>
+      </s0:output>
+    </s0:operation>
+  </s0:binding>
+  <s0:service name="TeamComercialClienteSOAPQSService">
+    <s0:port binding="s1:TeamComercialClienteSOAP" name="TeamComercialClienteSOAPQSPort">
+      <s2:address location="http://dlnx0032.telecom.com.ar:7403/CC/Cliente/InterfazTeamComercialCliente"/>
+    </s0:port>
+  </s0:service>
+</s0:definitions>

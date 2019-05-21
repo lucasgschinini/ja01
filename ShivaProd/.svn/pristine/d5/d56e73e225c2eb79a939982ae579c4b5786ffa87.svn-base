@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="ShivaWebService"
+	targetNamespace="http://shiva.ws.intelap.com/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://shiva.ws.intelap.com/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<xs:schema elementFormDefault="unqualified" targetNamespace="http://shiva.ws.intelap.com/"
+			version="1.0" xmlns:tns="http://shiva.ws.intelap.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:element name="ApropiacionDocumento" type="tns:ApropiacionDocumento" />
+			<xs:element name="ApropiacionDocumentoResponse" type="tns:ApropiacionDocumentoResponse" />
+			<xs:element name="ConsultaEstadoDocumento" type="tns:ConsultaEstadoDocumento" />
+			<xs:element name="ConsultaEstadoDocumentoResponse" type="tns:ConsultaEstadoDocumentoResponse" />
+			<xs:element name="DesapropiacionDocumento" type="tns:DesapropiacionDocumento" />
+			<xs:element name="DesapropiacionDocumentoResponse" type="tns:DesapropiacionDocumentoResponse" />
+			<xs:complexType name="DesapropiacionDocumento">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="DesapropiacionDeimos"
+						type="tns:DesapropiacionDeimos" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="DesapropiacionDeimos">
+				<xs:sequence>
+					<xs:element name="IdOperacionShiva" type="xs:string" />
+					<xs:element name="UsuarioCobrador" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="DesapropiacionDocumentoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="RespuestaDesapropiacionDeimos"
+						type="tns:RespuestaDesapropiacionDeimos" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RespuestaDesapropiacionDeimos">
+				<xs:sequence>
+					<xs:element name="IdOperacionShiva" type="xs:string" />
+					<xs:element name="ResultadoProcesamiento" type="tns:ResultadoProcesamiento" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ResultadoProcesamiento">
+				<xs:sequence>
+					<xs:element name="ResultadoImputacion" type="xs:string" />
+					<xs:element minOccurs="0" name="CodigoError" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="DescripcionError"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="detalleError" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ApropiacionDocumento">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="ApropiacionDeimos" type="tns:ApropiacionDeimos" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ApropiacionDeimos">
+				<xs:sequence>
+					<xs:element name="IdOperacionShiva" type="xs:string" />
+					<xs:element name="UsuarioCobrador" type="xs:string" />
+					<xs:element minOccurs="0" name="Transaccion" nillable="true"
+						type="tns:Transaccion" />
+					<xs:element minOccurs="0" name="ModoOperacion" nillable="true"
+						type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Transaccion">
+				<xs:sequence>
+					<xs:element name="IdSecuencia" type="xs:string" />
+					<xs:element name="ListaDocumentos" type="tns:ListaDocumentos" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ListaDocumentos">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="Documento" type="tns:Documento" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Documento">
+				<xs:sequence>
+					<xs:element name="Empresa" type="xs:string" />
+					<xs:element name="Sistema" type="xs:string" />
+					<xs:element name="Importe" type="xs:decimal" />
+					<xs:element minOccurs="0"
+						name="InfoAdicionalMedPagNoComisionables" nillable="true"
+						type="tns:InfoAdicionalMedPagNoComisionables" />
+					<xs:element minOccurs="0" name="IdDocumentoMIC"
+						nillable="true" type="tns:IdDocumentoMIC" />
+					<xs:element minOccurs="0" name="IdDocumentoCalipso"
+						nillable="true" type="tns:IdDocumentoCalipso" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="InfoAdicionalMedPagNoComisionables">
+				<xs:sequence>
+					<xs:element name="Importe" type="xs:decimal" />
+					<xs:element name="CodigoTipoMedioPago" type="xs:long" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="IdDocumentoMIC">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="NumeroReferenciaMIC"
+						nillable="true" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="IdDocumentoCalipso">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="TipoComprobante"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="ClaseComprobante"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="SucursalComprobante"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="NumeroComprobante"
+						nillable="true" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ApropiacionDocumentoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="RespuestaApropiacionDeimos"
+						type="tns:RespuestaApropiacionDeimos" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="RespuestaApropiacionDeimos">
+				<xs:sequence>
+					<xs:element name="IdSecuencia" type="xs:string" />
+					<xs:element minOccurs="0" name="ListaResultados"
+						nillable="true" type="tns:ListaResultados" />
+					<xs:element name="ResultadoProcesamiento" type="tns:ResultadoProcesamiento" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ListaResultados">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="Resultado" type="tns:Resultado" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Resultado">
+				<xs:sequence>
+					<xs:element name="Documento" type="tns:Documento" />
+					<xs:element name="ResultadoApropiacionDocumento" type="tns:ResultadoApropiacionDocumento" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ResultadoApropiacionDocumento">
+				<xs:sequence>
+					<xs:element name="ResultadoApropiacion" type="xs:string" />
+					<xs:element minOccurs="0" name="CodigoError" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="DescripcionError"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="getDetalleError" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ConsultaEstadoDocumento">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="ConsultaEstadoDeudaFiltroDeimos"
+						type="tns:ConsultaEstadoDeudaFiltroDeimos" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ConsultaEstadoDeudaFiltroDeimos">
+				<xs:sequence>
+					<xs:element name="Empresa" type="xs:string" />
+					<xs:element name="Sistema" type="xs:string" />
+					<xs:element minOccurs="0" name="IdDocumentoMIC"
+						nillable="true" type="tns:IdDocumentoMIC" />
+					<xs:element minOccurs="0" name="IdDocumentoCalipso"
+						nillable="true" type="tns:IdDocumentoCalipso" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ConsultaEstadoDocumentoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="ResultadoConsultaEstadoDeuda"
+						type="tns:ResultadoConsultaEstadoDeuda" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ResultadoConsultaEstadoDeuda">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="IdDocumentoMIC"
+						nillable="true" type="tns:IdDocumentoMIC" />
+					<xs:element minOccurs="0" name="IdDocumentoCalipso"
+						nillable="true" type="tns:IdDocumentoCalipso" />
+					<xs:element minOccurs="0" name="InformacionGeneralApropiacion"
+						nillable="true" type="tns:InformacionGeneralApropiacion" />
+					<xs:element minOccurs="0" name="ResultadoProcesamiento"
+						nillable="true" type="tns:ResultadoProcesamiento" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="InformacionGeneralApropiacion">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="Apropiada" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="CodigoEstadoTramite"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="DescripcionEstadoTramite"
+						nillable="true" type="xs:string" />
+					<xs:element name="Convenio" nillable="true" type="xs:long" />
+					<xs:element name="CantidadCuotas" nillable="true" type="xs:int" />
+					<xs:element name="CantidadCuotasPagas" nillable="true"
+						type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="ApropiacionDocumento">
+		<wsdl:part element="tns:ApropiacionDocumento" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="ConsultaEstadoDocumento">
+		<wsdl:part element="tns:ConsultaEstadoDocumento" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="DesapropiacionDocumentoResponse">
+		<wsdl:part element="tns:DesapropiacionDocumentoResponse"
+			name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="DesapropiacionDocumento">
+		<wsdl:part element="tns:DesapropiacionDocumento" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="ConsultaEstadoDocumentoResponse">
+		<wsdl:part element="tns:ConsultaEstadoDocumentoResponse"
+			name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="ApropiacionDocumentoResponse">
+		<wsdl:part element="tns:ApropiacionDocumentoResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="ShivaWebService">
+		<wsdl:operation name="DesapropiacionDocumento">
+			<wsdl:input message="tns:DesapropiacionDocumento" name="DesapropiacionDocumento">
+			</wsdl:input>
+			<wsdl:output message="tns:DesapropiacionDocumentoResponse"
+				name="DesapropiacionDocumentoResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ApropiacionDocumento">
+			<wsdl:input message="tns:ApropiacionDocumento" name="ApropiacionDocumento">
+			</wsdl:input>
+			<wsdl:output message="tns:ApropiacionDocumentoResponse"
+				name="ApropiacionDocumentoResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ConsultaEstadoDocumento">
+			<wsdl:input message="tns:ConsultaEstadoDocumento" name="ConsultaEstadoDocumento">
+			</wsdl:input>
+			<wsdl:output message="tns:ConsultaEstadoDocumentoResponse"
+				name="ConsultaEstadoDocumentoResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ShivaWebServiceSoapBinding" type="tns:ShivaWebService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="DesapropiacionDocumento">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="DesapropiacionDocumento">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="DesapropiacionDocumentoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ApropiacionDocumento">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="ApropiacionDocumento">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="ApropiacionDocumentoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ConsultaEstadoDocumento">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="ConsultaEstadoDocumento">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="ConsultaEstadoDocumentoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ShivaWebService">
+		<wsdl:port binding="tns:ShivaWebServiceSoapBinding" name="ShivaWebServicePort">
+			<soap:address
+				location="http://localhost:8080/shiva-web-service/ShivaWebService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/responseMessage" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cm="http://www.telecom.com.ar/XMLSchema/bios/common" xmlns:ns1="http://www.telecom.com.ar/XMLSchema/bios/cliente/responseMessage">
+	<xs:import namespace="http://www.telecom.com.ar/XMLSchema/bios/common" schemaLocation="Diccionario.xsd"/>
+	<xs:element name="consultarFactibilidadInactivarClienteEnLegadoResp">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="resultado">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="estado" type="xs:string"/>
+							<xs:element name="codigoError" type="xs:string" minOccurs="0"/>
+							<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="crmClienteID" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

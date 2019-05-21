@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+	<!-- 
+	Con este import realizo la carga de los objetos comunes para los procesos de Spring Batch
+	-->
+	<import resource="../../spring-batch-context.xml"/>
+	
+	<!-- 
+	Con este import realizo la carga del archivo de configuracion puntual que se desea ejecutar
+	-->
+	<import resource="file:${fileDefinicionProcesamientoArchivoAvcAcuerdo}"/>
+ 
+</beans>

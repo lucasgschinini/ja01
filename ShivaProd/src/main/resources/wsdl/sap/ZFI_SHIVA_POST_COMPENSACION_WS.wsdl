@@ -1,0 +1,380 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="urn:sap-com:document:sap:rfc:functions" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" targetNamespace="urn:sap-com:document:sap:rfc:functions">
+	<wsdl:documentation>
+		<sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl" />
+	</wsdl:documentation>
+	<wsp:UsingPolicy wsdl:required="true" />
+	<wsp:Policy wsu:Id="BN__zfi_shiva_post_compensacion_BND">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
+				<saptrnbnd:OptimizedMimeSerialization xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization"
+					wsp:Optional="true" />
+				<wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true" />
+				<wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+					<sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+						xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing"
+						xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"
+						xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+						<wsp:Policy>
+							<sp:TransportToken>
+								<wsp:Policy>
+									<sp:HttpsToken />
+								</wsp:Policy>
+							</sp:TransportToken>
+							<sp:AlgorithmSuite>
+								<wsp:Policy>
+									<sp:Basic128Rsa15 />
+								</wsp:Policy>
+							</sp:AlgorithmSuite>
+							<sp:Layout>
+								<wsp:Policy>
+									<sp:Strict />
+								</wsp:Policy>
+							</sp:Layout>
+						</wsp:Policy>
+					</sp:TransportBinding>
+				</wsp:All>
+			</wsp:All>
+			<wsp:All>
+				<sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
+				<saptrnbnd:OptimizedXMLTransfer xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/"
+					uri="http://xml.sap.com/2006/11/esi/esp/binxml" wsp:Optional="true" />
+				<wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true" />
+				<wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+					<sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+						xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing"
+						xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"
+						xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+						<wsp:Policy>
+							<sp:TransportToken>
+								<wsp:Policy>
+									<sp:HttpsToken />
+								</wsp:Policy>
+							</sp:TransportToken>
+							<sp:AlgorithmSuite>
+								<wsp:Policy>
+									<sp:Basic128Rsa15 />
+								</wsp:Policy>
+							</sp:AlgorithmSuite>
+							<sp:Layout>
+								<wsp:Policy>
+									<sp:Strict />
+								</wsp:Policy>
+							</sp:Layout>
+						</wsp:Policy>
+					</sp:TransportBinding>
+				</wsp:All>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="BN__zfi_shiva_post_compensacion_BND_soap12">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
+				<saptrnbnd:OptimizedMimeSerialization xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization"
+					wsp:Optional="true" />
+				<wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true" />
+				<wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+					<sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+						xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing"
+						xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"
+						xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+						<wsp:Policy>
+							<sp:TransportToken>
+								<wsp:Policy>
+									<sp:HttpsToken />
+								</wsp:Policy>
+							</sp:TransportToken>
+							<sp:AlgorithmSuite>
+								<wsp:Policy>
+									<sp:Basic128Rsa15 />
+								</wsp:Policy>
+							</sp:AlgorithmSuite>
+							<sp:Layout>
+								<wsp:Policy>
+									<sp:Strict />
+								</wsp:Policy>
+							</sp:Layout>
+						</wsp:Policy>
+					</sp:TransportBinding>
+				</wsp:All>
+			</wsp:All>
+			<wsp:All>
+				<sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
+				<saptrnbnd:OptimizedXMLTransfer xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/"
+					uri="http://xml.sap.com/2006/11/esi/esp/binxml" wsp:Optional="true" />
+				<wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true" />
+				<wsp:All xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+					<sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+						xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:wsa="http://www.w3.org/2005/08/addressing"
+						xmlns:wst="http://docs.oasis-open.org/ws-sx/ws-trust/200512" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"
+						xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+						<wsp:Policy>
+							<sp:TransportToken>
+								<wsp:Policy>
+									<sp:HttpsToken />
+								</wsp:Policy>
+							</sp:TransportToken>
+							<sp:AlgorithmSuite>
+								<wsp:Policy>
+									<sp:Basic128Rsa15 />
+								</wsp:Policy>
+							</sp:AlgorithmSuite>
+							<sp:Layout>
+								<wsp:Policy>
+									<sp:Strict />
+								</wsp:Policy>
+							</sp:Layout>
+						</wsp:Policy>
+					</sp:TransportBinding>
+				</wsp:All>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="IF__ZFI_SHIVA_POST_COMPENSACION_WS">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sapsession:Session xmlns:sapsession="http://www.sap.com/webas/630/soap/features/session/">
+					<sapsession:enableSession>false</sapsession:enableSession>
+				</sapsession:Session>
+				<sapcentraladmin:CentralAdministration xmlns:sapcentraladmin="http://www.sap.com/webas/700/soap/features/CentralAdministration/"
+					wsp:Optional="true">
+					<sapcentraladmin:BusinessApplicationID>0014C265A09E1ED1A0E24CA96B9D0400</sapcentraladmin:BusinessApplicationID>
+				</sapcentraladmin:CentralAdministration>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="OP__ZFI_SHIVA_POST_COMPENSACION">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no</saptrhnw05:required>
+				<sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.sap.com/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
+				<sapblock:enableBlocking xmlns:sapblock="http://www.sap.com/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
+				<saprmnw05:enableWSRM xmlns:saprmnw05="http://www.sap.com/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsdl:types>
+		<xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions">
+			<xsd:simpleType name="char1">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="1" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char10">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="10" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char12">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="12" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char2">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="2" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char220">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="220" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char4">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="4" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char50">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="50" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="cuky5">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="5" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="curr13.2">
+				<xsd:restriction base="xsd:decimal">
+					<xsd:totalDigits value="13" />
+					<xsd:fractionDigits value="2" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="date10">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="10" />
+					<xsd:pattern value="\d\d\d\d-\d\d-\d\d" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="decimal23.4">
+				<xsd:restriction base="xsd:decimal">
+					<xsd:totalDigits value="23" />
+					<xsd:fractionDigits value="4" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="numeric2">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="2" />
+					<xsd:pattern value="\d*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="numeric3">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="3" />
+					<xsd:pattern value="\d*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="numeric4">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="4" />
+					<xsd:pattern value="\d*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="numeric7">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="7" />
+					<xsd:pattern value="\d*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="ZFISSH005">
+				<xsd:sequence>
+					<xsd:element name="COMP_CODE" type="tns:char4" />
+					<xsd:element name="VENDOR" type="tns:char10" />
+					<xsd:element name="FISC_YEAR" type="tns:numeric4" />
+					<xsd:element name="DOC_NO" type="tns:char10" />
+					<xsd:element name="ITEM_NUM" type="tns:numeric3" />
+					<xsd:element name="CURRENCY" type="tns:cuky5" />
+					<xsd:element name="DOC_TYPE" type="tns:char2" />
+					<xsd:element name="DOC_DATE" type="tns:date10" />
+					<xsd:element name="FIS_PERIOD" type="tns:numeric2" />
+					<xsd:element name="DB_CR_IND" type="tns:char1" />
+					<xsd:element name="AMT_DOCCUR" type="tns:decimal23.4" />
+					<xsd:element name="PMNT_BLOCK" type="tns:char1" />
+					<xsd:element name="INV_REF" type="tns:char10" />
+					<xsd:element name="INV_YEAR" type="tns:numeric4" />
+					<xsd:element name="INV_ITEM" type="tns:numeric3" />
+					<xsd:element name="REF_KEY_2" type="tns:char12" />
+					<xsd:element name="ITEM_TEXT" type="tns:char50" />
+					<xsd:element name="ZIMPORTE_ARS" type="tns:curr13.2" />
+					<xsd:element name="ZIMPORTE_USD" type="tns:curr13.2" />
+					<xsd:element name="ZSHIVA_MONEDA" type="tns:cuky5" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZFISSH008">
+				<xsd:sequence>
+					<xsd:element name="COMP_CODE" type="tns:char4" />
+					<xsd:element name="FISC_YEAR" type="tns:numeric4" />
+					<xsd:element name="DOC_NO" type="tns:char10" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZSRETURN">
+				<xsd:sequence>
+					<xsd:element name="TYPE" type="tns:char1" />
+					<xsd:element name="NUMBER" type="tns:numeric3" />
+					<xsd:element name="MESSAGE" type="tns:char220" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZFITTSH005">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZFISSH005" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZTTRETURN">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZSRETURN" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ZFI_SHIVA_POST_COMPENSACION">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="I_IDOPERACIONSHIVA" type="tns:numeric7" minOccurs="0" />
+						<xsd:element name="PDF_FILE" type="xsd:base64Binary" minOccurs="0" />
+						<xsd:element name="T_LINEITEMS" type="tns:ZFITTSH005" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ZFI_SHIVA_POST_COMPENSACIONResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="E_COMPENSACION" type="tns:ZFISSH008" />
+						<xsd:element name="E_IDOPERACIONSHIVA" type="tns:numeric7" />
+						<xsd:element name="ST_RETURN" type="tns:ZSRETURN" />
+						<xsd:element name="T_RETURN" type="tns:ZTTRETURN" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="ZFI_SHIVA_POST_COMPENSACION">
+		<wsdl:part name="parameters" element="tns:ZFI_SHIVA_POST_COMPENSACION" />
+	</wsdl:message>
+	<wsdl:message name="ZFI_SHIVA_POST_COMPENSACIONResponse">
+		<wsdl:part name="parameter" element="tns:ZFI_SHIVA_POST_COMPENSACIONResponse" />
+	</wsdl:message>
+	<wsdl:portType name="ZFI_SHIVA_POST_COMPENSACION_WS">
+		<wsdl:documentation>
+			<sapdoc:sapdoc xmlns:sapdoc="urn:sap:esi:documentation">
+				<sapdoc:docitem applicationComponent="FI" />
+			</sapdoc:sapdoc>
+		</wsdl:documentation>
+		<wsp:Policy>
+			<wsp:PolicyReference URI="#IF__ZFI_SHIVA_POST_COMPENSACION_WS" />
+		</wsp:Policy>
+		<wsdl:operation name="ZFI_SHIVA_POST_COMPENSACION">
+			<wsp:Policy>
+				<wsp:PolicyReference URI="#OP__ZFI_SHIVA_POST_COMPENSACION" />
+			</wsp:Policy>
+			<wsdl:input message="tns:ZFI_SHIVA_POST_COMPENSACION" />
+			<wsdl:output message="tns:ZFI_SHIVA_POST_COMPENSACIONResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="zfi_shiva_post_compensacion_BND" type="tns:ZFI_SHIVA_POST_COMPENSACION_WS">
+		<wsp:Policy>
+			<wsp:PolicyReference URI="#BN__zfi_shiva_post_compensacion_BND" />
+		</wsp:Policy>
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+		<wsdl:operation name="ZFI_SHIVA_POST_COMPENSACION">
+			<soap:operation
+				soapAction="urn:sap-com:document:sap:rfc:functions:ZFI_SHIVA_POST_COMPENSACION_WS:ZFI_SHIVA_POST_COMPENSACIONRequest"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="zfi_shiva_post_compensacion_BND_soap12" type="tns:ZFI_SHIVA_POST_COMPENSACION_WS">
+		<wsp:Policy>
+			<wsp:PolicyReference URI="#BN__zfi_shiva_post_compensacion_BND_soap12" />
+		</wsp:Policy>
+		<wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+		<wsdl:operation name="ZFI_SHIVA_POST_COMPENSACION">
+			<wsoap12:operation
+				soapAction="urn:sap-com:document:sap:rfc:functions:ZFI_SHIVA_POST_COMPENSACION_WS:ZFI_SHIVA_POST_COMPENSACIONRequest"
+				style="document" />
+			<wsdl:input>
+				<wsoap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<wsoap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="zfi_shiva_post_compensacion_srv">
+		<wsdl:port name="zfi_shiva_post_compensacion_BND" binding="tns:zfi_shiva_post_compensacion_BND">
+			<soap:address
+				location="https://dhpx0056.telecom.com.ar:1443/sap/bc/srt/rfc/sap/zfi_shiva_post_compensacion_ws/400/zfi_shiva_post_compensacion_srv/zfi_shiva_post_compensacion_bnd" />
+		</wsdl:port>
+		<wsdl:port name="zfi_shiva_post_compensacion_BND_soap12" binding="tns:zfi_shiva_post_compensacion_BND_soap12">
+			<wsoap12:address
+				location="https://dhpx0056.telecom.com.ar:1443/sap/bc/srt/rfc/sap/zfi_shiva_post_compensacion_ws/400/zfi_shiva_post_compensacion_srv/zfi_shiva_post_compensacion_bnd" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

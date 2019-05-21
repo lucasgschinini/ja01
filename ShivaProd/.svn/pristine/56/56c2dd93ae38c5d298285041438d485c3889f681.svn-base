@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="BOLETA-DEPOSITO-CHEQUE" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.ReglaConciliacionDto">
+  		<property name="idRegla" value="1"/>
+
+  		<property name="listaConciliacion">
+  			<list>
+  				<ref bean="conciliacionTotal_BolDepCheque" />
+  				<ref bean="caso1_BolDepCheque" />
+  				<ref bean="caso2_BolDepCheque" />
+  				<ref bean="caso3_BolDepCheque" />
+  				<ref bean="caso4_BolDepCheque" />
+  				<ref bean="caso5_BolDepCheque" />
+  				<ref bean="caso6_BolDepCheque" />
+  				<ref bean="caso7_BolDepCheque" />
+  				<ref bean="caso8_BolDepCheque" />
+  				<ref bean="caso9_BolDepCheque" />
+  			</list>
+  		</property>
+  	</bean>
+	
+  	<bean id="conciliacionTotal_BolDepCheque" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="1"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="tipoValor" />
+  				<ref bean="nroCliente" />
+  				<ref bean="nroCheque" />
+  				<ref bean="importe" />
+  				<ref bean="nroBoleta" />
+  				<ref bean="acuerdo" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+	<bean id="caso1_BolDepCheque" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="2"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroCheque" />
+  				<ref bean="acuerdo" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+	<bean id="caso2_BolDepCheque" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="3"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroBoleta" />
+  				<ref bean="acuerdo" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+	<bean id="caso3_BolDepCheque" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="4"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroCliente" />
+  				<ref bean="importe" />
+  				<ref bean="acuerdo" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+	<bean id="caso4_BolDepCheque" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="5"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  			</set>
+  		</property>
+  	</bean>
+  	
+  	<bean id="caso5_BolDepCheque" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="6"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroCliente" />
+  				<ref bean="nroCheque" />
+  				<ref bean="importe" />
+  				<ref bean="nroBoleta" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+  	<bean id="caso6_BolDepCheque" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="7"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroCheque" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+  	<bean id="caso7_BolDepCheque" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="8"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroBoleta" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+  	<bean id="caso8_BolDepCheque" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="9"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  				<ref bean="nroCliente" />
+  				<ref bean="importe" />
+  			</set>
+  		</property>
+  	</bean>
+  	
+  	<bean id="caso9_BolDepCheque" class="ar.com.telecom.shiva.negocio.conciliacion.definicion.Conciliacion">
+  		<property name="idConciliacion" value="10"/>
+  		<property name="listaCamposCoincidentes">
+  			<set>
+  			</set>
+  		</property>
+  	</bean>
+  	
+</beans>

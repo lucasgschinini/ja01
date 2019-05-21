@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="VALORES-REVERSION" class="ar.com.telecom.shiva.negocio.workflow.definicion.Workflow">
+  		<property name="tipoWorkflow">
+  			<util:constant 
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.TipoWorkflow.VALORES_REVERSION" />
+ 		</property>
+  		
+  		<property name="transiciones">
+  			<list>
+  				<ref bean="inicioREV" />
+  				<ref bean="solicitarConfirmacionAltaValorPorReversion" />
+  				<ref bean="confirmarAltaValorPorReversion" />
+  				<ref bean="rechazarAltaValorPorReversion" />
+  				<ref bean="solicitarReconfirmacionAltaValorPorReversion" />
+  				<ref bean="actualizarSaldo" />
+  			</list>
+  		</property>	 
+  	</bean>
+  	
+  	<!-- Estados (4) + inicial -->
+  	<util:constant id="rev_pendiente"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.REV_PENDIENTE" />
+  	<util:constant id="rev_pendiente_confirmar"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.REV_PENDIENTE_CONFIRMAR" />
+  	<util:constant id="rev_confirmada"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.REV_CONFIRMADA" />
+  	<util:constant id="rev_rechazada"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.REV_RECHAZADA" />
+  	<util:constant id="rev_saldo_actualizado"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.REV_SALDO_ACTUALIZADO" />
+  	 
+  	 		
+  	<!-- Transiciones (5) -->
+  	<bean id="inicioREV" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Inicio"/>
+  		<property name="evento" value="crearWorkflow"/>
+  		<property name="origen">
+  			<util:constant 
+  				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.INICIO" />
+  		</property>
+  		<property name="destino" ref="rev_pendiente"/>	
+  	</bean>
+  	<bean id="solicitarConfirmacionAltaValorPorReversion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Confirmacion Alta de Valor Por Reversion"/>
+  		<property name="evento" value="solicitarConfirmacionAltaValorPorReversion"/>
+  		<property name="origen" ref="rev_pendiente"/>
+  		<property name="destino" ref="rev_pendiente_confirmar"/>	
+  	</bean>
+  	<bean id="confirmarAltaValorPorReversion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Confirmar Alta de Valor por Reversion"/>
+  		<property name="evento" value="confirmarAltaValorPorReversion"/>
+  		<property name="origen" ref="rev_pendiente_confirmar"/>
+  		<property name="destino" ref="rev_confirmada"/>	
+  	</bean>
+  	<bean id="rechazarAltaValorPorReversion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rachazar Alta de Valor por Reversion"/>
+  		<property name="evento" value="rechazarAltaValorPorReversion"/>
+  		<property name="origen" ref="rev_pendiente_confirmar"/>
+  		<property name="destino" ref="rev_rechazada"/>	
+  	</bean>
+  	<bean id="solicitarReconfirmacionAltaValorPorReversion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Reconfirmacion Alta de Valor por Reversion"/>
+  		<property name="evento" value="solicitarReconfirmacionAltaValorPorReversion"/>
+  		<property name="origen" ref="rev_rechazada"/>
+  		<property name="destino" ref="rev_pendiente_confirmar"/>	
+  	</bean>
+  	<bean id="actualizarSaldo" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Actualización de Saldo en Valor por Reversión exsitente"/>
+  		<property name="evento" value="actualizarSaldo"/>
+  		<property name="origen" ref="rev_pendiente"/>
+  		<property name="destino" ref="rev_saldo_actualizado"/>	
+  	</bean>
+ </beans>

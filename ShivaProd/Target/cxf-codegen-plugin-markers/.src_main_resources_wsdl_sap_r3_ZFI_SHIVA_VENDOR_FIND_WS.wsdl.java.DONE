@@ -1,0 +1,1 @@
+&[-b, file:/C:/Desarrollo/Workspace/ShivaProd/src/main/resources/wsdl/binding.xml, -noAddressBinding, -autoNameResolution, -p, ar.com.telecom.shiva.presentacion.wsdl.sap.r3.consultaProveedores, file:/C:/Desarrollo/Workspace/ShivaProd/src/main/resources/wsdl/sap/r3/ZFI_SHIVA_VENDOR_FIND_WS.wsdl]

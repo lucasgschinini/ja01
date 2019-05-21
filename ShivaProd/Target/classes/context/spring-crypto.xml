@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="bcProvider" class="org.bouncycastle.jce.provider.BouncyCastleProvider" />
+  	
+  	<bean id="byteEncryptor" class="org.jasypt.encryption.pbe.StandardPBEByteEncryptor">
+     	<property name="algorithm" value="PBEWITHSHA256AND256BITAES-CBC-BC"/>
+     	<property name="password" value="SHIVASHIVASHIVASHIVASHIVASHIVA14SHIVASHIVASHIVASHIVASHIVASHIVA15" />
+     	<property name="provider" ref="bcProvider"/>
+		<!--<property name="providerName" value="BC" /> -->
+    </bean>
+   
+    <bean id="otherByteEncryptor" class="org.jasypt.encryption.pbe.StandardPBEByteEncryptor">
+     	<property name="algorithm" value="PBEWithMD5AndDES"/>
+     	<property name="password" value="TheBestSecretKey" />
+    </bean>
+    
+    <bean id="otherByteEncryptorII" class="org.jasypt.encryption.pbe.StandardPBEByteEncryptor">
+     	<property name="algorithm" value="PBEWITHSHA256AND256BITAES-CBC-BC"/>
+     	<property name="password" value="SHIVASHIVASHIVASHIVASHIVASHIVA14" />
+     	<property name="provider" ref="bcProvider"/>
+		<!--<property name="providerName" value="BC" /> -->
+    </bean>
+    
+    <bean id="hibernateBinaryEncryptor" class="org.jasypt.hibernate4.encryptor.HibernatePBEByteEncryptor">
+     	<property name="registeredName"><value>strongHibernateBinaryEncryptor</value></property>
+     	<property name="encryptor"><ref bean="byteEncryptor" /></property>
+   	</bean>
+</beans>

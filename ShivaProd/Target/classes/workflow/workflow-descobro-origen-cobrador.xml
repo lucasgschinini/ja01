@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	
+  	<bean id="DESCOBRO_ORIGEN_COBRADOR" class="ar.com.telecom.shiva.negocio.workflow.definicion.Workflow">
+  		<property name="tipoWorkflow">
+  			<util:constant 
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.TipoWorkflow.DESCOBRO_ORIGEN_COBRADOR" />
+ 		</property>
+  		
+  		<property name="transiciones">
+  			<list>
+  				<ref bean="inicioDES" />
+  				<ref bean="iniciarDescobroOrigenCobrador" />
+   				<ref bean="regPendReversoDocMedioCobradores" /> 
+  				<ref bean="regPendReversoDocCobradoresMedioCalipso" /> 
+  				<ref bean="regPendReversoDocCobradoresMedioMic" /> 
+  				<ref bean="regPendReversoDocCalipsoMedioCobradores" /> 
+  				<ref bean="regPendReversoDocMicMedioCobradores" /> 
+   				<ref bean="regPendReversoDocCobradores" />
+  				<ref bean="regPendReversoMedioCobradores" />
+  				<ref bean="regPendReversoDocMedioCalipso" />  				
+  				<ref bean="regPendReversoDocCalipso" />  				
+  				<ref bean="regPendReversoMedioCalipso" />  				
+  				<ref bean="regPendReversoDocMedioMic" />  				
+  				<ref bean="regPendReversoDocMic" />  				
+  				<ref bean="regPendReversoMedioMic" /> 		
+    			<ref bean="procPendReversoDocMedioCobradores" /> 
+  				<ref bean="procPendReversoDocCobradoresMedioCalipso" /> 
+  				<ref bean="procPendReversoDocCobradoresMedioMic" /> 
+  				<ref bean="procPendReversoDocCalipsoMedioCobradores" /> 
+  				<ref bean="procPendReversoDocMicMedioCobradores" />
+    			<ref bean="procPendReversoDocCobradores" />
+  				<ref bean="procPendReversoMedioCobradores" />
+  				<ref bean="procPendReversoDocMedioCalipso" />  				
+  				<ref bean="procPendReversoDocCalipso" />  				
+  				<ref bean="procPendReversoMedioCalipso" />  				
+  				<ref bean="procPendReversoDocMedioMic" />  				
+  				<ref bean="procPendReversoDocMic" />  				
+  				<ref bean="procPendReversoMedioMic" />  				
+  				<ref bean="descobrarCobro" />
+  			</list>
+  		</property>	
+  		
+  	</bean>
+  	
+  	<!-- Estados (16) + inicial -->
+  	<util:constant id="des_imputar"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_IMPUTAR" />
+  	<util:constant id="des_descobro_proceso"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_DESCOBRO_PROCESO" />
+  	<util:constant id="des_ambos_cobradores"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_AMBOS_COBRADORES" />
+	<util:constant id="des_doc_cobradores_med_calipso"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_DOCUMENTOS_COBRADORES_MEDIOS_CALIPSO" />  	
+	<util:constant id="des_doc_cobradores_med_mic"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_DOCUMENTOS_COBRADORES_MEDIOS_MIC" />
+  	<util:constant id="des_doc_calipso_med_cobradores"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_DOCUMENTO_CALIPSO_MEDIOS_COBRADORES" />
+  	<util:constant id="des_doc_mic_med_cobradores"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_DOCUMENTO_MIC_MEDIOS_COBRADORES" />
+   	<util:constant id="des_documento_cobradores"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_DOCUMENTO_COBRADORES" />
+  	<util:constant id="des_medios_cobradores"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_MEDIOS_COBRADORES" />
+  	<util:constant id="des_ambos_calipso"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_AMBOS_CALIPSO" />
+  	<util:constant id="des_documento_calipso"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_DOCUMENTO_CALIPSO" />
+  	<util:constant id="des_medios_calipso"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_MEDIOS_CALIPSO" />
+  	<util:constant id="des_ambos_mic"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_AMBOS_MIC" />
+  	<util:constant id="des_documento_mic"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_DOCUMENTO_MIC" />
+  	<util:constant id="des_medios_mic"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_MEDIOS_MIC" />
+  	<util:constant id="des_descobrado"
+  			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.DES_DESCOBRADO" />
+  	
+  	  	<!-- Transiciones (16) -->
+  	<bean id="inicioDES" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Inicio"/>
+  		<property name="evento" value="crearWorkflow"/>
+  		<property name="origen">
+  			<util:constant 
+  				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.INICIO" />
+  		</property>
+  		<property name="destino" ref="des_imputar"/>	
+  	</bean>
+
+  	<bean id="iniciarDescobroOrigenCobrador" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Iniciar cobro"/>
+  		<property name="evento" value="iniciarDescobroOrigenCobrador"/>
+  		<property name="origen" ref="des_imputar"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>		
+  	
+  	<bean id="regPendReversoDocMedioCobradores" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Documentos y Medios de pago en cobradores"/>
+  		<property name="evento" value="regPendReversoDocMedioCobradores"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_ambos_cobradores"/>	
+  	</bean>
+
+  	<bean id="regPendReversoDocCobradoresMedioCalipso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Documentos en cobradores y Medios de pago en Calipso"/>
+  		<property name="evento" value="regPendReversoDocCobradoresMedioCalipso"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_doc_cobradores_med_calipso"/>	
+  	</bean>
+
+  	<bean id="regPendReversoDocCobradoresMedioMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Documentos en cobradores y Medios de pago en  MIC"/>
+  		<property name="evento" value="regPendReversoDocCobradoresMedioMic"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_doc_cobradores_med_mic"/>	
+  	</bean>
+
+  	<bean id="regPendReversoDocCalipsoMedioCobradores" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Documentos en Calipso y Medios de pago en cobradores"/>
+  		<property name="evento" value="regPendReversoDocCalipsoMedioCobradores"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_doc_calipso_med_cobradores"/>	
+  	</bean>
+
+  	<bean id="regPendReversoDocMicMedioCobradores" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Documentos en MIC y Medios de pago en cobradores"/>
+  		<property name="evento" value="regPendReversoDocMicMedioCobradores"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_doc_mic_med_cobradores"/>	
+  	</bean>
+
+  	<bean id="regPendReversoDocCobradores" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Documento en cobradores"/>
+  		<property name="evento" value="regPendReversoDocCobradores"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_documento_cobradores"/>	
+  	</bean>	
+  		
+  	<bean id="regPendReversoMedioCobradores" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Documento y Medios en cobradores"/>
+  		<property name="evento" value="regPendReversoMedioCobradores"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_medios_cobradores"/>	
+  	</bean>		
+  	
+  	<bean id="regPendReversoDocMedioCalipso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Documento y Medio Pago Calipso"/>
+  		<property name="evento" value="regPendReversoDocMedioCalipso"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_ambos_calipso"/>	
+  	</bean>		
+  	
+  	<bean id="regPendReversoDocCalipso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Documento Calipso"/>
+  		<property name="evento" value="regPendReversoDocCalipso"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_documento_calipso"/>	
+  	</bean>		
+  	
+  	<bean id="regPendReversoMedioCalipso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Medio Pago Calipso"/>
+  		<property name="evento" value="regPendReversoMedioCalipso"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_medios_calipso"/>	
+  	</bean>		
+  	
+  	<bean id="regPendReversoDocMedioMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Documento y Medio Pago MIC"/>
+  		<property name="evento" value="regPendReversoDocMedioMic"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_ambos_mic"/>	
+  	</bean>		
+  	
+  	<bean id="regPendReversoDocMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Documento MIC"/>
+  		<property name="evento" value="regPendReversoDocMic"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_documento_mic"/>	
+  	</bean>		
+  	
+  	<bean id="regPendReversoMedioMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="registrar Prend. Reverso Medio Pago MIC"/>
+  		<property name="evento" value="regPendReversoMedioMic"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_medios_mic"/>	
+  	</bean>	
+	
+  	<bean id="procPendReversoDocMedioCobradores" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="procesar Prend. Reverso Documentos y Medios de pago en cobradores"/>
+  		<property name="evento" value="procPendReversoDocMedioCobradores"/>
+  		<property name="origen" ref="des_ambos_cobradores"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>
+
+  	<bean id="procPendReversoDocCobradoresMedioCalipso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="procesar Prend. Reverso Documentos en cobradores y Medios de pago en Calipso"/>
+  		<property name="evento" value="procPendReversoDocCobradoresMedioCalipso"/>
+  		<property name="origen" ref="des_doc_cobradores_med_calipso"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>
+
+  	<bean id="procPendReversoDocCobradoresMedioMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="procesar Prend. Reverso Documentos en cobradores y Medios de pago en  MIC"/>
+  		<property name="evento" value="procPendReversoDocCobradoresMedioMic"/>
+  		<property name="origen" ref="des_doc_cobradores_med_mic"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>
+
+  	<bean id="procPendReversoDocCalipsoMedioCobradores" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="procesar Prend. Reverso Documentos en Calipso y Medios de pago en cobradores"/>
+  		<property name="evento" value="procPendReversoDocCalipsoMedioCobradores"/>
+  		<property name="origen" ref="des_doc_calipso_med_cobradores"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>
+
+  	<bean id="procPendReversoDocMicMedioCobradores" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="procesar Prend. Reverso Documentos en MIC y Medios de pago en cobradores"/>
+  		<property name="evento" value="procPendReversoDocMicMedioCobradores"/>
+  		<property name="origen" ref="des_doc_mic_med_cobradores"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>
+
+  	<bean id="procPendReversoDocCobradores" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="procesar Pend. Reverso Documentos Cobradores"/>
+  		<property name="evento" value="procPendReversoDocCobradores"/>
+  		<property name="origen" ref="des_documento_cobradores"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>	
+	
+  	<bean id="procPendReversoMedioCobradores" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="procesar Pend. Reverso Medios Pago Cobradores"/>
+  		<property name="evento" value="procPendReversoMedioCobradores"/>
+  		<property name="origen" ref="des_medios_cobradores"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>		
+ 	
+  	<bean id="procPendReversoDocMedioCalipso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="procesar Pend. Reverso Documentos y Medios Pago Calipso"/>
+  		<property name="evento" value="procPendReversoDocMedioCalipso"/>
+  		<property name="origen" ref="des_ambos_calipso"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>		
+  	
+  	<bean id="procPendReversoDocCalipso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+   		<property name="nombre" value="procesar Pend. Reverso Documentos Calipso"/>
+  		<property name="evento" value="procPendReversoDocCalipso"/>
+  		<property name="origen" ref="des_documento_calipso"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>		
+  	
+  	<bean id="procPendReversoMedioCalipso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="procesar Pend. Reverso Medios Pago Calipso"/>
+  		<property name="evento" value="procPendReversoMedioCalipso"/>
+  		<property name="origen" ref="des_medios_calipso"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>		
+  	
+  	<bean id="procPendReversoDocMedioMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+   		<property name="nombre" value="procesar Pend. Reverso Documentos y Medios Pago MIC"/>
+  		<property name="evento" value="procPendReversoDocMedioMic"/>
+  		<property name="origen" ref="des_ambos_mic"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>		
+  	
+  	<bean id="procPendReversoDocMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="procesar Pend. Reverso Documentos MIC"/>
+  		<property name="evento" value="procPendReversoDocMic"/>
+  		<property name="origen" ref="des_documento_mic"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>		
+  	
+  	<bean id="procPendReversoMedioMic" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="procesar Pend. Reverso Medios Pago MIC"/>
+  		<property name="evento" value="procPendReversoMedioMic"/>
+  		<property name="origen" ref="des_medios_mic"/>
+  		<property name="destino" ref="des_descobro_proceso"/>	
+  	</bean>		
+  	
+  	
+  	<bean id="descobrarCobro" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Descobrar cobro"/>
+  		<property name="evento" value="descobrarCobro"/>
+  		<property name="origen" ref="des_descobro_proceso"/>
+  		<property name="destino" ref="des_descobrado"/>	
+  	</bean>		
+</beans>

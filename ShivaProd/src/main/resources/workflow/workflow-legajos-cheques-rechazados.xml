@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	
+  	<bean id="LEGAJOS_CHEQUES_RECHAZADOS" class="ar.com.telecom.shiva.negocio.workflow.definicion.Workflow">
+  		<property name="tipoWorkflow">
+  			<util:constant static-field="ar.com.telecom.shiva.negocio.workflow.definicion.TipoWorkflow.LEGAJOS_CHEQUES_RECHAZADOS" />
+ 		</property>
+ 		
+  		<property name="transiciones">
+  			<list>
+  				<ref bean="inicioLegajo"/>
+  				
+				<ref bean="solicitarAperturaDeLegajo"/>
+				<ref bean="anularLegajoAbierto"/>
+				<ref bean="solicitarReversionDeCobrosrelacionados"/>
+				<ref bean="solicitarOmitirProcesoDeReembolsoParaLegajoConChequeRechazadoAbierto"/>
+				<ref bean="anularLegajoEnProcesoDeReversion"/>
+				<ref bean="solicitarInicioProcesodeReembolso"/>
+				<ref bean="solicitarFinalizarProcesodeReembolsoParaLegajoConChequeRechazadoPendienteDeEntrega"/>
+				<ref bean="solicitarEntregaDeChequeRechazadoParaLegajoEnProcesoDeReembolso"/>
+				<ref bean="solicitarEnvioALegalesParaLegajoEnProcesoDeReembolso"/>
+				<ref bean="solicitarDesistir"/>
+				<ref bean="solicitarCierreConChequeRechazadoPendienteDeEntregaParaLegajoReembolsado"/>
+				<ref bean="solicitarEntregaDeChequeRechazadoParaLegajoCerrado"/>
+				<ref bean="solicitarEntregaDeChequeRechazadoParaLegajoReembolsado"/>
+				<ref bean="solicitarFinalizarProcesoDeReembolsoParaLegajoConChequeRechazadoEntregado"/>
+				<ref bean="solicitarCierreParaLegajoConChequeRechazadoEntregado"/>
+				<ref bean="solicitarCierreConChequeRechazadoPendienteDeEntregaParaLegajoAbierto"/>
+				<ref bean="solicitarEntregaDeChequeRechazadoParaLegajoAbierto"/>
+				<ref bean="solicitarCierreDeLegajoParaChequeRechazadoEntregado"/>
+				<ref bean="solicitarEnvioALegalesParaLegajoAbierto"/>
+				<ref bean="solicitarOmitirProcesoDeReembolsoParaLegajoConChequeRechazadoPendienteDeEntrega"/>
+  			</list>
+  		</property>	
+  	</bean>
+  	
+  	<!-- Estados -->
+  	<util:constant id="lgj_no_disponible"									static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_NO_DISPONIBLE"/>
+  	<util:constant id="lgj_abierto"											static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_ABIERTO"/>
+  	<util:constant id="lgj_en_proceso_reversion_cobros_relacionados"		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_EN_PROCESO_REVERSION_COBROS_RELACIONADOS"/>
+  	<util:constant id="lgj_en_proceso_reembolso_con_cheque_pend_entrega"	static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_EN_PROCESO_REEMBOLSO_CON_CHEQUE_PEND_ENTREGA"/>
+  	<util:constant id="lgj_enviado_a_legales"								static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_ENVIADO_A_LEGALES"/>
+  	<util:constant id="lgj_reembolsado_con_cheque_pend_entrega"				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_REEMBOLSADO_CON_CHEQUE_PEND_ENTREGA"/>
+  	<util:constant id="lgj_cerrado_con_cheque_pend_entrega"					static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_CERRADO_CON_CHEQUE_PEND_ENTREGA"/>
+  	<util:constant id="lgj_en_proceso_reembolso_con_cheque_entregado"		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_EN_PROCESO_REEMBOLSO_CON_CHEQUE_ENTREGADO"/>
+  	<util:constant id="lgj_reembolsado_con_cheque_entregado"				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_REEMBOLSADO_CON_CHEQUE_ENTREGADO"/>
+  	<util:constant id="lgj_abierto_con_cheque_entregado"					static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_ABIERTO_CON_CHEQUE_ENTREGADO"/>
+  	<util:constant id="lgj_anulado"											static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_ANULADO"/>
+  	<util:constant id="lgj_desistido"										static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_DESISTIDO"/>
+  	<util:constant id="lgj_cerrado_con_cheque_entregado"					static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.LGJ_CERRADO_CON_CHEQUE_ENTREGADO"/>
+
+  	<!-- Transiciones -->
+  	<bean id="inicioLegajo" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Inicio"/>
+  		<property name="evento" value="crearWorkflow"/>
+  		<property name="origen">
+  			<util:constant static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.INICIO" />
+  		</property>
+  		<property name="destino" ref="lgj_no_disponible"/>	
+  	</bean>
+
+	<bean id="solicitarAperturaDeLegajo" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Apertura de Legajo"/>
+  		<property name="evento" value="solicitarAperturaDeLegajo"/>
+  		<property name="origen" ref="lgj_no_disponible"/>
+  		<property name="destino" ref="lgj_abierto"/>	
+  	</bean>
+
+	<bean id="anularLegajoAbierto" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Anular Legajo Abierto"/>
+  		<property name="evento" value="anularLegajoAbierto"/>
+  		<property name="origen" ref="lgj_abierto"/>
+  		<property name="destino" ref="lgj_anulado"/>	
+  	</bean>
+
+	<bean id="solicitarReversionDeCobrosrelacionados" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Reversión de cobros relacionados"/>
+  		<property name="evento" value="solicitarReversionDeCobrosrelacionados"/>
+  		<property name="origen" ref="lgj_abierto"/>
+  		<property name="destino" ref="lgj_en_proceso_reversion_cobros_relacionados"/>	
+  	</bean>
+
+	<bean id="solicitarOmitirProcesoDeReembolsoParaLegajoConChequeRechazadoAbierto" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Omitir Proceso de Reembolso para Legajo con Cheque Rechazado Abierto"/>
+  		<property name="evento" value="solicitarOmitirProcesoDeReembolsoParaLegajoConChequeRechazadoAbierto"/>
+  		<property name="origen" ref="lgj_abierto"/>
+  		<property name="destino" ref="lgj_reembolsado_con_cheque_pend_entrega"/>	
+  	</bean>
+
+	<bean id="anularLegajoEnProcesoDeReversion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Anular Legajo en Proceso de Reversión"/>
+  		<property name="evento" value="anularLegajoEnProcesoDeReversion"/>
+  		<property name="origen" ref="lgj_en_proceso_reversion_cobros_relacionados"/>
+  		<property name="destino" ref="lgj_anulado"/>	
+  	</bean>
+
+	<bean id="solicitarInicioProcesodeReembolso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Inicio Proceso de Reembolso"/>
+  		<property name="evento" value="solicitarInicioProcesodeReembolso"/>
+  		<property name="origen" ref="lgj_en_proceso_reversion_cobros_relacionados"/>
+  		<property name="destino" ref="lgj_en_proceso_reembolso_con_cheque_pend_entrega"/>	
+  	</bean>
+
+	<bean id="solicitarFinalizarProcesodeReembolsoParaLegajoConChequeRechazadoPendienteDeEntrega" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Finalizar Proceso de Reembolso para Legajo con Cheque Rechazado Pendiente de Entrega"/>
+  		<property name="evento" value="solicitarFinalizarProcesodeReembolsoParaLegajoConChequeRechazadoPendienteDeEntrega"/>
+  		<property name="origen" ref="lgj_en_proceso_reembolso_con_cheque_pend_entrega"/>
+  		<property name="destino" ref="lgj_reembolsado_con_cheque_pend_entrega"/>	
+  	</bean>
+
+	<bean id="solicitarEntregaDeChequeRechazadoParaLegajoEnProcesoDeReembolso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Entrega de Cheque para Legajo en Proceso de Reembolso"/>
+  		<property name="evento" value="solicitarEntregaDeChequeRechazadoParaLegajoEnProcesoDeReembolso"/>
+  		<property name="origen" ref="lgj_en_proceso_reembolso_con_cheque_pend_entrega"/>
+  		<property name="destino" ref="lgj_en_proceso_reembolso_con_cheque_entregado"/>	
+  	</bean>
+
+	<bean id="solicitarEnvioALegalesParaLegajoEnProcesoDeReembolso" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Envío a Legales para Legajo en Proceso de Reembolso"/>
+  		<property name="evento" value="solicitarEnvioALegalesParaLegajoEnProcesoDeReembolso"/>
+  		<property name="origen" ref="lgj_en_proceso_reembolso_con_cheque_pend_entrega"/>
+  		<property name="destino" ref="lgj_enviado_a_legales"/>	
+  	</bean>
+
+	<bean id="solicitarDesistir" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Desistir"/>
+  		<property name="evento" value="solicitarDesistir"/>
+  		<property name="origen" ref="lgj_enviado_a_legales"/>
+  		<property name="destino" ref="lgj_desistido"/>	
+  	</bean>
+
+	<bean id="solicitarCierreConChequeRechazadoPendienteDeEntregaParaLegajoReembolsado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Cierre con Cheque Rechazado Pendiente de Entrega para Legajo Reembolsado"/>
+  		<property name="evento" value="solicitarCierreConChequeRechazadoPendienteDeEntregaParaLegajoReembolsado"/>
+  		<property name="origen" ref="lgj_reembolsado_con_cheque_pend_entrega"/>
+  		<property name="destino" ref="lgj_cerrado_con_cheque_pend_entrega"/>	
+  	</bean>
+
+	<bean id="solicitarEntregaDeChequeRechazadoParaLegajoCerrado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Entrega de Cheque para Legajo Cerrado"/>
+  		<property name="evento" value="solicitarEntregaDeChequeRechazadoParaLegajoCerrado"/>
+  		<property name="origen" ref="lgj_cerrado_con_cheque_pend_entrega"/>
+  		<property name="destino" ref="lgj_cerrado_con_cheque_entregado"/>	
+  	</bean>
+
+	<bean id="solicitarEntregaDeChequeRechazadoParaLegajoReembolsado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Entrega de Cheque para Legajo Reembolsado"/>
+  		<property name="evento" value="solicitarEntregaDeChequeRechazadoParaLegajoReembolsado"/>
+  		<property name="origen" ref="lgj_reembolsado_con_cheque_pend_entrega"/>
+  		<property name="destino" ref="lgj_reembolsado_con_cheque_entregado"/>	
+  	</bean>
+
+	<bean id="solicitarFinalizarProcesoDeReembolsoParaLegajoConChequeRechazadoEntregado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Finalizar Proceso de Reembolso para Legajo con Cheque Rechazado Entregado"/>
+  		<property name="evento" value="solicitarFinalizarProcesoDeReembolsoParaLegajoConChequeRechazadoEntregado"/>
+  		<property name="origen" ref="lgj_en_proceso_reembolso_con_cheque_entregado"/>
+  		<property name="destino" ref="lgj_reembolsado_con_cheque_entregado"/>	
+  	</bean>
+
+	<bean id="solicitarCierreParaLegajoConChequeRechazadoEntregado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Cierre para Legajo con Cheque Rechazado Entregado"/>
+  		<property name="evento" value="solicitarCierreParaLegajoConChequeRechazadoEntregado"/>
+  		<property name="origen" ref="lgj_reembolsado_con_cheque_entregado"/>
+  		<property name="destino" ref="lgj_cerrado_con_cheque_entregado"/>	
+  	</bean>
+
+	<bean id="solicitarCierreConChequeRechazadoPendienteDeEntregaParaLegajoAbierto" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Cierre con Cheque Rechazado Pendiente de Entrega para Legajo Abierto"/>
+  		<property name="evento" value="solicitarCierreConChequeRechazadoPendienteDeEntregaParaLegajoAbierto"/>
+  		<property name="origen" ref="lgj_abierto"/>
+  		<property name="destino" ref="lgj_cerrado_con_cheque_pend_entrega"/>	
+  	</bean>
+
+	<bean id="solicitarEntregaDeChequeRechazadoParaLegajoAbierto" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Entrega de Cheque para Legajo Abierto"/>
+  		<property name="evento" value="solicitarEntregaDeChequeRechazadoParaLegajoAbierto"/>
+  		<property name="origen" ref="lgj_abierto"/>
+  		<property name="destino" ref="lgj_abierto_con_cheque_entregado"/>	
+  	</bean>
+
+	<bean id="solicitarCierreDeLegajoParaChequeRechazadoEntregado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+		<property name="nombre" value="Solicitar Cierre de Legajo para Cheque Entregado"/>
+  		<property name="evento" value="solicitarCierreDeLegajoParaChequeRechazadoEntregado"/>
+  		<property name="origen" ref="lgj_abierto_con_cheque_entregado"/>
+  		<property name="destino" ref="lgj_cerrado_con_cheque_entregado"/>	
+  	</bean>
+
+	<bean id="solicitarEnvioALegalesParaLegajoAbierto" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">  		
+		<property name="nombre" value="Solicitar Envío a Legales para Legajo Abierto"/>
+  		<property name="evento" value="solicitarEnvioALegalesParaLegajoAbierto"/>
+  		<property name="origen" ref="lgj_abierto"/>
+  		<property name="destino" ref="lgj_enviado_a_legales"/>	
+  	</bean>
+  	
+	<bean id="solicitarOmitirProcesoDeReembolsoParaLegajoConChequeRechazadoPendienteDeEntrega" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">  		
+		<property name="nombre" value="Solicitar Omitir Proceso de Reembolso para Legajo con Cheque Rechazado Pendiente de Entrega"/>
+  		<property name="evento" value="solicitarOmitirProcesoDeReembolsoParaLegajoConChequeRechazadoPendienteDeEntrega"/>
+  		<property name="origen" ref="lgj_en_proceso_reversion_cobros_relacionados"/>
+  		<property name="destino" ref="lgj_reembolsado_con_cheque_pend_entrega"/>	
+  	</bean>
+
+</beans>

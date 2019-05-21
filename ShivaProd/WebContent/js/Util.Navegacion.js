@@ -1,0 +1,5 @@
+
+	function redireccionarA() {
+		
+		var miPath = "";
+	}

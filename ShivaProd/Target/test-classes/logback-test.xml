@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${jboss.server.base.dir}/logs/shiva.log</file>
+		
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      		<!-- rollover daily -->
+      		<fileNamePattern>${jboss.server.base.dir}/logs/shiva-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+      		<timeBasedFileNamingAndTriggeringPolicy
+            		class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        		
+        		<!-- or whenever the file size reaches 100MB -->
+        		<maxFileSize>100MB</maxFileSize>
+      		</timeBasedFileNamingAndTriggeringPolicy>
+      		
+      		<!-- keep 5 days' worth of history -->
+      		<maxHistory>5</maxHistory>
+    	</rollingPolicy>
+    	
+		<encoder>
+			<pattern>%-50([%d][%thread]) %-13([%X{nivel}]) [%logger{50}] %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- Spring Webservice XML -->
+   	<logger name="org.springframework.ws.client.MessageTracing">
+   		<level value="TRACE" />	
+    	<appender-ref ref="file" />
+  	</logger>
+   	<logger name="org.springframework.ws.server.MessageTracing">
+   		<level value="TRACE" />	
+    	<appender-ref ref="file" />
+   	</logger>
+   
+   	<!-- Hibernate -->
+<!--    <logger name="org.hibernate.SQL" additivity="false" >	 -->
+<!--    	<level value="DEBUG" />	 -->
+<!--    	<appender-ref ref="file" /> -->
+<!--    </logger> -->
+<!-- 	<logger name="org.hibernate.type" additivity="false" >	 -->
+<!-- 		<level value="TRACE" />	 -->
+<!-- 		<appender-ref ref="file" /> -->
+<!-- 	</logger> -->
+   
+   <!-- Spring -->
+   	<logger name="org.springframework" level="error">
+  		<appender-ref ref="file" />
+	</logger>
+	
+	<!-- SHIVA -->
+	<logger name="ar.com.telecom.shiva" level="info">
+  		<appender-ref ref="file" />
+	</logger>
+	
+	<!-- Spring JMS -->
+	<logger name="org.springframework.jms" level="debug">
+	  <appender-ref ref="file"/>
+	</logger>
+	
+</configuration>

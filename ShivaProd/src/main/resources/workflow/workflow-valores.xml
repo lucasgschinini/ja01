@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	
+  	<bean id="VALORES" class="ar.com.telecom.shiva.negocio.workflow.definicion.Workflow">
+  		<property name="tipoWorkflow">
+  			<util:constant static-field="ar.com.telecom.shiva.negocio.workflow.definicion.TipoWorkflow.VALOR" />
+ 		</property>
+ 		
+  		<property name="transiciones">
+  			<list>
+  				<ref bean="inicioVAL" />
+
+  				<ref bean="disponibilizarValor" />  				
+
+  				<ref bean="solicitarConfirmacionAvisoDePago" />
+  				<ref bean="rechazarConfirmacionAvisoDePago" />
+  				<ref bean="solicitarReconfirmacionAvisoDePago" />
+  				<ref bean="confirmarAvisoDePago" />
+
+  				<ref bean="habilitarBoletaParaConciliar" />
+  				<ref bean="anularBoletaPendienteDeConciliar" />
+  				<ref bean="disponibilizarBoleta" />
+
+  				<ref bean="solicitarAutorizacionBoleta" />
+  				<ref bean="rechazarAutorizacionBoleta" />
+  				<ref bean="solicitarReautorizacionBoleta" />
+  				<ref bean="autorizarBoleta" />
+
+  				<ref bean="suspenderValorDisponible" />
+  				<ref bean="disponibilizarValorSuspendido" />
+  				<ref bean="revertirSuspensionValorUsado" />
+  				
+  				<ref bean="anular" />
+  				<ref bean="anularBoletaRechazada" />
+				<ref bean="anularAvisoDePagoRechazado" />
+
+  				<ref bean="usarValor" />
+  				<ref bean="disponibilizarValorUsado" />
+  				<ref bean="suspenderValorUsado" />
+
+				<ref bean="usarValorSuspendido" />
+  			</list>
+  		</property>	
+  	</bean>
+  	
+  	<!-- Estados (10) + inicial -->
+  	<util:constant id="val_no_disponible" 					static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.VAL_NO_DISPONIBLE" />
+
+  	<util:constant id="val_aviso_pago_rechazado" 			static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.VAL_AVISO_PAGO_RECHAZADO" />
+  	<util:constant id="val_aviso_pago_pendiente_confirmar" 	static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.VAL_AVISO_PAGO_PENDIENTE_CONFIRMAR" />
+  	<util:constant id="val_boleta_pendiente_conciliacion" 	static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.VAL_BOLETA_PENDIENTE_CONCILIACION" />
+  	<util:constant id="val_boleta_pendiente_autorizar" 		static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.VAL_BOLETA_PENDIENTE_AUTORIZAR" />
+  	<util:constant id="val_boleta_rechazada" 				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.VAL_BOLETA_RECHAZADA" />
+
+  	<util:constant id="val_disponible"						static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.VAL_DISPONIBLE" />
+  	<util:constant id="val_usado"							static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.VAL_USADO" />
+  	<util:constant id="val_suspendido"						static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.VAL_SUSPENDIDO" />
+  	<util:constant id="val_anulado" 						static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.VAL_ANULADO" />
+
+  	<!-- Transiciones (19) -->
+  	<bean id="inicioVAL" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Inicio"/>
+  		<property name="evento" value="crearWorkflow"/>
+  		<property name="origen">
+  			<util:constant 
+  				static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.INICIO" />
+  		</property>
+  		<property name="destino" ref="val_no_disponible"/>	
+  	</bean>
+
+  	<bean id="disponibilizarValor" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Disponibilizar Valor"/>
+  		<property name="evento" value="disponibilizarValor"/>
+  		<property name="origen" ref="val_no_disponible"/>
+  		<property name="destino" ref="val_disponible"/>	
+  	</bean>
+
+  	<bean id="solicitarConfirmacionAvisoDePago" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Confirmación Aviso de Pago"/>
+  		<property name="evento" value="solicitarConfirmacionAvisoDePago"/>
+  		<property name="origen" ref="val_no_disponible"/>
+  		<property name="destino" ref="val_aviso_pago_pendiente_confirmar"/>	
+  	</bean>
+
+  	<bean id="habilitarBoletaParaConciliar" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Habilitar Boleta para Conciliar"/>
+  		<property name="evento" value="habilitarBoletaParaConciliar"/>
+  		<property name="origen" ref="val_no_disponible"/>
+  		<property name="destino" ref="val_boleta_pendiente_conciliacion"/>	
+  	</bean>
+
+  	<bean id="solicitarAutorizacionBoleta" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Autorización Boleta"/>
+  		<property name="evento" value="solicitarAutorizacionBoleta"/>
+  		<property name="origen" ref="val_no_disponible"/>
+  		<property name="destino" ref="val_boleta_pendiente_autorizar"/>	
+  	</bean>
+
+  	<bean id="rechazarConfirmacionAvisoDePago" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rechazar Confirmacion Aviso de Pago"/>
+  		<property name="evento" value="rechazarConfirmacionAvisoDePago"/>
+  		<property name="origen" ref="val_aviso_pago_pendiente_confirmar"/>
+  		<property name="destino" ref="val_aviso_pago_rechazado"/>	
+  	</bean>
+
+  	<bean id="solicitarReconfirmacionAvisoDePago" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Reconfirmacion Aviso de Pago"/>
+  		<property name="evento" value="solicitarReconfirmacionAvisoDePago"/>
+  		<property name="origen" ref="val_aviso_pago_rechazado"/>
+  		<property name="destino" ref="val_aviso_pago_pendiente_confirmar"/>	
+  	</bean>
+
+  	<bean id="confirmarAvisoDePago" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Confirmar Aviso de Pago"/>
+  		<property name="evento" value="confirmarAvisoDePago"/>
+  		<property name="origen" ref="val_aviso_pago_pendiente_confirmar"/>
+  		<property name="destino" ref="val_disponible"/>	
+  	</bean>
+
+  	<bean id="rechazarAutorizacionBoleta" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Rechazar Autorizacion Boleta"/>
+  		<property name="evento" value="rechazarAutorizacionBoleta"/>
+  		<property name="origen" ref="val_boleta_pendiente_autorizar"/>
+  		<property name="destino" ref="val_boleta_rechazada"/>	
+  	</bean>
+
+  	<bean id="solicitarReautorizacionBoleta" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Reautorizacion Boleta"/>
+  		<property name="evento" value="solicitarReautorizacionBoleta"/>
+  		<property name="origen" ref="val_boleta_rechazada"/>
+  		<property name="destino" ref="val_boleta_pendiente_autorizar"/>	
+  	</bean>
+
+  	<bean id="autorizarBoleta" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Autorizar Boleta"/>
+  		<property name="evento" value="autorizarBoleta"/>
+  		<property name="origen" ref="val_boleta_pendiente_autorizar"/>
+  		<property name="destino" ref="val_boleta_pendiente_conciliacion"/>	
+  	</bean>
+
+  	<bean id="anularBoletaPendienteDeConciliar" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular Boleta Pendiente de Conciliar"/>
+  		<property name="evento" value="anularBoletaPendienteDeConciliar"/>
+  		<property name="origen" ref="val_boleta_pendiente_conciliacion"/>
+  		<property name="destino" ref="val_anulado"/>	
+  	</bean>
+
+  	<bean id="disponibilizarBoleta" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="DisponiblizarBoleta"/>
+  		<property name="evento" value="disponibilizarBoleta"/>
+  		<property name="origen" ref="val_boleta_pendiente_conciliacion"/>
+  		<property name="destino" ref="val_disponible"/>	
+  	</bean>
+
+  	<bean id="suspenderValorDisponible" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Suspender Valor Disponible"/>
+  		<property name="evento" value="suspenderValorDisponible"/>
+  		<property name="origen" ref="val_disponible"/>
+  		<property name="destino" ref="val_suspendido"/>	
+  	</bean>
+
+  	<bean id="disponibilizarValorSuspendido" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Disponibilizar Valor Suspendido"/>
+  		<property name="evento" value="disponibilizarValorSuspendido"/>
+  		<property name="origen" ref="val_suspendido"/>
+  		<property name="destino" ref="val_disponible"/>	
+  	</bean>
+
+  	<bean id="revertirSuspensionValorUsado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Revertir Suspensión Valor Usado"/>
+  		<property name="evento" value="revertirSuspensionValorUsado"/>
+  		<property name="origen" ref="val_suspendido"/>
+  		<property name="destino" ref="val_usado"/>	
+  	</bean>
+
+  	<bean id="anular" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular"/>
+  		<property name="evento" value="anular"/>
+  		<property name="origen" ref="val_suspendido"/>
+  		<property name="destino" ref="val_anulado"/>	
+  	</bean>
+
+  	<bean id="anularBoletaRechazada" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular Boleta Rechazada"/>
+  		<property name="evento" value="anularBoletaRechazada"/>
+  		<property name="origen" ref="val_boleta_rechazada"/>
+  		<property name="destino" ref="val_anulado"/>	
+  	</bean>
+
+  	<bean id="usarValor" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Usar Valor"/>
+  		<property name="evento" value="usarValor"/>
+  		<property name="origen" ref="val_disponible"/>
+  		<property name="destino" ref="val_usado"/>	
+  	</bean>
+
+  	<bean id="disponibilizarValorUsado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Disponibilizar Valor Usado"/>
+  		<property name="evento" value="disponibilizarValorUsado"/>
+  		<property name="origen" ref="val_usado"/>
+  		<property name="destino" ref="val_disponible"/>	
+  	</bean>
+
+  	<bean id="suspenderValorUsado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Suspender Valor Usado"/>
+  		<property name="evento" value="suspenderValorUsado"/>
+  		<property name="origen" ref="val_usado"/>
+  		<property name="destino" ref="val_suspendido"/>	
+  	</bean>
+
+	<bean id="anularAvisoDePagoRechazado" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular Aviso de Pago Rechazado"/>
+  		<property name="evento" value="anularAvisoDePagoRechazado"/>
+  		<property name="origen" ref="val_aviso_pago_rechazado"/>
+  		<property name="destino" ref="val_anulado"/>	
+  	</bean>
+
+	<bean id="usarValorSuspendido" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Usar Valor Suspendido"/>
+  		<property name="evento" value="usarValorSuspendido"/>
+  		<property name="origen" ref="val_suspendido"/>
+  		<property name="destino" ref="val_usado"/>	
+  	</bean>
+</beans>

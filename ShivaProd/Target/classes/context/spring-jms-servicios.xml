@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- Servicios -->
+	<bean id="facJmsSyncServicio" class="ar.com.telecom.shiva.base.jms.servicios.impl.FacJmsSyncServicioImpl">
+		 <property name="facConsultasControlMQ" ref="facConsultasControlMQ" />
+		 <property name="facConsultaAcuerdoMapeoJMS" ref="facConsultaAcuerdoMapeoJMS" />
+		 <property name="facConsultaAcuerdoxClienteMapeoJMS" ref="facConsultaAcuerdoxClienteMapeoJMS" />
+		 <property name="facConsultaClienteMapeoJMS" ref="facConsultaClienteMapeoJMS" />
+	</bean>
+	
+	<!-- Dummy Mic Jms Sync -->
+	<!--<bean id="micJmsSyncServicio" class="ar.com.telecom.shiva.base.jms.servicios.impl.dummy.MicDummyJmsSyncServicioImpl"/> -->
+	<!-- 	Clase padre de los servicios Sync y Async que comparte los mapeadores-->
+	<bean id="jmsServicio" class="ar.com.telecom.shiva.base.jms.servicios.impl.JmsServicio">
+		 <property name="micRespuestaRecepcionMapeoJMS" ref="micRespuestaRecepcionMapeoJMS" />
+		 <property name="micADCMapeoJMS" ref="micADCMapeoJMS" />
+		 <property name="micRespuestaADCMapeoJMS" ref="micRespuestaADCMapeoJMS" />
+		 <property name="micGeneracionCargoMapeoJMS" ref="micGeneracionCargoMapeoJMS" />
+		 <property name="micRespuestaGeneracionCargoMapeoJMS" ref="micRespuestaGeneracionCargoMapeoJMS" />
+		 <property name="micDescobroMapeoJMS" ref="micDescobroMapeoJMS" />
+		 <property name="micRespuestaDescobroMapeoJMS" ref="micRespuestaDescobroMapeoJMS" />
+	</bean>
+	
+	<!-- Asincronico para imputacion cobros, cargos, descobros-->
+	<bean id="micJmsServicio" class="ar.com.telecom.shiva.base.jms.servicios.impl.MicJmsServicioImpl">
+		 <property name="micImputacionCobrosControlMQ" ref="micImputacionCobrosControlMQ" />
+		 <property name="micImputacionDescobrosControlMQ" ref="micImputacionDescobrosControlMQ" />
+		 <property name="cobroServicio" ref="cobroServicio" />
+		 <property name="descobroImputacionServicio" ref="descobroImputacionServicio" />
+		 <property name="reintentosMensajeria" ref="reintentosMensajeria" />
+		 <property name="mensajeriaTransaccionServicio" ref="mensajeriaTransaccionServicio"/>
+	</bean>
+	
+	<!-- Sincronico para simulacion cobros, cargos, descobros -->
+	<bean id="micJmsSyncServicio" class="ar.com.telecom.shiva.base.jms.servicios.impl.MicJmsSyncServicioImpl">
+		 <property name="micConsultaDeudaControlMQ" ref="micConsultaDeudaControlMQ" />
+		 <property name="micConsultaDeudaMapeoJMS" ref="micConsultaDeudaMapeoJMS" />
+		 <property name="micConsultaCreditoControlMQ" ref="micConsultaCreditoControlMQ" />
+		 <property name="micConsultaCreditoMapeoJMS" ref="micConsultaCreditoMapeoJMS" />
+		 <property name="micSimulacionCobrosControlMQ" ref="micSimulacionCobrosControlMQ" />
+		 <property name="mensajeriaTransaccionServicio" ref="mensajeriaTransaccionServicio"/>
+	</bean>
+	
+	<!-- Otros Servicios -->
+	<bean id="jmsMonitorMensajeria" class="ar.com.telecom.shiva.base.jms.util.JmsMonitorMensajeria">
+		<property name="micJmsServicio" ref="micJmsServicio"/>
+		<property name="parametroServicio" ref="parametroServicio" />
+		<property name="transaccionCobroServicio" ref="transaccionCobroServicio" />
+	</bean>
+	
+	<bean id="reintentosMensajeria" class="ar.com.telecom.shiva.base.soa.reintentos.ReintentosMensajeria">
+		 <property name="micImputacionCobrosControlMQ" ref="micImputacionCobrosControlMQ" />
+		 <property name="mensajeriaTransaccionServicio" ref="mensajeriaTransaccionServicio"/>
+		 <property name="parametroServicio" ref="parametroServicio" />
+	</bean>
+    
+</beans>

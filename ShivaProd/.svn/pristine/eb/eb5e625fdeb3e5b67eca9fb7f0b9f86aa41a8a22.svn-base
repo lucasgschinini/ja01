@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+        
+    <bean id="OPERACION_MASIVA" class="ar.com.telecom.shiva.negocio.workflow.definicion.Workflow">
+    	<property name="tipoWorkflow">
+    		<util:constant static-field="ar.com.telecom.shiva.negocio.workflow.definicion.TipoWorkflow.OPERACION_MASIVA"/>
+    	</property>
+    	
+    	<property name="transiciones">
+    		<list>
+    			<ref bean="inicioOperacionMasiva"/>
+    			<ref bean="registrarOperacionMasivaEnProcesoDeImputacion"/>
+    			<ref bean="procesarOperacionMasiva"/>
+    			<ref bean="registrarOperacionMasivaEnError"/>
+    			<ref bean="registrarOperacionMasivaProcesada"/>
+    			<ref bean="solicitarAprobacionDeAltaDeOperacionMasiva"/>
+    			<ref bean="aprobarAltaDeOperacionMasiva"/>
+    			<ref bean="rechazarAltaDeOperacionMasiva"/>
+    			<ref bean="solicitarReaprobacionAltaDeOperacionMasiva"/>
+    			<ref bean="cancelarOperacionMasivaPendienteDeProcesar"/>
+    			<ref bean="solicitarOperacionMasivaPedidoAutorizacionReferente"/>
+    			<ref bean="anularOperacionMasivaRechazada"/>
+    			<ref bean="anularOperacionMasivaEnError"/>
+    			<ref bean="solicitarReaprobacionDeOperacionMasivaEnError"/>
+    			<ref bean="regresarOperacionMasivaRechazadaAPendienteProcesar"/>
+    			<ref bean="regresarOperacionMasivaEnErrorAPendienteProcesar"/>
+    			<ref bean="registrarOperacionMasivaProcesadaParcialmente"/>
+    			
+    		</list>
+    	</property>
+    </bean>
+    
+    <!-- Estados (8) + el inicial -->
+    <util:constant id="mas_configuracion" static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.MAS_CONFIGURACION"/>
+    <util:constant id="mas_pendiente_procesar" static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.MAS_PENDIENTE_PROCESAR"/>
+    <util:constant id="mas_proceso_imputacion" static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.MAS_PROCESO_IMPUTACION"/>
+    <util:constant id="mas_imputada" static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.MAS_IMPUTADA"/>
+    <util:constant id="mas_parcialmente_imputada" static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.MAS_PARCIALMENTE_IMPUTADA"/>
+    <util:constant id="mas_error" static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.MAS_ERROR"/>
+    <util:constant id="mas_pendiente_aprobacion" static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.MAS_PENDIENTE_APROBACION"/>
+    <util:constant id="mas_rechazada" static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.MAS_RECHAZADA"/>
+    <util:constant id="mas_anulada" static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.MAS_ANULADA"/>
+    
+    <!-- Transiciones (10) -->
+    <bean id="inicioOperacionMasiva" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+    	<property name="nombre" value="Inicio"></property>
+    	<property name="evento" value="crearWorkflow"></property>
+    	<property name="origen">
+    		<util:constant static-field="ar.com.telecom.shiva.negocio.workflow.definicion.Estado.INICIO"/>
+    	</property>
+    	<property name="destino" ref="mas_configuracion"></property>
+    </bean>
+    
+    <bean id="registrarOperacionMasivaEnProcesoDeImputacion" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+    	<property name="nombre" value="Registrar en proceso de imputacion"></property>
+    	<property name="evento" value="registrarOperacionMasivaEnProcesoDeImputacion"></property>
+    	<property name="origen" ref="mas_configuracion"></property>
+    	<property name="destino" ref="mas_pendiente_procesar"></property>
+    </bean>
+    
+    <bean id="procesarOperacionMasiva" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+    	<property name="nombre" value="Procesar operacion masiva"></property>
+    	<property name="evento" value="procesarOperacionMasiva"></property>
+    	<property name="origen" ref="mas_pendiente_procesar"></property>
+    	<property name="destino" ref="mas_proceso_imputacion"></property>
+    </bean>
+    
+    <bean id="registrarOperacionMasivaEnError" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+    	<property name="nombre" value="Registrar Operacion Masiva en Error"></property>
+    	<property name="evento" value="registrarOperacionMasivaEnError"></property>
+    	<property name="origen" ref="mas_proceso_imputacion"></property>
+    	<property name="destino" ref="mas_error"></property>
+    </bean>
+    <bean id="registrarOperacionMasivaProcesada" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+    	<property name="nombre" value="Registrar Operacion Masiva Procesada"></property>
+    	<property name="evento" value="registrarOperacionMasivaProcesada"></property>
+    	<property name="origen" ref="mas_proceso_imputacion"></property>
+    	<property name="destino" ref="mas_imputada"></property>
+    </bean>
+    <bean id="registrarOperacionMasivaProcesadaParcialmente" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+    	<property name="nombre" value="Operacion masiva procesada"></property>
+    	<property name="evento" value="registrarOperacionMasivaProcesadaParcialmente"></property>
+    	<property name="origen" ref="mas_proceso_imputacion"></property>
+    	<property name="destino" ref="mas_parcialmente_imputada"></property>
+    </bean>
+    
+    <bean id="cancelarOperacionMasivaPendienteDeProcesar" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+    	<property name="nombre" value="Cancelar pendiente de procesar"></property>
+    	<property name="evento" value="cancelarOperacionMasivaPendienteDeProcesar"></property>
+    	<property name="origen" ref="mas_pendiente_procesar"></property>
+    	<property name="destino" ref="mas_anulada"></property>
+    </bean>
+    
+    <bean id="solicitarAprobacionDeAltaDeOperacionMasiva" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+    	<property name="nombre" value="Solicitar aprobacion de alta"></property>
+    	<property name="evento" value="solicitarAprobacionDeAltaDeOperacionMasiva"></property>
+    	<property name="origen" ref="mas_configuracion"></property>
+    	<property name="destino" ref="mas_pendiente_aprobacion"></property>
+    </bean>
+    
+    <bean id="aprobarAltaDeOperacionMasiva" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+    	<property name="nombre" value="Aprobar alta"></property>
+    	<property name="evento" value="aprobarAltaDeOperacionMasiva"></property>
+    	<property name="origen" ref="mas_pendiente_aprobacion"></property>
+    	<property name="destino" ref="mas_pendiente_procesar"></property>
+    </bean>
+    
+    <bean id="rechazarAltaDeOperacionMasiva" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+    	<property name="nombre" value="Rechazar alta"></property>
+    	<property name="evento" value="rechazarAltaDeOperacionMasiva"></property>
+    	<property name="origen" ref="mas_pendiente_aprobacion"></property>
+    	<property name="destino" ref="mas_rechazada"></property>
+    </bean>
+    
+    <bean id="solicitarReaprobacionAltaDeOperacionMasiva" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+    	<property name="nombre" value="Solicitar reaprobacion de alta"></property>
+    	<property name="evento" value="solicitarReaprobacionAltaDeOperacionMasiva"></property>
+    	<property name="origen" ref="mas_rechazada"></property>
+    	<property name="destino" ref="mas_pendiente_aprobacion"></property>
+    </bean>
+    
+    <bean id="solicitarOperacionMasivaPedidoAutorizacionReferente" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Solicitar Operación Masiva con Pedido de Autorizacion Referente"/>
+  		<property name="evento" value="solicitarOperacionMasivaPedidoAutorizacionReferente"/>
+  		<property name="origen" ref="mas_pendiente_procesar"/>
+  		<property name="destino" ref="mas_pendiente_aprobacion"/>	
+  	</bean>
+  	
+  	<bean id="anularOperacionMasivaRechazada" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular Operación Masiva Rechazada"/>
+  		<property name="evento" value="anularOperacionMasivaRechazada"/>
+  		<property name="origen" ref="mas_rechazada"/>
+  		<property name="destino" ref="mas_anulada"/>	
+  	</bean>
+  	
+  	<bean id="anularOperacionMasivaEnError" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Anular Operación Masiva en Error"/>
+  		<property name="evento" value="anularOperacionMasivaEnError"/>
+  		<property name="origen" ref="mas_error"/>
+  		<property name="destino" ref="mas_anulada"/>	
+  	</bean>
+  	
+  	<bean id="solicitarReaprobacionDeOperacionMasivaEnError" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Reaprobar Operacion Masiva en Error"/>
+  		<property name="evento" value="solicitarReaprobacionDeOperacionMasivaEnError"/>
+  		<property name="origen" ref="mas_error"/>
+  		<property name="destino" ref="mas_pendiente_aprobacion"/>	
+  	</bean>
+  	
+  	<bean id="regresarOperacionMasivaRechazadaAPendienteProcesar" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Regresar Operacion Masiva Rechazada A Pendiente De Procesar"/>
+  		<property name="evento" value="regresarOperacionMasivaRechazadaAPendienteProcesar"/>
+  		<property name="origen" ref="mas_rechazada"/>
+  		<property name="destino" ref="mas_pendiente_procesar"/>	
+  	</bean>
+  	
+  	<bean id="regresarOperacionMasivaEnErrorAPendienteProcesar" class="ar.com.telecom.shiva.negocio.workflow.definicion.Transicion">
+  		<property name="nombre" value="Regresar Operacion Masiva En Error A Pendiente De Procesar"/>
+  		<property name="evento" value="regresarOperacionMasivaEnErrorAPendienteProcesar"/>
+  		<property name="origen" ref="mas_error"/>
+  		<property name="destino" ref="mas_pendiente_procesar"/>	
+  	</bean>
+  	
+  	
+  	
+</beans>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="motorWorkflow" class="ar.com.telecom.shiva.negocio.workflow.MotorWorkflow">
+  		<property name="workflows">
+  			<list>
+  				<ref bean="BOLETAS" />
+  				<ref bean="REGISTROS-AVC" />
+  				<ref bean="VALORES" />
+				<ref bean="COBROS" /> 
+  				<ref bean="DESCOBROS" />
+  				<ref bean="TALONARIOS" />
+  				<ref bean="RECIBO_PRE_IMPRESOS" />
+  				<ref bean="VALORES-REVERSION" />
+  				<ref bean="OPERACION_MASIVA" />
+  				<ref bean="DESCOBRO_ORIGEN_COBRADOR" />
+  				<ref bean="LEGAJOS_CHEQUES_RECHAZADOS" />
+  			</list>
+  		</property>
+  	</bean>
+  	
+  	<import resource="workflow-registros-avc.xml" />
+  	<import resource="workflow-boletas.xml" />
+  	<import resource="workflow-valores.xml" />
+  	<import resource="workflow-cobros.xml" />
+  	<import resource="workflow-descobros.xml" />
+  	<import resource="workflow-descobro-origen-cobrador.xml" />
+  	<import resource="workflow-talonarios.xml" />
+  	<import resource="workflow-recibos-pre-impresos.xml"/>
+  	<import resource="workflow-valores-reversion.xml" />
+  	<import resource="workflow-operaciones-masivas.xml" />
+  	<import resource="workflow-legajos-cheques-rechazados.xml" />
+  	
+</beans>

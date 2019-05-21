@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.telecom.com.ar/XMLSchema/bios/cliente/responseMessage" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cd="http://www.telecom.com.ar/XMLSchema/bios/clienteDicc" xmlns:ns1="http://www.telecom.com.ar/XMLSchema/bios/cliente/responseMessage">
+	<xs:import namespace="http://www.telecom.com.ar/XMLSchema/bios/clienteDicc" schemaLocation="DiccionarioCliente.xsd"/>
+	<xs:element name="consultarClienteResp">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="clientesCRM" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="cd:clienteCRM" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="crmClienteID" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>ID del Cliente en CRM-Siebel</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="legadoID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Es el ID del Legado/Comercial (ebos) en Tabla Traductora</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="legadoOfID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Código de Of. Comercial (ebos) de Legado</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="legadoClienteID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Es el ID del Cliente ( número con que figura ) en el Legado</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
